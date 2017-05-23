@@ -1,0 +1,124 @@
+{% load extras %}
+<div class="modal fade" id="returns_refunds_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">审核</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="retref_modal_form" method="post">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="obj_id" name="obj_id" value="{{ obj.id }}">
+          <h6><b>订单信息</b></h6>
+          <table class="table table-bordered personal-info">
+            <tr>
+              <td>订单编号</td>
+              <td width="335">{{ obj.order.order_no }}</td>
+              <td>订单金额</td>
+              <td>￥{{ obj.order.total_price|multiply:0.01 }}</td>
+            </tr>
+            <tr>
+              <td>实付金额(元)</td>
+              <td>￥{{ obj.order.real_price|multiply:0.01 }}</td>
+              <td>收货人</td>
+              <td>{{ obj.order.receiving_address.people }}</td>
+            </tr>
+          </table>
+          <h6><b>商品信息</b></h6>
+          <table class="table table-bordered good-info">
+            <thead>
+            <tr>
+              <th>商品图片</th>
+              <th width="210">商品名称</th>
+              <th>单价（元）</th>
+              <th>单价优惠</th>
+              <th>数量</th>
+              <th>小计（元）</th>
+              <th>实付金额（元）</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in order_items %}
+              <tr>
+                <td><img src="{% if item.good.main_photo.name %}{{ item.good.main_photo.name|urlencode|media_url }}{% else %}{{ 'common/img/good_placeholder.png'|static_url }}{% endif %}"/></td>
+                <td>{{ item.good.name }}</td>
+                <td class="price">{{ item.price|multiply:0.01 }}</td>
+                <td class="discount">{% if item.changepricerecord.change_price_state == 2 %}{{ item.changepricerecord.real_discount|multiply:0.01 }}{% else %}0.00{% endif %}</td>
+                <td class="quantity">{{ item.quantity }}</td>
+                <td>{{ item.price|multiply:item.quantity|multiply:0.01 }}</td>
+                <td class="real_price"></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <h6><b>售后详情</b></h6>
+          <table class="table table-bordered personal-info">
+            <tr>
+              <td>退款编号</td>
+              <td width="335">{{ obj.id }}</td>
+              <td>售后类型</td>
+              <td>{{ obj.get_refund_type_display }}</td>
+            </tr>
+            <tr>
+              <td>售后状态</td>
+              <td>{{ obj.get_refund_status_display }}</td>
+              <td>申请时间</td>
+              <td>{{ obj.created|date:'Y-m-d H:i:s' }}</td>
+            </tr>
+            <tr>
+              <td>退还给买家的金额</td>
+              <td>{{ obj.refund|multiply:0.01 }}</td>
+              <td>支付给卖家的金额</td>
+              <td>{{ obj.order.real_price|multiply:0.01 }}</td>
+            </tr>
+            <tr>
+              <td>退款说明</td>
+              <td colspan="3">{{ obj.refund_desc }}</td>
+            </tr>
+          </table>
+          <h6><b>操作日志</b></h6>
+          <table class="table table-bordered operation-log">
+            <thead>
+            <tr>
+              <th>时间</th>
+              <th>处理信息</th>
+              <th>操作员</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for op in op_logs %}
+              <tr>
+                <td>{{ op.created|date:'Y-m-d H:i:s' }}</td>
+                <td>{{ op.note }}</td>
+                <td>{{ op.operator.first_name|default:op.operator.username }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <div id="verify-btn">
+          <button type="button" class="btn btn-dts2 btn-s1" id="ret_ref_ok">通过</button>
+          <button type="button" class="btn btn-dts2 btn-s4" id="ret_ref_refuse">不通过</button>
+        </div>
+        <div id="finish-btn" class="hide">
+          <button type="button" class="btn btn-dts2 btn-s1" id="ret_ref_receipt">确认收货</button>
+          <button type="button" class="btn btn-dts2 btn-s1" id="ref_refuse_gd">拒绝收货</button>
+          <!--<button type="button" class="btn btn-dts2 btn-s4" data-dismiss="modal">取消</button> -->
+        </div>
+        <div id="finish-return" class="hide">
+          <button type="button" class="btn btn-dts2 btn-s1" id="ret_ref_money">确认退款</button>
+          <button type="button" class="btn btn-dts2 btn-s1" id="ref_ref_money">拒绝退款</button>
+          <!--<button type="button" class="btn btn-dts2 btn-s4" data-dismiss="modal">取消</button>-->
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

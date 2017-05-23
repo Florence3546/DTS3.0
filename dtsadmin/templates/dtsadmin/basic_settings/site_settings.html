@@ -1,0 +1,68 @@
+<form class="form-horizontal" id="form_site_settings" method="post" action="">
+  {% csrf_token %}
+  <div class="form-group form-group-dts">
+    <label for="input_site_name" class="control-label normal"><span class="must-note">*</span>网站名称</label>
+    <input type="text" class="form-control long" id="input_site_name" name="site_name"
+           value="{{ settings_item_dict.FRONT_SITE.site_name }}" required placeholder="显示到前台网站">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_phone" class="control-label normal"><span class="must-note">*</span>联系电话</label>
+    <input type="text" class="form-control long" id="input_admin_phone" name="admin_phone"
+           value="{{ settings_item_dict.FRONT_SITE.admin_phone }}" required placeholder="显示到前台网站首页">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_telephone" class="control-label normal">投诉电话</label>
+    <input type="text" class="form-control long" id="input_admin_telephone" name="admin_telephone"
+           value="{{ settings_item_dict.FRONT_SITE.admin_telephone }}" placeholder="显示到前台网站首页">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_complain" class="control-label normal">药监投诉</label>
+    <input type="text" class="form-control long" id="input_admin_complain" name="admin_complain"
+           value="{{ settings_item_dict.FRONT_SITE.admin_complain }}" placeholder="显示到前台网站首页">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_email" class="control-label normal">联系邮箱</label>
+    <input type="email" class="form-control long" id="input_admin_email" name="admin_email"
+           value="{{ settings_item_dict.FRONT_SITE.admin_email }}" placeholder="显示到前台网站首页">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_address" class="control-label normal"><span class="must-note">*</span>联系地址</label>
+    <input type="text" class="form-control long" id="input_admin_address" name="admin_address"
+           value="{{ settings_item_dict.FRONT_SITE.admin_address }}" required placeholder="显示到前台网站底部，同时作为收货地址">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_code" class="control-label normal"><span class="must-note">*</span>邮政编码</label>
+    <input type="text" class="form-control long" id="input_admin_code" name="admin_code"
+           value="{{ settings_item_dict.FRONT_SITE.admin_code }}" required placeholder="显示到前台网站底部">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_phone" class="control-label normal">公司名称</label>
+    <input type="text" class="form-control long" id="input_admin_company" name="admin_company"
+           value="{{ settings_item_dict.FRONT_SITE.admin_company }}" placeholder="显示到前台网站底部">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_copyright" class="control-label normal">Copyright</label>
+    <input type="text" class="form-control long" id="input_admin_copyright" name="admin_copyright"
+           value="{{ settings_item_dict.FRONT_SITE.admin_copyright }}" placeholder="显示到前台网站底部">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_icp" class="control-label normal">ICP经营许可证</label>
+    <input type="text" class="form-control long" id="input_admin_icp" name="admin_icp"
+           value="{{ settings_item_dict.FRONT_SITE.admin_icp }}" placeholder="显示到前台网站底部">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_number" class="control-label normal">网站备案号</label>
+    <input type="text" class="form-control long" id="input_admin_number" name="admin_site_no"
+           value="{{ settings_item_dict.FRONT_SITE.admin_site_no }}" placeholder="显示到前台网站底部">
+  </div>
+  <div class="form-group form-group-dts">
+    <label for="input_admin_note" class="control-label normal">官方声明</label>
+    <input type="text" class="form-control long" id="input_admin_note" name="admin_note"
+           value="{{ settings_item_dict.FRONT_SITE.admin_note }}" placeholder="显示到前台网站底部">
+  </div>
+  <input type="hidden" name="op_type" value="front_site">
+  <div class="form-group form-group-dts">
+    <label class="control-label"></label>
+    <button type="submit" class="control-btn btn btn-dts btn-s1" id="submit_front_site_add">保存</button>
+  </div>
+</form>

@@ -1,0 +1,291 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+{% block title %}账户信息 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/quickly_place_order.css'|static_url }}"> {% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+    {% csrf_token %}
+
+    <div class="main clearfix">
+      <div class="section">
+        <div class="clearfix">
+          <button class="btn btn-defined" id="reload-buyment-record">导入购买记录</button>
+          <table class="quick-order-tab">
+            <thead>
+            <tr>
+              <th><input type="checkbox" class="check-all"></th>
+              <th>序号</th>
+              <th>商品名称</th>
+              <th>数量</th>
+              <th>单位</th>
+              <th>商品编码</th>
+              <th>商品规格</th>
+              <th>生产厂家</th>
+              <th>单价(元)</th>
+              <th>小计(元)</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for order in quickly_order %}
+
+              <tr>
+                <td><input type="checkbox"
+                           data-id="{{ order.id }}"
+                           class="check-item order_item"></td>
+                <td class="number">{{ forloop.counter }}</td>
+                <td class="good_name">{{ order.good.get_display_name }}5g*18袋</td>
+                <td>
+                  <div class="input-group input-group-defined">
+                    <div class="input-group-addon btn-addon-defined reduce-number good_count_action"
+                         data-action="count_reduce">-
+                    </div>
+                    <input type="text"
+                           data-id="{{ order.id }}"
+                           class="form-control input-add-subtract good_count quickly_order_id_{{ order.id }}"
+                           value="{{ order.quantity }}" onchange="">
+                    <div class="input-group-addon btn-addon-defined add-number good_count_action"
+                         data-action="count_add">+
+                    </div>
+                  </div>
+                </td>
+                <td>包</td>
+                <td>{{ order.good.external_id }}</td>
+                <td>5g*16袋</td>
+                <td>{{ order.good.enterprise.name }}</td>
+                <td>{{ order.good.member_price | multiply:0.01 }}</td>
+                <td>{{ order.quantity | multiply:order.good.member_price | multiply:0.01 }}</td>
+                <td>
+                  <a class="remove">删除</a>
+                </td>
+              </tr>
+            {% endfor %}
+            <tr>
+              <td><input type="checkbox" class="check-item"></td>
+              <td class="add_number number">1</td>
+              <td><input type="text" id="search_good_add" class="search-good"><i class="iconfont icon-enter add_good"></i>
+                <div class="mask-white hide"></div>
+                <div id="search-result" class="hide">
+                  <div class="search-closed">&times;</div>
+                  <table>
+                    <thead>
+                    <tr>
+                      <th>商品编码</th>
+                      <th>商品名称</th>
+                      <th>单位</th>
+                      <th>商品规格</th>
+                      <th>生产厂家</th>
+                      <th>单价(元)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+          <button class="btn-s2 pull-right shopping_balance"
+                  api="{% url 'eshop:shopping_balance' %}"
+                  id="btn-orange">结算
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+  <div class="mask-layer hide"></div>
+  <div id="buyment-record" class="hide">
+    <p class="title">购买记录<span class="close-box">&times;</span></p>
+    <ul id="record-title">
+      <li>
+			<span><input type="checkbox" class="check-all">
+    	</span><span>订单时间</span>
+        <span>订单编号</span><span>订单金额</span>
+        <span>实付金额</span><span>支付方式</span><span>商品种类</span><span>交易状态</span>
+      </li>
+    </ul>
+    <ul id="record-box">
+      {% for order in history_order %}
+        <li>
+      <span>
+      <input type="checkbox"
+             data-id="{{ order.id }}"
+             class="check-item old_order_item"></span>
+          <span>{{ order.ord_time | date:'Y-m-d H:m:s' }}</span>
+          <span>{{ order.order_no }}</span>
+          <span>￥{{ order.total_price | multiply:0.01 }}</span>
+          <span>￥{{ order.real_price | multiply:0.01 }}</span>
+          <span>aa{{ order.payment_method.name_cn }}</span>
+          <span><a>共{{ order.orderitem_set.all | length }}件商品</a>
+        <a class="boult boult-down"></a></span>
+          <span>待付款</span>
+        </li>
+        {% if order.orderitem_set %}
+          <li class="unfold hide">
+            <ul class="details">
+              <li><span><input type="checkbox"
+                               class="check-item-mun"></span><span>商品信息</span><span>商品编号</span><span>商品数量</span><span>单价</span><span>小计</span>
+              </li>
+              {% for orderitem in order.orderitem_set.all %}
+                <li><span>
+              <input type="checkbox"
+                     data-gid="{{ orderitem.good.id }}"
+                     class="check-item old_good_item"></span>
+                  <span>{{ orderitem.good.get_display_name }} 10mg*7片/盒</span>
+                  <span>{{ orderitem.good.external_id }}</span>
+                  <span>*{{ orderitem.quantity }}</span>
+                  <span>￥{{ orderitem.price | multiply:0.01 }}</span>
+                  <span>￥{{ orderitem.price | multiply:orderitem.quantity | multiply:0.01 }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+
+    <input type="hidden" id="search_url" value="{% url 'eshop:quickly_order' %}">
+    <input type="hidden" id="shopping_balance" value="{% url 'eshop:shopping_balance' %}">
+    <p id="operate-com">
+      <button class="btn-s1 add_old_order">确定</button>
+      <button class="cancel">取消</button>
+    </p>
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/quickly_order.js'|static_url }}"></script>
+{% endblock %}

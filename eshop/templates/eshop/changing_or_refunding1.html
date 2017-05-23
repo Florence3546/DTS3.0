@@ -1,0 +1,200 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}我的订单 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/changing_or_refunding.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/member_site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main">
+      <div class="changing-or-refunding">
+        <div class="crumb">
+          <ul>
+            <li>
+              <a href="{% url "eshop:member_center" %}">会员中心</span>
+                <i class="iconfont icon-shangxiajiantou-copy1"></i>
+            </li>
+            <li>
+              <a href="{% url "eshop:my_order" %}">订单管理</a>
+              <i class="iconfont icon-shangxiajiantou-copy1"></i>
+            </li>
+            <li>
+              <span>我的订单</span>
+            </li>
+          </ul>
+        </div>
+        <div class="step">
+          <div class="progress-wrap">
+            <div class="progress-bar1"></div>
+            <div class="progress-bar2"></div>
+            <div class="progress-bar3"></div>
+            <div class="progress-bar4"></div>
+          </div>
+          <ul>
+            <li class="active">买家申请退款退货</li>
+            <li>葫芦娃医药网审核售后</li>
+            <li>葫芦娃医药网审核退款</li>
+            <li>确认收货，退款完成</li>
+          </ul>
+        </div>
+        <h5>订单信息</h5>
+        <ul class="subnav">
+          <li>下单时间</li>
+          <li>订单编号</li>
+          <li>订单金额</li>
+          <li>实付金额</li>
+          <li>收货人</li>
+          <li>商品种类</li>
+        </ul>
+        <ul class="order-info">
+          <li>
+            <span>2017-1-25 10:25:03</span>
+            <span><a>12345678912345678912</a></span>
+            <span><b>￥5251.00</b></span>
+            <span><b>￥3893.00</b></span>
+            <span>张丽</span>
+            <span><a class="sort-of-goods">共2种商品</a></span>
+            <div class="goods-information">
+              <ul class="goods-nav">
+                <li>商品信息</li>
+                <li>商品编号</li>
+                <li>商品数量</li>
+                <li>单价(元)</li>
+                <li>小计(元)</li>
+              </ul>
+              <ul class="goods-list">
+                <li>
+                  <div>
+                    <img src="../../static/eshop/images/goods.jpg"/>
+                    <p>
+                      <span>可定</span><span>瑞舒伐他汀钙片</span><span>10mg*7片/盒</span>
+                    </p>
+                    <a href="#">加入购物车</a>
+                  </div>
+                  <div>Q254136557457</div>
+                  <div>*10</div>
+                  <div>￥17.00</div>
+                  <div>￥1170.00</div>
+                </li>
+                <li>
+                  <div>
+                    <img src="../../static/eshop/images/goods.jpg"/>
+                    <p>
+                      <span>可定</span><span>瑞舒伐他汀钙片</span><span>10mg*7片/盒</span>
+                    </p>
+                    <a href="#">加入购物车</a>
+                  </div>
+                  <div>Q254136557457</div>
+                  <div>*10</div>
+                  <div>￥17.00</div>
+                  <div>￥1170.00</div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        <div class="type">
+          请选择您要服务的类型
+          <a class="return-money">我要退款</a>
+          <a class="return-good">我要退货</a>
+        </div>
+        <div class="cause">
+          <form id="" method="post">
+            <div class="form-group take-good">
+              <label class="select"><span class="necessary">*</span>是否收到货：</label>
+              <input id="No" type="radio" name="good"/><label class="deliveries" for="No">未收到货</label>
+              <input id="Yes" type="radio" name="good"/><label class="deliveries" for="Yes">已收到货</label>
+              <span class="error"></span>
+            </div>
+            <div class="form-group">
+              <label><span class="necessary">*</span>退货原因：</label>
+              <select class="form-control">
+                <option>请选择退款原因</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><span class="necessary">*</span>退款金额：</label>
+              <input class="form-control short" type="text" value="5000"/>&nbsp;元 (最多￥5000.00)
+            </div>
+            <div class="form-group">
+              <label class="reason">退款说明：</label>
+              <textarea></textarea>
+            </div>
+            <div class="form-group">
+              <label>上传凭证：</label>
+              <a class="upload-pictures">上传图片</a>
+              <p>每张图片大小不超过5M，最多支持3张，支持GIF，JPG，BMP格式</p>
+              <a class="submit">提交退款申请</a>
+            </div>
+          </form>
+          <div class="wait wait-money">
+            <p>您已成功发起退款申请，请耐心等待审核处理!</p>
+            <p>
+              审核通过后请等待退款处理，处理后系统将钱退至您的预存款账户中。<br/>
+              若审核不通过，您可以修改申请，再次申请发起，商家会重新处理。<br/>
+              为了快速处理，您在申请前请联系客服，看是否达到“<a href='#'>退款退货政策</a>”要求。
+            </p>
+            <p>
+              <a class="revise">修改申请</a>
+              <a class="cancel" href="{% url 'eshop:my_order' %}">取消申请</a>
+            </p>
+          </div>
+          <div class="wait wait-good">
+            <p>您已成功发起退货申请，请耐心等待审核处理!</p>
+            <p>
+              审核通过后请等待退款处理，处理后系统将钱退至您的预存款账户中。<br/>
+              若审核不通过，您可以修改申请，再次申请发起，商家会重新处理。<br/>
+              为了快速处理，您在申请前请联系客服，看是否达到“<a href='#'>退款退货政策</a>”要求。
+            </p>
+            <p>
+              <a class="revise">修改申请</a>
+              <a class="cancel" href="{% url 'eshop:my_order' %}">取消申请</a>
+            </p>
+          </div>
+        </div>
+        <div class="service-introduce">
+          <h5>服务介绍</h5>
+          <div>
+            <p>1. 退货流程</p>
+            <p>(1)用户查看“<a href='#'>退款退货政策</a>”，联系客服确认，符合退换条件后进行申请；</p>
+            <p>(2)客服针对您提供的申请信息，进行审核，审核通过后客服将与您取得联系了解商品情况，请务必登记准确的联系方式，期间保持手机或电话畅通；</p>
+            <p>(3)用户将商品包裹安全，寄回我方（地址将由我司与您联系确认）；</p>
+            <p>(4)售后中心收货并检测商品，符合退货条件会退款，退货结束。</p>
+          </div>
+          <div>
+            <p>2. 我要退货</p>
+            <p>申请条件：符合“<a href='#'>退款退货政策</a>”，若您未收到货，请选择“仅退款”选项。</p>
+            <p>退款流程：1.联系客服，确认符合条件>2.申请退款 >3.我方公司进行审核>4.审核通过，同意退款申请 >5.退款成功</p>
+          </div>
+          <div>
+            <p>3. 我要退款</p>
+            <p>申请条件：若为商品问题，符合“<a href='#'>退款退货政策</a>”，请选择“退货退款”选项，退货后请保留物流底单。</p>
+            <p><i>退货流程：</i>1.联系客服，确认符合条件 >2.申请退货 >3.我方公司进行审核 >4.审核通过，发送退货地址给买家 >5.买家退货并填写退货物流信息
+              <b>>6.我方公司检测商品，符合退货条件确认收货，退款成功</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/changing_or_refunding.js'|static_url }}"></script>
+{% endblock %}
+

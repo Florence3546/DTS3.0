@@ -1,0 +1,118 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}充值 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/user_recharge.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div id="content">
+      <div class="main">
+        <div class="crumb">
+          <ul>
+            <li>
+              <a href="{% url 'eshop:member_center' %}">会员中心</a>
+              <i class="iconfont icon-shangxiajiantou-copy1"></i>
+            </li>
+            <li>
+              <span>充值</span>
+            </li>
+          </ul>
+        </div>
+        <div class="recharge">
+          <div class="recharge-left">
+            <div>
+              <i class="iconfont icon-yucunkuan"></i>预存款充值
+            </div>
+            <ul>
+              <li><span>●</span>预存款可以用来购买商品</li>
+              <li><span>●</span>充值的金额为预存款金额</li>
+              <li><span>●</span>支持国内主流银行储蓄卡充值</li>
+              <li><span>●</span>在线支付成功后，充值金额会在1分钟内到账</li>
+              <li><span>●</span>如若提现，请联系客服</li>
+            </ul>
+            <p>客服电话：400-606-5500</p>
+            <p>服务时间：9:00-21:00</p>
+          </div>
+          <div class="recharge-right">
+            <h5>填写充值金额</h5>
+            <p>充值账户：<span>快乐的阳光</span></p>
+            <p>账户余额：<span class="balance">￥256.00</span></p>
+            <p class="recharge-money">充值金额：<input type="text"/> 元</p>
+            <p class="recharge-method">
+              充值方式：<span class="active" data-class="recharge-code">充值码</span>
+              <span data-class="WeChat">微信</span>
+              <span data-class="alipay">支付宝</span>
+              <span data-class="online-payment">网银在线</span>
+            </p>
+            <div>
+              <div class="recharge-code">
+                <p class="code">充值码：<input type="text"/></p>
+                <p class="password">充值密码：<input type="text"/></p>
+                <a class="pay btn-s2" href="#">充值</a>
+              </div>
+              <div class="WeChat">
+                <img src="../../static/eshop/images/QR.jpg"/>
+                <span><i class="iconfont icon-saoma"></i>微信扫码完成支付</span>
+              </div>
+              <div class="alipay">
+                <img src="../../static/eshop/images/QR.jpg"/>
+                <span><i class="iconfont icon-saoma"></i>支付宝扫码完成支付</span>
+              </div>
+              <div class="online-payment">
+                <ul>
+                  <li class="active"><a><span></span><i class="ico_icbc"></i>工商银行</a></li>
+                  <li><a><span></span><i class="ico_abc"></i>农业银行</a></li>
+                  <li><a><span></span><i class="ico_cmb"></i>招商银行</a></li>
+                  <li><a><span></span><i class="ico_ccb"></i>建设银行</a></li>
+                  <li><a><span></span><i class="ico_boc"></i>中国银行</a></li>
+                  <li><a><span></span><i class="ico_boco"></i>交通银行</a></li>
+                  <!--<li><a><span></span><i class="iconfont icon-pinganyinhang"></i>邮政银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>广发银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>民生银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>平安银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>光大银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>兴业银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>中信银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>北京银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>上海农商</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>浦发银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>宁波银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>南京银行</a></li>
+                  <li><a><span></span><i class="iconfont icon-pinganyinhang"></i>东亚银行</a></li>-->
+                </ul>
+                <p>说明：支持储蓄卡充值，立即支付后跳转到对应银行的网银系统</p>
+                <a class="pay btn-s2" href="#">立即支付</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+    <div class="right-tab">
+      <a href="#"><i class="iconfont icon-qq"></i></a>
+      <a href="#"><i class="iconfont icon-gouwuche"></i></a>
+      <a href="#"><i class="iconfont icon-liuyan"></i></a>
+      <a href="#"><i class="iconfont icon-huidaodingbu"></i></a>
+    </div>
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/user_recharge.js'|static_url }}"></script>
+{% endblock %}

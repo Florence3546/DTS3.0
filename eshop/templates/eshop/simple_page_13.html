@@ -1,0 +1,63 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}关于我们 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>关于我们</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_enterprise_info.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">关于我们</div>
+        <div class="help-body">
+          <div class="text-content">
+            云药库-院外处方药控销平台，是国家食品药品监督管理局审批取得互联网药品交易服务资格（B2B）的移动互联网新型供应链公司。主体公司广州市振康医药有限公司成立于2005年2月，
+            是一家集专科处方药的代理、配送、临床推广、连锁处方药房经营为一体的综合型医药企业。为社区药房，网上药店，社区医疗门诊、医院等提供齐全的药品信息查询和新特药“采购”渠道，
+            打造最合法、正规、安全的医药采购网站；
+          </div>
+          <div class="text-content">
+            “云药库”平台上产品涵盖肿瘤、肝胆、神经、心脑血管、糖尿病、风湿骨痛等十四个专科科室，慢病处方药产品1.2万个SKU。线下销售网络覆盖全国15万家单体零售药
+            房及2000家连锁药房总部、10万家医疗门诊与民营医院。为广大合作商户提供慢病处方药的拆零散供、专业用药指导、CDC慢病照顾技术、O2O落地服务培训、免费网上开店、
+            微信互联等多渠道、全方位战略支持！
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

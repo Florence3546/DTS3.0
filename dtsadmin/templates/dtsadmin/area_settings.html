@@ -1,0 +1,151 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+
+
+{% block title %}地区设置 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_basic_settings.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    #table_fold {
+      width: 900px;
+    }
+
+    #table_fold thead th:nth-of-type(2),
+    #table_fold thead th:nth-of-type(3) {
+      width: 60px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    #table_fold tbody td:nth-of-type(2) {
+      text-align: center;
+    }
+
+    #table_fold thead th:nth-of-type(1) {
+      width: 250px;
+    }
+
+    #table_fold tbody td:nth-of-type(3) {
+      text-align: center;
+    }
+
+    #table_fold tr.disabled,
+    #table_fold tr.disabled a.triangle {
+      color: #ccc;
+    }
+
+    .form-group-dts .form-control {
+      display: inline-block;
+      float: none;
+      text-align: center;
+    }
+
+    #table_fold a.triangle {
+      margin: 0;
+      color: #777;
+    }
+
+    a.triangle {
+      position: relative;
+      padding-left: 15px;
+    }
+
+    a.triangle:before {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      display: block;
+      content: '';
+      border-left: 5px solid #7c7c7c;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
+
+    a.triangle.triangle-bottom:before {
+      top: 5px;
+      border-left: 5px solid transparent;
+      border-top: 5px solid #7c7c7c;
+      border-right: 5px solid transparent;
+    }
+  </style>
+{% endblock %}
+
+{#内容区#}
+
+{% block content %}
+  <div class="small" id="content">
+    <div class="form-group">
+      {% csrf_token %}
+      {#    <button class="control-btn btn btn-dts btn-s1 save_order"#}
+      {#            api="{% url 'dtsadmin:ajax:save_order' model_name='Region' %}"#}
+      {#            >保存排序</button>#}
+    </div>
+
+    <div class="form-group form-group-dts">
+
+
+      <table id="table_fold" class="table table-bordered">
+        <thead>
+        <tr>
+          <th>地区名称</th>
+          <th>行政代码</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in data_list %}
+          <tr
+              level="{{ obj.level }}"
+              class="{% if not obj.is_active %}disabled{% endif %} {% if obj.level > 0 %}hide{% endif %}"
+              obj_id="{{ obj.id }}"
+          >
+            <td>
+              {% if obj.has_child %}
+                <a class="triangle" style="margin-left: {{ 15|multiply:obj.level }}px;">{{ obj.region_name }}</a>
+              {% else %}
+                <span style="margin-left: {{ 15|multiply:obj.level }}px;">{{ obj.region_name }}</span>
+              {% endif %}
+            </td>
+            <td>{{ obj.region_code }}</td>
+            <td>
+              <div class="switch-default active"
+                   api="{% url 'dtsadmin:ajax:switch_area_bypk' model_name='Region' obj_pk=obj.pk %}"
+                   is_active="{{ obj.is_active }}">
+                <div class="switch-on {% if not obj.is_active %}hide{% endif %}">启用</div>
+                <div class="switch-off {% if obj.is_active %}hide{% endif %}">禁用</div>
+              </div>
+            </td>
+          </tr>
+        {% empty %}
+          <tr class="no_data">
+            <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+          </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+
+    </div>
+
+
+  </div>
+{% endblock %}
+
+{#模态对话框#}
+{% block modal %}
+{#  {% include 'dtsadmin/modals/modal_area.html' %}#}
+{#  {% include 'dtsadmin/modals/modal_parent_area.html' %}#}
+{#  {% include 'dtsadmin/modals/modal_child_area.html' %}#}
+{#  {% include 'dtsadmin/modals/modal_change_area.html' %}#}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/area_settings.js'|static_url }}"></script>
+{% endblock %}

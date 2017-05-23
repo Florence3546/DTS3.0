@@ -1,0 +1,413 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}企业列表 - DTS管理后台{% endblock %}
+
+{#  侧边栏  #}
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_info_manage.html' %}
+{% endblock %}
+
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    .form-group-dts .btn-s1 {
+      margin-left: 30px;
+    }
+
+    table input[type="checkbox"] {
+      vertical-align: middle;
+    }
+
+    #table_enterprises thead th:nth-of-type(1) {
+      width: 32px;
+    }
+
+    #table_enterprises thead th:nth-last-of-type(1) {
+      width: 100px;
+    }
+
+    #table_enterprises tr td {
+      text-align: center;
+    }
+
+    #table_enterprises tr td:nth-of-type(2) {
+      text-align: left;
+    }
+
+    #table_enterprises tr td:nth-of-type(7),
+    #table_enterprises tr td:nth-of-type(8) {
+      text-align: right;
+    }
+
+    label:not(.control-label) {
+      font-weight: normal;
+      margin: 0;
+    }
+
+    input[type=radio] {
+      margin: 5px;
+      vertical-align: sub;
+    }
+
+    /***********************添加企业模态框样式*********************/
+    .enterprise_modal .form-horizontal .control-label {
+      padding-right: 0;
+      width: 100px;
+    }
+
+    .enterprise_modal .form-horizontal .form-control {
+      margin-left: 0;
+    }
+
+    .account-info span, .enterprise-info span {
+      font-size: 14px;
+      font-weight: bolder;
+      margin: 0 5px 0 22px;
+    }
+
+    .enterprise-info {
+      border-top: 1px dashed #e5e5e5;
+      padding-top: 20px;
+    }
+
+    .enterprise_modal .form-horizontal .region {
+      width: 96px;
+      margin-right: 6px;
+    }
+
+    .enterprise_modal ul {
+      overflow: hidden;
+    }
+
+    .enterprise_modal ul li {
+      float: left;
+      width: 240px;
+    }
+
+    .enterprise_modal ul li label {
+      width: auto;
+      text-align: left;
+      float: none;
+      line-height: 14px;
+      font-weight: normal;
+    }
+
+    .enterprise_modal ul li input {
+      position: relative;
+      top: 3px;
+      margin-right: 5px;
+      margin-left: 0;
+    }
+
+    .uploading a {
+      position: relative;
+      float: left;
+      display: block;
+      margin-right: 15px;
+      width: 92px;
+      height: 92px;
+      text-align: center;
+      background: #f9f9f9;
+      border: 1px solid #e3e3e3;
+      overflow: hidden;
+    }
+
+    .enterprise_modal .uploading a span {
+      position: relative;
+      top: 25px;
+      color: #ccc;
+    }
+
+    .uploading a img {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      z-index: 1;
+    }
+
+    /***********************查看、审核模态框样式*********************/
+    .enterprise_check_modal table tr td:nth-of-type(odd) {
+      width: 78px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    #content .typeahead li.active a {
+      background: #0090ff;
+    }
+  </style>
+{% endblock %}
+
+
+{% block content %}
+  <div class="small" id="content">
+
+    {% csrf_token %}
+    <form class="form-inline bordered" role="form" id="search_enterprise_form" method="get"
+          action="/dtsadmin/enterprise_list/">
+      <input type="hidden" id="total_count" value="{{ data_list.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="search_enterprise_name" class="control-label normal">企业名称</label>
+          <input type="text" id="search_enterprise_name" name="search_enterprise_name" value="{{ request.GET.search_enterprise_name }}" class="form-control" autocomplete="off">
+          <button type="submit" class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="search_enterprise_legal_repr" class="control-label normal">法人代表</label>
+          <input type="text"
+                 value="{{ request.GET.search_enterprise_legal_repr }}"
+                 name="search_enterprise_legal_repr" class="form-control"
+                 id="search_enterprise_legal_repr">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="search_enterprise_operate_mode" class="control-label normal">经营方式
+          </label>
+          <select class="form-control"
+                  id="search_enterprise_operate_mode"
+                  name="search_enterprise_operate_mode">
+            <option value="">请选择……</option>
+            {% for obj in choices.operate_mode %}
+              <option value="{{ obj.value }}"
+                      {% if request.GET.search_enterprise_operate_mode == obj.value %}selected{% endif %}>
+                {{ obj.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="member_grade" class="control-label normal">会员等级</label>
+          <select class="form-control" id="member_grade" name="member_grade">
+            <option value="">请选择……</option>
+            {% for obj in member_level_choices %}
+              <option value="{{ obj.value }}">{{ obj.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="search_enterprise_review_status" class="control-label normal">审核状态</label>
+          <select class="form-control"
+                  id="search_enterprise_review_status"
+                  name="search_enterprise_review_status">
+            <option value="">请选择……</option>
+            {% for obj in choices.review_status %}
+              <option value="{{ obj.0 }}"
+                      {% if request.GET.search_enterprise_review_status == obj.0 %}selected{% endif %}>{{ obj.1 }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="search_enterprise_is_lock" class="control-label normal">企业状态</label>
+          <select class="form-control"
+                  id="search_enterprise_is_lock"
+                  name="search_enterprise_is_lock">
+            <option value="">请选择……</option>
+            <option value="0" {% if request.GET.search_enterprise_is_lock == '0' %}selected{% endif %}>未锁定</option>
+            <option value="1" {% if request.GET.search_enterprise_is_lock == '1' %}selected{% endif %}>已锁定</option>
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="search_enterprise_created_from" class="control-label normal">注册日期
+          </label>
+          <input type="text"
+                 id="search_enterprise_created_from"
+                 value="{{ request.GET.search_enterprise_created_from }}"
+                 name="search_enterprise_created_from" class="form-control date"
+                 data-date-format="yyyy-mm-dd" placeholder="请选择日期">
+          <span class="control-text">-</span>
+          <input type="text"
+                 id="search_enterprise_created_to"
+                 value="{{ request.GET.search_enterprise_created_to }}"
+                 name="search_enterprise_created_to" class="form-control date"
+                 data-date-format="yyyy-mm-dd" placeholder="请选择日期">
+        </div>
+      </div>
+      <div class="spacing">
+        <button type="button" class="control-btn btn btn-dts btn-s2 add">添加
+        </button>
+        <button type="button"
+                id="enterprise_lock"
+                api="{% url 'dtsadmin:ajax:switch_enterprise_lock' %}"
+                class="control-btn btn btn-dts btn-s2 enterprise_is_lock">锁定
+        </button>
+        <button type="button"
+                id="enterprise_unlock"
+                api="{% url 'dtsadmin:ajax:switch_enterprise_lock' %}"
+                class="control-btn btn btn-dts btn-s2 enterprise_is_lock">解锁
+        </button>
+        <button type="button"
+                api="{% url 'dtsadmin:ajax:switch_enterprise_lock' %}"
+            {#              data-toggle="modal" data-target="#common_delete_modal"#}
+                class="control-btn btn btn-dts btn-s2 delete_enterprises">删除
+        </button>
+      </div>
+      <table id="table_enterprises" class="table-bordered table-hover dataTable">
+        <thead>
+        <tr>
+          <th>
+            <input type="checkbox" class="check-all"></th>
+          <th>企业名称</th>
+          <th>经营方式</th>
+          <th>法人代表</th>
+          <th>注册日期</th>
+          <th>手机号</th>
+          <th>预存款(元)</th>
+          <th>信用额度(元)</th>
+          <th>会员积分</th>
+          <th>会员等级</th>
+          <th>企业状态</th>
+          <th>审核状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for data in data_list %}
+          <tr>
+            <td>
+              <input type="checkbox" class="check-item" name="chk_list" value="{{ data.id }}"></td>
+            <td>{{ data.name }}</td>
+            <td>{% for operate_mode in operate_mode_choices %}
+              {% if operate_mode.value == data.operate_mode %}
+                {{ operate_mode.name }}
+              {% endif %}
+            {% endfor %}
+            </td>
+            <td>{{ data.legal_repr }}</td>
+            <td>{{ data.created | date:'Y-m-d' }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ data.balance | divide:'100' }}</td>
+            <td>{{ data.overdraft | divide:'100' }}</td>
+            <td>会员积分</td>
+            <td>普通会员</td>
+            <td>
+              <span>{{ data.is_lock|yesno:'已锁定,未锁定, ' }}</span>
+            </td>
+            <td>
+              <span>{{ data.get_review_status_display }}</span>
+            </td>
+            <td class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown">
+                管理
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a data-toggle="modal"
+                     data-pk="{{ data.pk }}"
+                     api="{% url 'dtsadmin:enterprise_list' %}"
+                     class="look_enter">查看</a>
+                </li>
+                {% if data.review_status != 2 %}
+                  <li>
+                    <a data-pk="{{ data.pk }}"
+                       api="{% url 'dtsadmin:enterprise_list' %}"
+                       class="check_enter">审核</a>
+                  </li>
+                {% endif %}
+
+                <li>
+                  <a href="javascript:;"
+                     data-pk="{{ data.pk }}"
+                     api="{% url 'dtsadmin:enterprise_list' %}"
+                     class="update">修改</a>
+                </li>
+                <li>
+                  <a href="javascript:;"
+                     class="delete"
+                     api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='Enterprise' obj_id=data.id %}">删除</a>
+                </li>
+                <li>
+                  <a data-toggle="modal" data-target="#common_log_modal">日志</a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+      {% if data_list.paginator.count > 0 %}
+        <span
+            class="table-info">每页显示{{ data_list.paginator.per_page }}条，总共{{ data_list.paginator.num_pages }}页，共{{ data_list.paginator.count }}条</span>
+        <ul class="pagination right">
+          <li>
+            <a class="btn_page" page="
+                {% if data_list.has_previous %}{{ data_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+          </li>
+          {% if pagi_bar.left %}
+            {% for page in pagi_bar.left %}
+              <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                                page="{{ page }}">{{ page }}</a></li>
+            {% endfor %}
+            <li><span class="page-count">…</span></li>
+          {% endif %}
+          {% for page in pagi_bar.center %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          {% if pagi_bar.right %}
+            <li><span class="page-count">…</span></li>
+            {% for page in pagi_bar.right %}
+              <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                                page="{{ page }}">{{ page }}</a></li>
+            {% endfor %}
+          {% endif %}
+          <li>
+            <a class="btn_page"
+               page="
+                   {% if data_list.has_next %}{{ data_list.next_page_number }}{% else %}{{ data_list.paginator.num_pages }}{% endif %}"
+            >&raquo;</a>
+          </li>
+        </ul>
+      {% endif %}
+    </form>
+  </div>
+
+{% endblock %}
+
+{#  模态对话框  #}
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_enterprise.html' %}
+  {% include 'dtsadmin/modals/modal_enterprise_check.html' %}
+  {% include 'dtsadmin/modals/modal_common_log.html' %}
+  {% include 'dtsadmin/modals/modal_error.html' %}
+{% endblock %}
+
+{#  自定义JS  #}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'plugins/typeahead/bootstrap3-typeahead.min.js'|static_url }}"></script>
+  <script>
+      // 搜索企业自动补全
+      var items = [
+          {% for choice in choices.auto_enter %}
+              '{{ choice.name }} {{ choice.pinyin }}',
+          {% endfor %}
+      ];
+      $("#search_enterprise_name").typeahead({
+          source: items
+      })
+      ;
+  </script>
+  <script type="text/javascript" src="{{ 'dtsadmin/js/enterprise_list.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/data.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/distpicker.js'|static_url }}"></script>
+{% endblock %}

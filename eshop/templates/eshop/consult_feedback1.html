@@ -1,0 +1,56 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}咨询反馈 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/consult_feedback.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main clearfix">
+
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_member_center.html' %}
+
+      <div class="section">
+        <div class="tabtable">
+          <ul class="tab" id="feedback-nav">
+            <li class="active"><a href="#feedback" data-toggle="tab">我要反馈</a></li>
+            <li><a href="#consult" data-toggle="tab">我的咨询(10)</a></li>
+            <li><a href="#complain" data-toggle="tab">我的投诉(2)</a></li>
+          </ul>
+          <div class="tab-content feedback-content">
+            <div class="tab-pane active" id="feedback">
+              {% include 'eshop/consult_feedback/feedback_default.html' %}
+            </div>
+            <div class="tab-pane consult-record" id="consult">
+              {% include 'eshop/consult_feedback/feedback_consult.html' %}
+            </div>
+            <div class="tab-pane complain-record" id="complain">
+              {% include 'eshop/consult_feedback/feedback_complain.html' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/consult_feedback.js'|static_url }}"></script>
+{% endblock %}

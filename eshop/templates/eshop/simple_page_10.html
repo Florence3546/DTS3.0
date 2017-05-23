@@ -1,0 +1,63 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}售后服务 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>售后服务</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>投诉建议</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">投诉建议</div>
+        <div class="help-body">
+          <ul>
+            <li>若您对我们的服务有任何不满或者建议均可与我们的客服联系。</li>
+            <li>工作人员将在第一时间给予答复和妥善处理。</li>
+            <li>客服电话：0571-87177348</li>
+            <li>电子邮箱：ec@gkzj.com</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

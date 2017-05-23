@@ -1,0 +1,99 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}采购指南 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>采购指南</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>购买流程</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">购买流程</div>
+        <img class="mrg-t-30" width="982" height="118" src="{{ 'eshop/images/help05.png'|static_url }}"/>
+        <ul class="purchase-process">
+          <li>1.免费注册</li>
+          <li>2.搜索商品</li>
+          <li>3.确认下单付款</li>
+          <li>4.订单发货 跟踪物流</li>
+          <li>5.收货验货确认收货</li>
+        </ul>
+        <div class="help-body">
+          <dl>
+            <dt>1.免费注册</dt>
+            <dd>1）进入网站首页，点击页面顶部左上角【免费注册】；</dd>
+            <dd>2）采购商注册填写账户信息以及企业信息；</dd>
+            <dd>3）提交后将相关资质证照邮寄到我司地址进行审核</dd>
+          </dl>
+          <dl>
+            <dt>2.挑选商品</dt>
+            <dd>1）审核通过后登录，进行挑选商品；</dd>
+            <dd>查找商品的方法一：在全部商品分类中查找您要购买的商品；</dd>
+            <dd>查找商品的方法二：直接在搜索框搜索想要购买的商品。</dd>
+          </dl>
+          <dl>
+            <dt>3.确认下单付款</dt>
+            <dd>1）找到您要购买的商品后，点击【加入购物车】；</dd>
+            <dd>2）确认购买商品全部加入购物车后，请点击【去结算】；</dd>
+            <dd>3）填写您的收货地址，选择支付方式；</dd>
+            <dd>4）选择发票信息及使用优惠券后，确认订单信息后点击【提交订单】；</dd>
+            <dd>5）确认付款成功提交订单。</dd>
+          </dl>
+          <dl>
+            <dt>4.订单发货，跟踪物流</dt>
+            <dd>成功提交订单后，您可以随时登录查看订单状态，当发货后，可以根据单号查询物流状态。</dd>
+          </dl>
+          <dl>
+            <dt>5.验货收货，确认收货</dt>
+            <dd>1）签收时请注意：请您务必开箱验货，确认无误后再签收，如发现商品有破损等情况第一时间联系我司客服。</dd>
+            <dd>2）收到货后请在操作中点击确认收货。</dd>
+          </dl>
+          <dl class="annotation">
+            <dt>注：在注册和挑选选商品时，您可以通过以下方式对商品进行更全面的了解：</dt>
+            <dd>1、通过商品详情页右侧的“在线客服”提出您的疑问，我们的客服人员将及时为您解答；</dd>
+            <dd>2、拨打服务热线 400-650-6600进行药品咨询。</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

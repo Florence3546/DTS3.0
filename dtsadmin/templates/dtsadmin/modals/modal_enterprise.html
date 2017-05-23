@@ -1,0 +1,220 @@
+{% load extras %}
+<div class="modal enterprise_modal fade" id="common_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><b>添加</b></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="common_form" method="post" action="" enctype="multipart/form-data">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          {#          <input type="hidden" name="action" value="add_enterprise"/>#}
+
+          <input type="hidden" id="enterprise_id" name="pk" value="{{ obj.pk }}">
+          <input type="hidden" id="user_id" name="user_pk" value="{{ user.pk }}">
+
+          <h5 class="account-info"><span>账户信息</span>(账户登录信息)</h5>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>用户名：</label>
+            <input type="text"
+                   value="{{ user.username }}"
+                   name="username" class="form-control" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>姓名：</label>
+            <input type="text"
+                   value="{{ user.first_name }}"
+                   name="first_name" class="form-control" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>手机号：</label>
+            <input type="text"
+                   value="{{ user.phone }}"
+                   name="user_phone" class="form-control" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>密码：</label>
+            <input type="password"
+                   value=""
+                   name="passwd" class="form-control" id="password_note" required>
+            <span class="error"></span>
+            <a class="reset_password"
+               style="line-height: 24px;margin-left: 10px">重置密码</a>
+          </div>
+          <div class="form-group form-group-dts passwd2">
+            <label class="control-label normal"><span class="text-red">*</span>重复密码：</label>
+            <input type="password"
+                   value=""
+                   name="passwd2" class="form-control" required equalTo="#password_note">
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>邮箱：</label>
+            <input type="text"
+                   value="{{ user.email }}"
+                   name="email" class="form-control" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">性别：</label>
+            <input type="hidden" name="gender" id="enterprise_gender">
+            <label>
+              <input type="radio"
+                     {% if user.gender == 1 %}checked="checked"{% endif %}
+                     name="sex"
+                     value="1" class="radio_checked"/>先生</label>
+            <label>
+              <input type="radio"
+                     {% if user.gender == 2 %}checked="checked"{% endif %}
+                     name="sex"
+                     value="2"/>女士</label>
+          </div>
+          <h5 class="enterprise-info"><span>企业信息</span>(企业认证信息)</h5>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>企业名称：</label>
+            <input type="text"
+                   value="{{ obj.name }}"
+                   name="enterprise_name"
+                   class="form-control" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>企业简称：</label>
+            <input class="form-control"
+                   value="{{ obj.short_name }}"
+                   name="short_name" type="text" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+
+            <label class="control-label normal"><span class="text-red">*</span>经营方式：</label>
+            <select class="form-control"
+                    id="operate_mode"
+                    name="operate_mode" required>
+              <option value="">请选择……</option>
+              {% for choice in choices.operate_mode %}
+                <option value="{{ choice.value }}"
+                        {% if choice.value == obj.operate_mode %}selected{% endif %}>{{ choice.name }}</option>
+              {% endfor %}
+            </select>
+            <span class="error"></span>
+
+          </div>
+          <div id="distpicker" class="form-group dispicker form-group-dts" data-toggle="distpicker">
+            <label class="control-label normal"><span class="text-red">*</span>所在地区：</label>
+            <input type="hidden" id="region" name="region" value="{{ obj.region }}">
+            <select class="form-control region province" required>
+              <option>请选择……</option>
+            </select>
+            <select class="form-control region city hide" required>
+              <option>请选择……</option>
+            </select>
+            <select class="form-control region district hide" required>
+              <option>请选择……</option>
+            </select>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>详细地址：</label>
+            <input class="form-control  long" type="text"
+                   value="{{ obj.address }}"
+                   name="address" placeholder="默认为收货地址，请在收货地址中修改" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>企业电话：</label>
+            <input class="form-control long"
+                   value="{{ obj.phone }}"
+                   name="enter_phone" type="text" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>法人代表：</label>
+            <input class="form-control long"
+                   value="{{ obj.legal_repr }}"
+                   name="legal_repr" type="text" required>
+            <span class="error"></span>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>经营范围：</label>
+            <input type="hidden" id="biz_scope" name="biz_scope">
+            <ul class="check_box">
+              {% for item in operate_scope %}
+                <li><label>
+                  <input value="{{ item.name }}"
+                         {% if item.name in obj.biz_scope %}checked{% endif %}
+                         type="checkbox">{{ item.name }}</label></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal"><span class="text-red">*</span>资质证照：</label>
+            <div class="license">
+              <p class="uploading">
+                <a class="upload_file" id="img_qyxk">
+                  {% if qualification %}
+                    <img src="{% if qualification.0.photo.name %}{{ qualification.0.photo.name|media_url }}{% endif %}">
+                  {% endif %}
+                  <span class="img_file" id="img_qyxk"></span>
+                  <span>药品经营<br/>企业许可证</span>
+
+                </a>
+                <input type="file" id="qyxk"
+                       class="file" name="qyxk"
+                       onchange="DTS.admin_enterprise.preview_img(this.files,'img_qyxk')"
+                       style="display:none">
+                <a class="upload_file" id="img_yyzz">
+                  {% if qualification %}
+                    <img src="{% if qualification.1.photo.name %}{{ qualification.1.photo.name|media_url }}{% endif %}">
+                  {% endif %}
+                  <span class="img_file" id="img_yyzz"></span>
+                  <span>企业法人<br/>营业执照</span>
+                </a>
+                <input type="file" id="yyzz"
+                       class="file"
+                       onchange="DTS.admin_enterprise.preview_img(this.files,'img_yyzz')"
+                       name="yyzz" style="display:none">
+                <a class="upload_file" id="img_wts">
+                  {% if qualification %}
+                    <img src="{% if qualification.2.photo.name %}{{ qualification.2.photo.name|media_url }}{% endif %}">
+                  {% endif %}
+                  <span class="img_file" id="img_wts"></span>
+                  <span>法人委托书</span>
+                </a>
+                <input type="file" id="wts"
+                       class="file"
+                       onchange="DTS.admin_enterprise.preview_img(this.files,'img_wts')"
+                       name="wts" style="display:none">
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button"
+                class="btn btn-save btn-dts2 btn-s1"
+                api="{% url 'dtsadmin:enterprise_list' %}"
+                id="submit_add">保存
+        </button>
+        <button type="button"
+                class="btn btn-primary btn-dts2 btn-s1"
+                api="{% url 'dtsadmin:enterprise_list' %}"
+                id="submit_update">保存
+        </button>
+        <button type="button"
+                class="btn btn-cancel btn-dts2 btn-s3"
+                data-dismiss="modal">取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

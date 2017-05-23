@@ -1,0 +1,61 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}联系我们 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>联系我们</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_enterprise_info.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">联系我们</div>
+        <div class="help-body">
+          <ul>
+            <li class="mrg-b-20">产品合作：010-82218600-6023</li>
+            <li class="mrg-b-20">市场推广：010-82218600-6009</li>
+            <li class="mrg-b-20">客服中心： 400-650-6600 62220790</li>
+            <li>服务时间：周一至周日 8：00——20：00</li>
+            <li>总机：82218600</li>
+            <li>传真：82218600-6000（下班后是自动接收留言或传真）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

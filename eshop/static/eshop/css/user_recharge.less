@@ -1,0 +1,322 @@
+@mainColor: #33cc6d;
+@orangeColor: #ff7e00;
+.header {
+  > span {
+    margin-left: 15px;
+    line-height: 48px;
+    font-size: 22px;
+    font-family: "微软雅黑";
+  }
+  .step {
+    float: right;
+    padding-top: 10px;
+  }
+  .step span {
+    position: relative;
+    float: left;
+    display: block;
+    margin-left: 12px;
+    width: 118px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background: #ededed;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      content: '';
+      border-left: 18px solid #fff;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+    }
+    &:after {
+      position: absolute;
+      top: 0;
+      right: -18px;
+      display: block;
+      content: '';
+      border-left: 18px solid #ededed;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      z-index: 5;
+    }
+  }
+  .step .step1 {
+    &:before {
+      display: none;
+    }
+  }
+  .step .step3 {
+    &:after {
+      display: none;
+    }
+  }
+  .step .active {
+    color: #fff;
+    background: #7fe7a6;
+    &:after {
+      border-left: 18px solid #7fe7a6;
+    }
+  }
+}
+
+//  面包屑
+.crumb {
+  padding-left: 10px;
+  overflow: hidden;
+  li {
+    float: left;
+    padding-left: 6px;
+    height: 50px;
+    line-height: 50px;
+    i.icon-shangxiajiantou-copy1 {
+      position: relative;
+      top: 3px;
+    }
+  }
+}
+
+.recharge {
+  margin-bottom: 120px;
+  height: 500px;
+  border: 1px solid #e5e5e5;
+}
+
+.recharge-left {
+  float: left;
+  width: 210px;
+  height: 100%;
+  background: #f6f6f6;
+  border-right: 1px solid #e5e5e5;
+  div {
+    margin: 0 20px;
+    padding: 20px 0 10px;
+    line-height: 36px;
+    border-bottom: 1px solid #e5e5e5;
+    i {
+      float: left;
+      margin: 0 15px 0 20px;
+      line-height: 40px;
+      font-size: 40px;
+      color: #ffb400;
+    }
+  }
+  ul {
+    padding: 35px 0 0 25px;
+    height: 365px;
+    li {
+      position: relative;
+      line-height: 30px;
+      span {
+        position: absolute;
+        left: -15px;
+        color: #cbcbcb;
+        transform: scale(0.6);
+      }
+    }
+  }
+  p {
+    margin-bottom: 5px;
+    padding-left: 40px;
+    color: #acacac;
+  }
+}
+
+.recharge-right {
+  float: left;
+  padding-left: 45px;
+  width: 988px;
+  h5 {
+    margin: 32px 0 26px;
+    font-weight: bolder;
+  }
+  > p {
+    margin-bottom: 15px;
+    input {
+      height: 30px;
+      border: 1px solid #e5e5e5;
+    }
+  }
+  .recharge-money input {
+    padding-left: 12px;
+    width: 105px;
+    font-size: 14px;
+    font-weight: bolder;
+  }
+  span.balance {
+    font-size: 14px;
+    font-weight: bolder;
+    font-family: "微软雅黑";
+    color: #ff6600;
+  }
+  .recharge-method span {
+    display: inline-block;
+    margin-right: 20px;
+    width: 118px;
+    height: 30px;
+    line-height: 26px;
+    text-align: center;
+    border: 2px solid #dfdfdf;
+    cursor: pointer;
+    &.active {
+      border: 2px solid #33CC6D;
+      background: url(../images/active.png) bottom right no-repeat;
+    }
+  }
+  a.pay {
+    display: block;
+    margin-left: 60px;
+    background: @orangeColor;
+    border-color: @orangeColor;
+  }
+}
+
+.recharge-code {
+  .code {
+    padding-left: 12px;
+  }
+  .code input, .password input {
+    padding-left: 12px;
+    width: 225px;
+    height: 30px;
+    border: 1px solid #e5e5e5;
+  }
+}
+
+.WeChat, .alipay {
+  display: none;
+  padding-left: 60px;
+  img {
+    border: 1px solid #d5d5d5;
+  }
+  span {
+    display: block;
+    margin-top: 6px;
+    padding: 5px 30px;
+    width: 150px;
+    height: 42px;
+    color: #fff;
+    background: #8cb6f1;
+    i {
+      float: left;
+      margin-right: 7px;
+      line-height: 30px;
+      font-size: 24px;
+    }
+  }
+}
+
+.alipay span {
+  padding-right: 25px;
+}
+
+.online-payment {
+  display: none;
+  padding-left: 60px;
+  p {
+    margin: 15px 0 10px;
+    padding-left: 5px;
+    color: #acacac;
+  }
+  a.pay {
+    margin-left: 0;
+  }
+}
+
+.online-payment ul {
+  max-width: 485px;
+  border-top: 1px solid #e5e5e5;
+  border-left: 1px solid #e5e5e5;
+  zoom: 1;
+  &:after {
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+    visibility: hidden;
+  }
+  li {
+    float: left;
+    width: 121px;
+    height: 31px;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    a {
+      position: relative;
+      display: block;
+      padding-left: 33px;
+      width: 120px;
+      height: 30px;
+      line-height: 30px;
+      span {
+        position: absolute;
+        top: 7px;
+        left: 8px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        border: 1px solid #b6bbc1;
+        border-radius: 50%;
+      }
+    }
+    a:hover, a.active {
+      position: relative;
+      top: -1px;
+      left: -1px;
+      width: 122px;
+      height: 32px;
+      border: 1px solid #a5c85b;
+      background: rgba(165, 200, 91, 0.2);
+    }
+    &.active a {
+      position: relative;
+      top: -1px;
+      left: -1px;
+      width: 122px;
+      height: 32px;
+      border: 1px solid #a5c85b;
+      background: rgba(165, 200, 91, 0.2) url(../images/act.png) bottom right no-repeat;
+      z-index: 5;
+      span:after {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        display: block;
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: #a5c85b;
+        border-radius: 50%;
+      }
+    }
+    i {
+      position: relative;
+      top: 5px;
+      display: inline-block;
+      margin-right: 4px;
+      width: 18px;
+      height: 18px;
+      background: url(../images/bank_ico.png) no-repeat;
+    }
+    .ico_abc {
+      background-position: -54px 0;
+    }
+    .ico_cmb {
+      background-position: -18px 0;
+    }
+    .ico_ccb {
+      background-position: -36px 0;
+    }
+    .ico_boc {
+      background-position: -72px 0;
+    }
+    .ico_boco {
+      background-position: -36px -18px;
+    }
+  }
+}
+
+
+

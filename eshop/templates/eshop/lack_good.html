@@ -1,0 +1,184 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}缺货登记 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <style>
+    .header-member .menu a.active {
+      background: transparent;
+    }
+
+    .main {
+      margin-bottom: 114px;
+    }
+
+    .section {
+      float: left;
+      width: 1070px;
+      height: auto;
+    }
+
+    .section table {
+      width: 1070px;
+      margin-top: 35px;
+      border: 1px solid #e5e5e5;
+    }
+
+    table th {
+      font-weight: normal;
+    }
+
+    table td a {
+      color: #0090ff;
+    }
+
+    table td a:nth-child(2) {
+      margin-left: 20px;
+    }
+
+    table td a:visited {
+      color: #999;
+    }
+
+    table td a:hover, a:focus {
+      color: #45aeff;
+      text-decoration: none;
+    }
+
+    table td a:active {
+      color: #45aeff;
+    }
+
+    table thead {
+      background: #f9f9f9;
+    }
+
+    thead th {
+      height: 40px;
+      border: 1px solid #e5e5e5;
+      text-align: center;
+    }
+
+    thead th:nth-child(1) {
+      width: 410px;
+    }
+
+    thead th:nth-child(2) {
+      width: 210px;
+    }
+
+    thead th:nth-child(3) {
+      width: 200px;
+    }
+
+    thead th:nth-child(3) .iconfont {
+      position: relative;
+      top: 2px;
+      margin-left: 5px;
+      color: #cccccc;
+      font-weight: normal;
+    }
+
+    thead th:nth-child(4) {
+      width: 200px;
+    }
+
+    tbody td {
+      height: 40px;
+      border: 1px solid #e5e5e5;
+    }
+
+    tbody td:nth-child(1) {
+      padding-left: 30px;
+    }
+
+    tbody td:nth-child(2),
+    tbody td:nth-child(3) {
+      text-align: center;
+    }
+
+    tbody td:nth-child(4) {
+      text-align: center;
+    }
+
+    #wrap .tooltip-inner {
+      background: #eaeaea;
+      color: #777;
+    }
+
+    #wrap .tooltip-arrow {
+      border-right-color: #eaeaea;
+    }
+  </style>
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap" class="clearfix">
+    {% csrf_token %}
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main clearfix">
+
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_member_center.html' %}
+
+      <div class="section">
+        <table>
+          <thead>
+          <tr>
+            <th>商品名称</th>
+            <th>登记时间</th>
+            <th>状态<i class="iconfont icon-tip" data-toggle="tooltip" data-placement="right" title="不用看了，这里没有内容"></i>
+            </th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for obj in lack_list %}
+            <tr>
+              <td>{{ obj.good.name }} {{ obj.good.prep_spec }} {{ obj.good.pack_spec }}</td>
+              <td>{{ obj.created | date:'Y-m-d' }}</td>
+              {% if obj.good.stock_amount <= 0 %}
+                <td>缺货</td>
+                <td><a href="javascript:;"
+                       class="delete"
+                       api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='LackRegister' obj_id=obj.id %}">删除</a>
+                </td>
+              {% else %}
+                <td><span class="text-red">有货</span></td>
+                <td><a href="javascript:;"
+                       class="delete"
+                       api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='LackRegister' obj_id=obj.id %}">删除</a>
+                  <a href="javascript:;" class="add_cart" data-pk="{{ obj.good_id }}"  api="{% url 'eshop:ajax:add_shopping_cart' %}">加入购物车</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" style="height: 297px;text-align: center">
+                <img src="{{ 'eshop/images/good_empty.png' | static_url }}"/>
+                <span>暂无缺货登记</span>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/lack_good.js'|static_url }}"></script>
+{% endblock %}

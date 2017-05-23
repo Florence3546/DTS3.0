@@ -1,0 +1,140 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+
+{% block title %}数据字典 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    #content {
+      width: 1149px;
+    }
+
+    #content .add_data {
+      float: left;
+    }
+
+    #content .tab_filter {
+      float: right;
+      line-height: 24px;
+    }
+
+    #content .tab_filter select {
+      width: 100px;
+    }
+
+    #content table > thead > tr > th:nth-child(1) {
+      width: 250px;
+    }
+
+    #content table > thead > tr > th:nth-child(2) {
+      width: 250px;
+    }
+
+    #content table > thead > tr > th:nth-child(3) {
+      width: 400px;
+    }
+
+    #content table > thead > tr > th:nth-child(4) {
+      width: 249px;
+    }
+
+    #content table > tbody > tr > td:nth-child(4) {
+      text-align: center;
+    }
+
+    .pagination {
+      float: right;
+    }
+
+    .form-control-div {
+      line-height: 24px;
+      margin-left: 5px;
+      float: left;
+    }
+
+    .form-horizontal .form-group-dts .control-label {
+      font-weight: normal;
+      padding-right: 0;
+    }
+
+    .form-horizontal .form-group-dts textarea.form-control {
+      width: 300px;
+      height: 80px;
+    }
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_basic_settings.html' %}
+{% endblock %}
+
+{#内容区#}
+{% block content %}
+  <div class="small" id="content">
+    <div class="clearfix">
+      <div class="form-group form-group-dts add_data">
+        <button class="control-btn btn btn-dts btn-s1 add_settings_type">添加字典项</button>
+      </div>
+      <div class="form-group form-group-dts tab_filter">
+        <label for="filter_name" class="control-label normal">字典类别</label>
+        <select id="filter_name" class="form-control">
+          <option value="">--请选择--</option>
+          {% for s_type, _ in result %}
+            <option value="{{ s_type.code }}">{{ s_type.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <table class="table-bordered" id="table_settings">
+      <thead>
+      <tr>
+        <th>名称</th>
+        <th>值</th>
+        <th>备注</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for s_type, item_list in result %}
+        <tr obj_id="{{ s_type.id }}" obj_code="{{ s_type.code }}" obj_name="{{ s_type.name }}"
+            obj_note="{{ s_type.note }}">
+          <td>{{ s_type.name }}</td>
+          <td>{{ s_type.code }}</td>
+          <td>{{ s_type.note }}</td>
+          <td>
+            <a href="javascript:;" class="add_settings_item font_btn">添加子项</a>
+            <a href="javascript:;" class="update_settings_type font_btn">修改</a>
+            <a href="javascript:;" class="delete_settings_type font_btn"
+               api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='SettingsType' obj_id=s_type.id %}">删除</a>
+          </td>
+        </tr>
+        {% for item in item_list %}
+          <tr obj_id="{{ item.id }}" obj_name="{{ item.name }}" obj_value="{{ item.value }}" obj_note="{{ item.note }}"
+              obj_s_type_id="{{ s_type.id }}" obj_s_type_name="{{ s_type.name }}">
+            <td>&emsp;&emsp;-{{ item.name }}</td>
+            <td>{{ item.value }}</td>
+            <td>{{ item.note }}</td>
+            <td>
+              <a href="javascript:;" class="update_settings_item font_btn">修改</a>
+              <a href="javascript:;" class="delete_setting_item font_btn"
+                 api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='SettingsItem' obj_id=item.id %}">删除</a>
+            </td>
+          </tr>
+        {% endfor %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{#模态对话框#}
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_settings_type.html' %}
+  {% include 'dtsadmin/modals/modal_settings_item.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/data_dictionary.js'|static_url }}"></script>
+{% endblock %}

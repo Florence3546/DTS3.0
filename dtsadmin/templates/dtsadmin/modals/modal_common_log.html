@@ -1,0 +1,40 @@
+{% load extras %}
+<div class="modal fade" id="common_log_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">日志</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th width="130">操作人</th>
+            <th width="200">时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for oper in op_logs %}
+            <tr>
+              <td>{{ oper.operator.first_name|default:oper.operator.username }}</td>
+              <td>{{ oper.created|date:'Y-m-d H:i:s' }}</td>
+              <td>{{ oper.note }}</td>
+            </tr>
+          {% empty %}
+            <tr class="no_data">
+              <td colspan="3"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+	

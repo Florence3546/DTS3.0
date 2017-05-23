@@ -1,0 +1,19 @@
+{% load extras %}
+<ul class="sidebar-member">
+  <li class="category"><b>新手入门</b></li>
+  <li class="{% active_url 'simple_page/1' %}"><a href="{% url 'eshop:simple_page/1' %}">会员注册</a></li>
+  <li class="{% active_url 'simple_page/2' %}"><a href="{% url 'eshop:simple_page/2' %}">找回密码</a></li>
+  <li class="{% active_url 'simple_page/3' %}"><a href="{% url 'eshop:simple_page/3' %}">常见问题</a></li>
+  <li class="category"><b>采购指南</b></li>
+  <li class="{% active_url 'simple_page/4' %}"><a href="{% url 'eshop:simple_page/4' %}">购买流程</a></li>
+  <li class="{% active_url 'simple_page/5' %}"><a href="{% url 'eshop:simple_page/5' %}">隐私声明</a></li>
+  <li class="{% active_url 'simple_page/6' %}"><a href="{% url 'eshop:simple_page/6' %}">服务协议</a></li>
+  <li class="category">支付配送</li>
+  <li class="{% active_url 'simple_page/7' %}"><a href="{% url 'eshop:simple_page/7' %}">支付方式</a></li>
+  <li class="{% active_url 'simple_page/8' %}"><a href="{% url 'eshop:simple_page/8' %}">配送说明</a></li>
+  <li class="{% active_url 'simple_page/9' %}"><a href="{% url 'eshop:simple_page/9' %}">签收验货</a></li>
+  <li class="category">售后服务</li>
+  <li class="{% active_url 'simple_page/10' %}"><a href="{% url 'eshop:simple_page/10' %}">投诉建议</a></li>
+  <li class="{% active_url 'simple_page/11' %}"><a href="{% url 'eshop:simple_page/11' %}">退款退货政策</a></li>
+  <li class="{% active_url 'simple_page/12' %}"><a href="{% url 'eshop:simple_page/12' %}">退款退货流程</a></li>
+</ul>

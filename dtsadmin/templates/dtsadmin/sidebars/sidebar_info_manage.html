@@ -1,0 +1,17 @@
+{% load extras %}
+<div class="bg-blue sidebar-left">
+  <div class="small list-group">
+    <div class="list-group-item"><i class="iconfont icon-jibenxinxi1"></i>信息管理</div>
+    <a href="{% url 'dtsadmin:enterprise_list' %}" class="list-group-item {% active_url 'enterprise_list' %}">企业列表</a>
+    <a href="{% url 'dtsadmin:user_manage' %}" class="list-group-item {% active_url 'user_manage' %}">用户管理</a>
+    <a href="{% url 'dtsadmin:role_manage' %}" class="list-group-item {% active_url 'role_manage' %}">角色管理</a>
+    <a href="{% url 'dtsadmin:permission_manage' %}"
+       class="list-group-item {% active_url 'permission_manage' %}">权限管理</a>
+    <a href="{% url 'dtsadmin:log_manage' %}" class="list-group-item {% active_url 'log_manage' %}">日志管理</a>
+    {% checkPerm dtsadmin.publish_manage %}
+      <a href="{% url 'dtsadmin:publish_manage' %}" class="list-group-item {% active_url 'publish_manage' %}">信息发布</a>
+    {% endcheckPerm %}
+    <a href="{% url 'dtsadmin:data_backup' %}" class="list-group-item {% active_url 'data_backup' %}">数据备份</a>
+    <a href="{% url 'dtsadmin:consult_feedback' %}" class="list-group-item {% active_url 'consult_feedback' %}">咨询反馈</a>
+  </div>
+</div>

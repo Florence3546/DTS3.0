@@ -1,0 +1,150 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}数据备份 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #table_backup tr td {
+      text-align: center;
+    }
+
+    #table_backup tr td:nth-of-type(5) {
+      text-align: left;
+    }
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_info_manage.html' %}
+{% endblock %}
+
+<!-- 内容面板 -->
+{% block content %}
+  <div class="small">
+    <div class="spacing">
+      <button type="button" class="control-btn btn btn-dts btn-s1">新增备份</button>
+      <button type="button" class="control-btn btn btn-dts btn-s1">自动备份</button>
+    </div>
+    <table id="table_backup" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>备份时间</th>
+        <th>备份文件目录</th>
+        <th>自动备份</th>
+        <th>备注</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>2016-01-08 13:00</td>
+        <td>c/backup/01</td>
+        <td>否</td>
+        <td>备份名称：201658544474，备份到c/backuo/01</td>
+        <td><a>还原</a><a>删除</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <!-- <script type="text/javascript" src="{{ 'dtsadmin/js/basic_settings.js'|static_url }}"></script> -->
+{% endblock %}

@@ -1,0 +1,201 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}首页 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/eshop_home.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <input type="hidden" id="good_placeholder_img" value="{{ 'common/img/good_placeholder.png' | static_url }}">
+  <div id="wrap">
+    <!--site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+    <div id="content">
+      <div class="main-nav">
+        <div class="nav">
+          <!-- 主导航 -->
+          {% for obj in home_section.main_nav.sectionhref_list %}
+            <a href="{{ obj.href }}" target="_blank">{{ obj.text }}</a>
+          {% endfor %}
+          <ul class="main-menu">
+            <!-- 全部商品分类 -->
+            <li>
+              <a href="{{ home_section.category_nav.href }}" target="_blank" style="color: #fff;">
+                {{ home_section.category_nav.icon|safe }}{{ home_section.category_nav.title }}
+              </a>
+            </li>
+            {% for obj in home_section.category_nav.child_list %}
+              <li>
+                <p>{{ obj.title }}</p>
+                {% for sectionhref in obj.sectionhref_list %}
+                  <a href="{{ sectionhref.href }}" target="_blank">{{ sectionhref.text }}</a>
+                {% endfor %}
+              </li>
+            {% endfor %}
+          </ul>
+          <div class="notice-board">
+            <div class="service-info">
+              <img class="pull-left" src="{{ 'eshop/images/service.png'|static_url }}"/>
+              <p>客服热线</p>
+              <p>{{ request.extras.input_service_number }}</p>
+              <p>药监投诉</p>
+              <p>{{ request.extras.admin_complain }}</p>
+            </div>
+            <div class="mailbox">
+              <i class="iconfont icon-email"></i>
+              <span>|</span>
+              <a>{{ request.extras.admin_email }}</a>
+            </div>
+            <p id="info_notic">
+              <span><a id="notic_span" class="info_notic_span active" info_type="N">公告</a></span>
+              <span><a id="info_span" class="info_notic_span" info_type="I">资讯</a></span>
+              <a href="{% url 'eshop:notice_list'  info_type='N' %}" target="_blank" id="info_notic_more">更多</a>
+            </p>
+            <ol id="notic_list" class="">
+              {% for notic in info_notics %}
+                <li>
+                  <a href="{% url 'eshop:eshop_notice'  info_id=notic.id %}" target="_blank">
+                    <span>{{ notic.name }}</span>
+                    <span>{{ notic.start_date|date:'m-d' }}</span>
+                  </a>
+                </li>
+              {% empty %}
+                <li class="notice-empty">
+                  <img src="{{ 'eshop/images/notice_empty.png' | static_url }}" />
+                </li>
+              {% endfor %}
+            </ol>
+            <ol id="info_list" class="hide">
+              {% for info in info_mations %}
+                <li>
+                  <a href="{% url 'eshop:eshop_notice'  info_id=info.id %}" target="_blank">
+                    <span>{{ info.name }}</span>
+                    <span>{{ info.start_date|date:'m-d' }}</span>
+                  </a>
+                </li>
+              {% empty %}
+                <li class="notice-empty">
+                  <img src="{{ 'eshop/images/notice_empty.png' | static_url}}" />
+                </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div id="carousel-example-generic" class="carousel slide banner" data-ride="carousel">
+        <ol class="carousel-indicators">
+          {% for sectionimage in home_section.main_carousel.sectionimage_list %}
+            <li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter0 }}"
+                class="{% if forloop.first %}active{% endif %}"></li>
+          {% endfor %}
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          {% for sectionimage in home_section.main_carousel.sectionimage_list %}
+            <div class="item {% if forloop.first %}active{% endif %}">
+              <div style="background: url('{{ sectionimage.image.name|urlencode|media_url }}') center center no-repeat">
+                <a href="{{ sectionimage.href }}" target="_blank"></a></div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="main">
+        <div class="sales-promotion">
+          <ul class="hot">
+            {% for section in home_section.good_tabs.child_list %}
+              <li class="{% if forloop.first %}active{% endif %}">
+              	<a data-toggle="tab" href="#{{ section.anchor }}">{{ section.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+          <div class="tab-content">
+            {% for section in home_section.good_tabs.child_list %}
+              <div class="selling-goods goods tab-pane {% if forloop.first %}active{% endif %}"
+                   id="{{ section.anchor }}">
+                {% for sectiongood in section.sectiongood_list %}
+                  <a href="{% url 'eshop:good_detail' good_id=sectiongood.good.id %}" target="_blank"
+                     class="good_thumb">
+                    <span><img src="{% if sectiongood.good.main_photo.name %}{{ sectiongood.good.main_photo.name|urlencode|media_url }}{% else %}{{ 'common/img/good_placeholder.png'|static_url }}{% endif %}"/></span>
+                    {% if user.is_anonymous %}
+                      <p class="not-log-in">登录后显示价格</p>
+                    {% else %}
+                      <p class="log-in"><span>￥{{ sectiongood.good.member_price | multiply:0.01 }}</span>
+                        <del>￥{{ sectiongood.good.retail_price | multiply:0.01 }}</del>
+                      </p>
+                    {% endif %}
+                    <p>{{ sectiongood.good.trade_name }}</p>
+                    <p>{{ sectiongood.good.display_spec }}</p>
+                  </a>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- 商品分类列表 -->
+        {% for section in home_section.good_list.child_list %}
+          <div id="{{ section.anchor }}" class="floor">
+            <h3 class="good_list_title {% cycle 'red' 'green' 'blue' 'purple' 'yellow' %}">{{ section.title }}<a
+                href="{{ section.href }}" target="_blank">更多</a></h3>
+            <div class="nav-third">
+              {% for sectionhref in section.sectionhref_list %}
+                <a href="{{ sectionhref.href }}" target="_blank">{{ sectionhref.text }}</a>
+              {% endfor %}
+            </div>
+            <div class="goods">
+              {% for sectionimage in section.sectionimage_list %}
+                <a href="{{ sectionimage.href }}" target="_blank">
+                  <img src="{{ sectionimage.image.name|urlencode|media_url }}"/>
+                </a>
+              {% endfor %}
+              {% for sectiongood in section.sectiongood_list %}
+                <a href="{% url 'eshop:good_detail' good_id=sectiongood.good.id %}" target="_blank" class="good_thumb">
+                  <span><img src="{% if sectiongood.good.main_photo.name %}{{ sectiongood.good.main_photo.name|urlencode|media_url }}{% else %}{{ 'eshop/images/good_placeholder.png'|static_url }}{% endif %}"/></span>
+                  {% if user.is_anonymous %}
+                    <p class="not-log-in">登录后显示价格</p>
+                  {% else %}
+                    <p class="log-in"><span>￥{{ sectiongood.good.member_price | multiply:0.01 }}</span>
+                      <del>￥{{ sectiongood.good.retail_price | multiply:0.01 }}</del>
+                    </p>
+                  {% endif %}
+                  <p>{{ sectiongood.good.trade_name }}</p>
+                  <p>{{ sectiongood.good.display_spec }}</p>
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+    <div class="left-tab">
+      <a>医药种类</a>
+      {% for section in home_section.good_list.child_list %}
+        <a class="tab_floor" href="#{{ section.anchor }}">{{ section.title }}</a>
+      {% endfor %}
+      <a href="#site-wrap">TOP</a>
+    </div>
+    <div class="right-tab">
+      {% if request.extras.enable_cust_service %}
+      <a href="http://wpa.qq.com/msgrd?v=1&uin={{ request.extras.servive_qq }}&site=&menu=yes" target="_blank"><i class="iconfont icon-qq"></i></a>
+      {% endif %}
+      <a href="{% url 'eshop:shopping_cart_list' %}" target="_blank"><i class="iconfont icon-gouwuche"></i></a>
+      <a href="{% url 'eshop:consult_feedback' %}" target="_blank"><i class="iconfont icon-liuyan"></i></a>
+      <a href="#"><i class="iconfont icon-huidaodingbu"></i></a>
+    </div>
+  </div>
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+{#  <script type="text/javascript" src="{{ 'plugins/jquery/jquery-3.1.1.js'|static_url }}"></script>#}
+  <script type="text/javascript" src="{{ 'eshop/js/eshop_home.js'|static_url }}"></script>
+{% endblock %}
+

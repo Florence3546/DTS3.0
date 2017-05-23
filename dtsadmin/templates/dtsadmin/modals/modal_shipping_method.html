@@ -1,0 +1,65 @@
+<div class="modal fade" id="modal_delivery" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加配送方式</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="form_delivery" data-type="0">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="delivery_id" name="id" value="{{ obj.id }}">
+
+          <div class="form-group form-group-dts">
+            <label for="delivery_name" class="control-label normal"><span class="must-note">*</span>快递名称：</label>
+            <input type="text" name="name_cn" value="{{ obj.name_cn }}" class="form-control" required id="delivery_name"
+                   placeholder="请输入快递名称">
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="delivery_url" class="control-label normal"><span class="must-note">*</span>快递公司网址：</label>
+            <input type="text" class="form-control" name="website" value="{{ obj.website }}" required id="delivery_url"
+                   placeholder="请输入快递公司查询地址">
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="delivery_sort" class="control-label normal"><span class="must-note">*</span>排序序号：</label>
+            <input name="order_no"
+                   value="{{ obj.order_no }}"
+                   class="form-control" id="delivery_sort"
+                   placeholder="请输入整数，数字越小越靠前" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="shipping_type" class="control-label normal"><span class="must-note">*</span>配送类型：</label>
+            <select class="form-control short" id="shipping_type" name="shipping_type" required>
+              <option value="">请选择……</option>
+              {% for choice in obj.shipping_type_choices %}
+                <option value="{{ choice.0 }}"
+                        {% if obj.shipping_type == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button"
+                id="submit_delivery_add"
+                api="{% url 'dtsadmin:ajax:add_object_byform' form_class='ShippingMethodForm' %}"
+                class="btn btn-save btn-dts2 btn-s1">保存
+        </button>
+        <button type="button"
+                id="submit_delivery_update"
+                api="{% url 'dtsadmin:ajax:update_object_byform' form_class='ShippingMethodForm' %}"
+                class="btn btn-save btn-dts2 btn-s1">保存
+        </button>
+        <button type="button"
+                class="btn btn-dts2 btn-s3"
+                data-dismiss="modal">取消
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

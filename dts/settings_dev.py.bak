@@ -1,0 +1,60 @@
+# coding=UTF-8
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+DEBUG = True
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+
+# DATABASES = {
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.mysql',
+#     #     'NAME': 'dts',
+#     #     'USER': 'root',
+#     #     'PASSWORD': 'king5699',
+#     #     'HOST': '127.0.0.1',
+#     #     'PORT': '3306',
+#     # },
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dts',
+#         'USER': 'root',
+#         'PASSWORD': 'zxcvbnhy6',
+#         'HOST': '192.168.0.99',
+#         'PORT': '3306',
+#     },
+# }
+
+CACHES = {
+    # 'default': {
+    #     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+    #     'LOCATION': '127.0.0.1:11211',
+    # },
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '192.168.0.99:11211',
+    },
+}
+
+MSSQL_DATABASES = {
+    'dts': {
+        'host': '192.168.0.99',
+        'port': '14330',
+        'user': 'root',
+        'password': 'zxcvbnhy6',
+        'database': 'dts',
+        'charset': 'UTF-8',
+        'as_dict': True,
+    },
+    'dingding': {
+        'host': '202.110.153.242',
+        'port': '14330',
+        'user': 'dingding',
+        'password': 'dingding',
+        'database': 'qy',
+        'charset': 'UTF-8',
+        'as_dict': True,
+    },
+}

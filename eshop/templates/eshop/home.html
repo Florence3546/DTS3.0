@@ -1,0 +1,30 @@
+{% load extras %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DTS</title>
+  <link rel="icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}"
+        type="image/x-icon">
+  <script type="text/javascript" src="{{ 'plugins/jquery/jquery-3.1.1.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/home.js'|static_url }}"></script>
+</head>
+<body>
+<h1>DTS电子商城</h1>
+<ul>
+  {% for user in user_list %}
+    <li>{{ user.username }} - {{ user.email }}</li>
+  {% endfor %}
+</ul>
+<h3><a href="{% url 'eshop:eshop_home' %}">进入前台电子商城</a></h3>
+<h3><a href="{% url 'dtsadmin:dts_home' %}">进入后台管理系统</a></h3>
+<img src="{{ '1.jpg'|media_url }}">
+<form id="test_form" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" multiple name="photo" id="photo" onchange="DTS.home.preview_img(this.files, 'preview');">
+  <button id="btn_submit" api="{% url 'eshop:ajax:test_upload_file' %}">提交</button>
+</form>
+<div id="preview"></div>
+</body>
+</html>

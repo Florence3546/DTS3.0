@@ -1,0 +1,92 @@
+{% load extras %}
+<div class="modal fade" id="order_invoice_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">开票</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="order_invoice_form">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+
+          <input type="hidden" name="pk" value="{{ order.pk }}">
+          <input type="hidden" name="action" value="order_invoice">
+          <input type="hidden" name="method" value="submit_order_invoice">
+          <h6><b>商品信息</b></h6>
+          <table class="table table-bordered good-info">
+            <thead>
+            <tr>
+              <th>商品图片</th>
+              <th>商品名称</th>
+              <th>单价(元)</th>
+              <th>单价折扣</th>
+              <th>数量</th>
+              <th>小计(元)</th>
+              <th>实付金额(元)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order_item in order.orderitem_set.all %}
+              <tr>
+                <td><img src="{% if order_item.good.main_photo.name %}{{ order_item.good.main_photo.name|urlencode|media_url }}{% else %}{{ 'common/img/good_placeholder.png'|static_url }}{% endif %}"/></td>
+                <td>{{ order_item.good.get_display_name }}</td>
+                <td class="price">{{ order_item.good.retail_price | multiply:0.01 }}</td>
+                <td class="discount">{% if order_item.changepricerecord.change_price_state == 2 %}{{ order_item.changepricerecord.real_discount|multiply:0.01 }}{% else %}0.00{% endif %}</td>
+                <td class="quantity">{{ order_item.quantity }}</td>
+                <td>{{ order_item.good.retail_price | multiply:order_item.quantity | multiply:0.01 }}</td>
+                <td class="real_price"></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <h6><b>发票信息</b></h6>
+          <table class="table table-bordered personal-info">
+            <tr>
+              <td>公司名称</td>
+              <td>{{ invoice.company_name }}</td>
+              <td>纳税人识别号</td>
+              <td>{{ invoice.taxpayer_no }}</td>
+            </tr>
+            <tr>
+              <td>地址、电话</td>
+              <td colspan="3">{{ invoice.address_phone }}</td>
+            </tr>
+            <tr>
+              <td>开户行及账号</td>
+              <td colspan="3">{{ invoice.bank_account }}</td>
+            </tr>
+          </table>
+          <h6><b>发票代码</b></h6>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">发票代码：</label>
+            <input type="text"
+                   name="invoice_no_12"
+                   value="{{ order.invoice_no | slice:':12' }}"
+                   class="form-control"/>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">发票号码：</label>
+            <input type="text"
+                   name="invoice_no_8"
+                   value="{{ order.invoice_no | slice:'12:' }}"
+                   class="form-control"/>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button"
+                data-method="submit_order_invoice"
+                api="{% url 'dtsadmin:order_list' %}"
+                class="btn btn-s1 btn-dts1 submit_order_invoice">确认开票
+        </button>
+        <button type="button" class="btn btn-s3 btn-dts1 invoice_cancel" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

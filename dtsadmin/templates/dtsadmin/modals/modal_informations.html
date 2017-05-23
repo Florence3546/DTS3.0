@@ -1,0 +1,81 @@
+<div class="modal fade" id="modal_information" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加信息</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" id="publish_add_form" class="form-horizontal" method="post" action="">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="publish_op_type" name="op_type" value="add">
+          <input type="hidden" id="info_id" name="info_id" value="{{ obj.id|default:-1 }}">
+          <div class="form-group form-group-dts">
+            <label for="enterprise_bank_account" class="normal control-label"><span
+                class="must-note">*</span>信息类型：</label>
+            <select class="form-control" id="info_type" name="info_type" required>
+              <option value="">请选择……</option>
+              <option value="I" {% ifequal obj.info_type 'I' %}selected{% endifequal %}>资讯</option>
+              <option value="N" {% ifequal obj.info_type 'N' %}selected{% endifequal %}>公告</option>
+            </select>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="enterprise_reg_capital" class="normal control-label"><span
+                class="must-note">*</span>信息名称：</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ obj.name }}" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="enterprise_reg_capital" class="normal control-label"><span
+                class="must-note">*</span>显示排序：</label>
+            <input type="text" class="form-control" id="order_no" name="order_no" value="{{ obj.order_no }}"
+                   placeholder="请输入1~99的正整数" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="start_date" class="normal control-label"><span class="must-note">*</span>开始时间：</label>
+            <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="start_date" name="start_date"
+                   value="{{ obj.start_date|date:"Y-m-d" }}" readonly required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="end_date" class="normal control-label"><span class="must-note">*</span>结束时间：</label>
+            <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="end_date" name="end_date"
+                   value="{{ obj.end_date|date:"Y-m-d" }}" readonly required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="is_top" class="normal control-label"><span class="must-note">*</span>是否置顶：</label>
+            <input type="radio" value="1" name="is_top" {% ifequal obj.is_top True %}checked="true"{% endifequal %}
+                   style="margin-left:5px;" required>是
+            <input type="radio" value="0" name="is_top"
+                   {% ifequal obj.is_top False %}checked="true"{% endifequal %}id="is_top_false" required>否
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="audience" class="normal control-label"><span class="must-note">*</span>可见对象：</label>
+            <select id="audience" class="form-control" name="audience" required>
+              <option value="">请选择</option>
+              <option value="A" {% ifequal obj.audience 'A' %}selected{% endifequal %}>全部</option>
+              <option value="P" {% ifequal obj.audience 'P' %}selected{% endifequal %}>采购方</option>
+              <option value="E" {% ifequal obj.audience 'E' %}selected{% endifequal %}>企业会员</option>
+              <option value="M" {% ifequal obj.audience 'M' %}selected{% endifequal %}>个人会员</option>
+              <option value="O" {% ifequal obj.audience 'O' %}selected{% endifequal %}>运营商</option>
+            </select>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="enterprise_reg_capital" class="normal control-label"><span
+                class="must-note">*</span>信息内容：</label>
+            <div class="pull-left">
+              <textarea id="info_content" name="content">{{ obj.content }}</textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button" class="btn btn-dts2 btn-s1" id="modal_publish_add_btn">保存</button>
+        <button type="button" class="btn btn-dts2 btn-s3" data-dismiss="modal" id="modal_publish_cancel">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

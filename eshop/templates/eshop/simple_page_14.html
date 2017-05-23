@@ -1,0 +1,66 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}资质证书 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--主导航栏部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>采购指南</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>隐私声明</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_enterprise_info.html' %}
+
+      <div class="help-content">
+        <div class="help-title">隐私声明</div>
+        <div class="help-body">
+          <p class="text-center mrg-b-30 mrg-t-30">互联网药品交易服务证书</p>
+          <img class="border" src="{{ 'eshop/images/license1.jpg'|static_url }}"/>
+          <p class="text-center mrg-b-30 mrg-t-30">互联网药品信息服务资格证书</p>
+          <img class="border" src="{{ 'eshop/images/license2.jpg'|static_url }}"/>
+          <p class="text-center mrg-b-30 mrg-t-30">营业执照</p>
+          <img class="border" src="{{ 'eshop/images/license3.jpg'|static_url }}"/>
+          <p class="text-center mrg-b-30 mrg-t-30">食品经营许可证</p>
+          <img class="border" src="{{ 'eshop/images/license4.jpg'|static_url }}"/>
+          <p class="text-center mrg-b-30 mrg-t-30">医疗器械经营企业许可证</p>
+          <img class="border" src="{{ 'eshop/images/license5.jpg'|static_url }}"/>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

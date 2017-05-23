@@ -1,0 +1,142 @@
+<form class="form-horizontal" id="form_consult_settings" method="post" action="">
+
+  {% csrf_token %}
+  <div class="form-group form-group-dts">
+    <label class="control-label normal">启用客服</label>
+    <input type="hidden" name="enable_cust_service" id="enable_cust_service"
+           value="{{ settings_item_dict.CONSULT_SETTING.enable_cust_service|default:"N" }}">
+    <div class="switch-default" id="consult_setting_pane">
+      {% ifequal settings_item_dict.CONSULT_SETTING.enable_cust_service None %}
+        <div class="switch-on" val="Y">启用</div>
+        <div class="switch-off hide" val="N">禁用</div>
+      {% else %}
+        <div
+            class="switch-on {% ifnotequal  settings_item_dict.CONSULT_SETTING.enable_cust_service 'Y' %}hide{% endifnotequal %}"
+            val="Y">开启
+        </div>
+        <div
+            class="switch-off {% ifnotequal  settings_item_dict.CONSULT_SETTING.enable_cust_service 'N' %}hide{% endifnotequal %}"
+            val="N">关闭
+        </div>
+      {% endifequal %}
+    </div>
+    <!--<span>只有开启在线客服功能后，商城才会显示</span>-->
+  </div>
+
+  <div class="form-group form-group-dts">
+    <label for="work_date" class="control-label normal">工作日</label>
+    <input type="hidden" id="select_work_date_start"
+           value="{{ settings_item_dict.CONSULT_SETTING.work_date_start|default:'周一' }}">
+    <select class="form-control data_time" id="work_date" name="work_date_start">
+      {% if settings_item_dict.CONSULT_SETTING.work_date_list %}
+        {% for item in settings_item_dict.CONSULT_SETTING.work_date_list %}
+          <option val="{{ item.key }}" value="{{ item.value }}">{{ item.value }}</option>
+        {% endfor %}
+      {% else %}
+        <option val="1" value="周一" selected>周一</option>
+        <option val="2" value="周二">周二</option>
+        <option val="3" value="周三">周三</option>
+        <option val="4" value="周四">周四</option>
+        <option val="5" value="周五">周五</option>
+        <option val="6" value="周六">周六</option>
+        <option val="7" value="周日">周日</option>
+      {% endif %}
+    </select>
+    <span class="control-text">-</span>
+    <input type="hidden" id="select_work_date_end"
+           value="{{ settings_item_dict.CONSULT_SETTING.work_date_end|default:'周日' }}">
+    <select class="form-control data_time" id="work_date_end" name="work_date_end">
+      {% if settings_item_dict.CONSULT_SETTING.work_date_list %}
+        {% for item in settings_item_dict.CONSULT_SETTING.work_date_list %}
+          <option val="{{ item.key }}" value="{{ item.value }}">{{ item.value }}</option>
+        {% endfor %}
+      {% else %}
+        <option val="1" value="周一">周一</option>
+        <option val="2" value="周二">周二</option>
+        <option val="3" value="周三">周三</option>
+        <option val="4" value="周四">周四</option>
+        <option val="5" value="周五">周五</option>
+        <option val="6" value="周六">周六</option>
+        <option val="7" value="周日" selected>周日</option>
+      {% endif %}
+    </select>
+  </div>
+
+  <div class="form-group form-group-dts">
+    <label for="time_online" class="control-label normal">在线时间</label>
+    <select class="form-control data_time" id="time_online" name="time_online_start">
+      <option val="1" value="7:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_start '7:00' %}selected{% endifequal %}>7:00
+      </option>
+      <option val="2" value="7:30"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_start '7:30' %}selected{% endifequal %}>7:30
+      </option>
+      <option val="3" value="8:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_start '8:00' %}selected{% endifequal %}>8:00
+      </option>
+      <option val="4" value="8:30"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_start '8:30' %}selected{% endifequal %}>8:30
+      </option>
+      <option val="5" value="9:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_start '9:00' %}selected{% endifequal %}>9:00
+      </option>
+      <option val="6" value="9:30"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_start '9:30' %}selected{% endifequal %}>9:30
+      </option>
+      <option val="7 " value="10:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_start '10:00' %}selected{% endifequal %}>10:00
+      </option>
+    </select>
+    <span class="control-text">-</span>
+    <select class="form-control data_time" id="time_online_end" name="time_online_end">
+      <option val="1" value="18:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_end '18:00' %}selected{% endifequal %}>18:00
+      </option>
+      <option val="2" value="19:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_end '19:00' %}selected{% endifequal %}>19:00
+      </option>
+      <option val="3" value="20:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_end '20:00' %}selected{% endifequal %}>20:00
+      </option>
+      <option val="4" value="21:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_end '21:00' %}selected{% endifequal %}>21:00
+      </option>
+      <option val="5" value="22:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_end '22:00' %}selected{% endifequal %}>22:00
+      </option>
+      <option val="6" value="23:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_end '23:00' %}selected{% endifequal %}>23:00
+      </option>
+      <option val="7" value="00:00"
+              {% ifequal  settings_item_dict.CONSULT_SETTING.time_online_end '00:00' %}selected{% endifequal %}>00:00
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group form-group-dts">
+    <label for="input_service_number" class="control-label normal"><span class="must-note">*</span>客服电话</label>
+    <input class="form-control" type="text" id="input_service_number" name="input_service_number"
+           value="{{ settings_item_dict.CONSULT_SETTING.input_service_number }}">
+  </div>
+
+  <div class="form-group form-group-dts">
+    <input type="hidden" id="service_account_list" name="service_account_list"
+           value="{{ settings_item_dict.CONSULT_SETTING.service_account_list_str|default:"[]" }}">
+    <label for="service_account" class="control-label normal"><span class="must-note">*</span>客服账号</label>
+    <select class="form-control" id="service_account">
+      {% for item in settings_item_dict.CONSULT_SETTING.service_account_list %}
+        <option value="{{ item.QQ_number }}"
+                modal_service_sort="{{ item.modal_service_sort }}">{{ item.nike_name }}</option>
+      {% endfor %}
+    </select>
+    <button type="button" class="control-btn btn btn-dts btn-s0" id="add_service" title="添加后需点击保存按钮提交">添加</button>
+    <button type="button" class="control-btn btn btn-dts btn-s0" id="edit_service" title="编辑后需点击保存按钮提交">编辑</button>
+    <button type="button" class="control-btn btn btn-dts btn-s0" id="delete_service" title="删除后需点击保存按钮提交">删除</button>
+  </div>
+
+  <div class="form-group form-group-dts">
+    <label class="control-label"></label>
+    <button type="button" id="consult_settings_btn" class="control-btn btn btn-dts btn-s1">保存</button>
+  </div>
+  <input type="hidden" name="op_type" value="consult_settings">
+</form>

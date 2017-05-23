@@ -1,0 +1,23 @@
+<div class="feedback-pic">
+  <img src="../../static/eshop/images/feedback.png" alt="">
+</div>
+<form id="feedback_form" action="" method="post">
+  {% csrf_token %}
+  <input type="hidden" id="id_feedback_type" name="feedback_type" value="0">
+  <div class="feedback-box">
+    <p class="feedback-box-title" type="text" value="{{ data.content }}" name="username">
+      我们会每天关注您的咨询与反馈，不断优化产品，为您提供更好的服务！</p>
+    <textarea name="content" class="feedback-box-text"
+              placeholder="请输入您的留言和建议">{{ data.content }}</textarea>
+    <p class="feedback-type clearfix">
+      <span>请选择您的反馈类型:</span>
+      <span class="message active"><label for="con">咨询留言</label></span>
+      <span class="suggest"><label for="sug">投诉建议</label></span>
+    </p>
+    <button
+        type="button"
+        api="{% url 'eshop:consult_feedback' %}"
+        class="btn-s2 submit_feedback">提交
+    </button>
+  </div>
+</form>

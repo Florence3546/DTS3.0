@@ -1,0 +1,289 @@
+{% load extras %}
+<div class="modal fade" id="add_good_modal" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">修改商品信息</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="common_form" action="" method="post" enctype="multipart/form-data">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="fk_good_id" name="fk_good_id" value="{{ obj.id }}">
+          <input type="hidden" id="op_type" value="add">
+          <ul class="tab-defined" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#basic_info" role="tab" data-toggle="tab">基本信息</a>
+            </li>
+            <li role="presentation">
+              <a href="#good_detail" role="tab" data-toggle="tab">商品详情</a>
+            </li>
+            <li role="presentation">
+              <a href="#specification" role="tab" data-toggle="tab">说明书</a>
+            </li>
+          </ul>
+          <div class="tab-content small">
+            <div role="tabpanel" class="tab-pane active" id="basic_info">
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>商品编码：</label>
+                  <input type="text" class="form-control" id="good_external_id" name="external_id"
+                         value="{{ obj.external_id }}" required maxlength="80">
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>库存数量：</label>
+                  <input type="text" class="form-control" id="good_stock_amount" name="stock_amount"
+                         value="{{ obj.stock_amount }}" required>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>商品通用名称：</label>
+                  <input type="text" class="form-control" id="good_name" name="name" value="{{ obj.name }}" required
+                         maxlength="80">
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal">供应商：</label>
+                  <select class="form-control" id="good_supplier" name="supplier">
+                    <option value="">请选择……</option>
+                    {% for item in enter_select %}
+                      <option value="{{ item.id }}" {% if obj.supplier.id == item.id %}selected{% endif %}>
+                        {{ item.name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>商品名称：</label>
+                  <input type="text" class="form-control" name="trade_name" id="good_trade_name"
+                         value="{{ obj.trade_name }}" required maxlength="80">
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>是否中药保护：</label>
+                  <label>
+                    <input type="radio" name="is_zybh" value="1" {% if obj.drugattr.is_zybh == True %}checked{% endif %}
+                           required>是
+                    <input type="radio" name="is_zybh" value="0"
+                           {% if obj.drugattr.is_zybh == False %}checked{% endif %} required>否
+                  </label>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>商品分类：</label>
+                  <select class="form-control" name="category" id="good_category" required>
+                    <option value="">请选择……</option>
+                    {% for item in category_select %}
+                      <option value="{{ item.id }}"
+                              {% if obj.category.id == item.id %}selected{% endif %}>{{ item.name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>是否委托加工：</label>
+                  <label><input type="radio" name="is_oem" value="1"
+                                {% if obj.drugattr.is_oem == True %}checked{% endif %} required>是</label>
+                  <label><input type="radio" name="is_oem" value="0"
+                                {% if obj.drugattr.is_oem == False %}checked{% endif %} required>否</label>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>制剂规格：</label>
+                  <input type="text" class="form-control" name="prep_spec" id="good_prep_spec"
+                         value="{{ obj.prep_spec }}" required maxlength="30">
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>是否OTC：</label>
+                  <label><input type="radio" value="1" name="is_otc"
+                                {% if obj.drugattr.is_otc == True %}checked{% endif %} required>是</label>
+                  <label><input type="radio" value="0" name="is_otc"
+                                {% if obj.drugattr.is_otc == False %}checked{% endif %} required>否</label>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>批准文号：</label>
+                  <input type="text" class="form-control" name="license" id="drugattr_license"
+                         value="{{ obj.drugattr.license }}" required>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>是否新药：</label>
+                  <label><input type="radio" value="1" name="is_new"
+                                {% if obj.drugattr.is_new == True %}checked{% endif %} required>是</label>
+                  <label><input type="radio" value="0" name="is_new"
+                                {% if obj.drugattr.is_new == False %}checked{% endif %} required>否</label>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>厂家：</label>
+                  <input type="text" id="good_manufacturer" name="manufacturer" class="form-control"
+                         placeholder="请输入厂家信息" value="{{ obj.manufacturer }}" required>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal">OTC类型：</label>
+                  <select class="form-control" id="good_otc_type" name="otc_type">
+                    <option value="">请选择……</option>
+                    <option value="0" {% if obj.drugattr.otc_type == 0 %}selected{% endif %}>甲类</option>
+                    <option value="1" {% if obj.drugattr.otc_type == 1 %}selected{% endif %}>乙类</option>
+                    <option value="2" {% if obj.drugattr.otc_type == 2 %}selected{% endif %}>丙类</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>产地：</label>
+                  <input type="text" value="{{ obj.locality }}" class="form-control" name="locality" id="good_locality"
+                         required maxlength="20">
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal">处方类型：</label>
+                  <select class="form-control" name="recipe_type" id="drugattr_recipe_type">
+                    <option value="">请选择……</option>
+                    <option value="普通" {% ifequal obj.drugattr.recipe_type '普通' %}selected{% endifequal %}>普通</option>
+                    <option value="处方" {% ifequal obj.drugattr.recipe_type '处方' %}selected{% endifequal %}>处方</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>包装单位：</label>
+                  <input type="text" class="form-control" name="unit" id="good_unit" value="{{ obj.unit }}" required
+                         maxlength="10">
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>零售价：</label>
+                  <input type="text" value="{{ obj.retail_price | multiply:'0.01' }}" class="form-control short"
+                         name="retail_price" id="retail_price" required>元
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>包装规格：</label>
+                  <input type="text" value="{{ obj.pack_spec }}" class="form-control " name="pack_spec"
+                         id="good_pack_spec" required maxlength="10">
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal"><span class="text-red">*</span>会员价：</label>
+                  <input type="text" value="{{ obj.member_price | multiply:'0.01' }}" class="form-control short"
+                         name="member_price" id="member_price" required>元
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal">剂型：</label>
+                  <select class="form-control" id="good_dosage_form" name="dosage_form">
+                    <option value="">请选择……</option>
+                    {% for item in dosage_form_select %}
+                      <option value="{{ item.name }}"
+                              {% if obj.drugattr.dosage_form == item.name %}selected{% endif %}>{{ item.name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal">品牌：</label>
+                  <input type="text" class="form-control short" name="brand" id="good_brand" value="{{ obj.brand }}"
+                         maxlength="30">
+                </div>
+              </div>
+              <div class="form-group form-group-dts">
+                <div class="col-sm-6">
+                  <label class="control-label normal">商品图片：</label>
+                  <div class="picture good_photo_img" id="good_photo_pane">
+                    <a href="javascript:;" class="good-photo-main" id="good_photo_main">
+                      {% if obj.main_photo is not None and obj.main_photo != '' %}
+                        <img class="main-img" src="{{ obj.main_photo.name|media_url }}">
+                      {% else %}
+                        <span class="photo-main-text">+主图</span>
+                      {% endif %}
+                    </a>
+                    <input type="file" id="good_photo_main_file" class="file hide" name="main_photo"
+                           onchange="DTS.admin_good.preview_cur_img(this.files,'good_photo_main');">
+                    {% for item in good_photo %}
+                      <input type="hidden" id="del_photo_{{ item.id }}" value="{{ item.id }}" class="">
+                      <a class="pre-img"><i class="remove-img" val="{{ item.id }}">&times;</i><img
+                          src="{{ item.photo.name|media_url }}"></a>
+                      {% if forloop.last %}
+                        {% if forloop.counter == 3 %}
+                          <a href="javascript:;" class="good_photo hide" id="good_photo"><span>+</span></a>
+                        {% else %}
+                          <a href="javascript:;" class="good_photo" id="good_photo"><span>+</span></a>
+                        {% endif %}
+                        <input type="file" id="good_photo_file" class="file hide"
+                               onchange="DTS.admin_good.preview_img(this.files,'good_photo',3);">
+                      {% endif %}
+                    {% empty %}
+                      <a href="javascript:;" class="good_photo" id="good_photo"><span>+</span></a>
+                      <input type="file" id="good_photo_file" class="file hide"
+                             onchange="DTS.admin_good.preview_img(this.files,'good_photo',3);">
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label normal">商品资质：</label>
+                  <div class="picture good_qualification_img" id="good_qua_pane">
+                    {% for item in qualification %}
+                      <a class="pre-img"><i class="remove-img" val="{{ item.id }}">&times;</i><img
+                          src="{{ item.photo.name|media_url }}"></a>
+                      {% if forloop.last %}
+                        {% ifequal forloop.counter 4 %}
+                          <a href="javascript:;" class="good_qua hide" id="good_qua"><span>+</span></a>
+                        {% else %}
+                          <a href="javascript:;" class="good_qua" id="good_qua"><span>+</span></a>
+                        {% endifequal %}
+                        <input type="file" id="good_qua_file" class="file hide"
+                               onchange="DTS.admin_good.preview_img(this.files,'good_qua',4);">
+                      {% endif %}
+                    {% empty %}
+                      <a href="javascript:;" class="qua_img" id="good_qua"><span>+</span></a>
+                      <input type="file" id="good_qua_file" class="file hide"
+                             onchange="DTS.admin_good.preview_img(this.files,'good_qua',4);">
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <p class="text-red">注：基本信息内容显示在前台商品详情页中</p>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="good_detail">
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">商品详情：</label>
+                <div class="col-sm-9" style="padding-left:0px;">
+                  <textarea class="" name="desc_drug" id="ck_desc_drug">{{ obj.drugattr.desc_drug }}</textarea>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="specification">
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">说明书：</label>
+                <div class="col-sm-9" style="padding-left:0px;">
+                  <textarea class="" name="desc_good" id="ck_desc_good">{{ obj.drugattr.desc_good }}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <div class="form-group form-group-dts">
+          <button type="button" class="btn btn-dts2 btn-s3 pull-right" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-dts2 btn-s1 pull-right" id="submit_add"
+                  api="{% url 'dtsadmin:ajax:add_good' %}">保存
+          </button>
+          <button type="button" class="btn btn-dts2 btn-s1 pull-right" id="submit_update"
+                  api="{% url 'dtsadmin:ajax:update_good' %}" style="display: none;">保存
+          </button>
+        </div>
+      </div><!-- ./modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

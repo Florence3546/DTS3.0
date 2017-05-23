@@ -1,0 +1,114 @@
+{% load extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8"/>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}"
+        type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="{{ 'plugins/bootstrap/css/bootstrap.min.css'|static_url }}">
+  <link rel="stylesheet" type="text/css"
+        href="{{ 'plugins/datetimepicker/css/bootstrap-datetimepicker.css'|static_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'plugins/dataTables/css/jquery.dataTables.min.css'|static_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'plugins/FixedHeader/fixedHeader.dataTables.min.css'|static_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'common/css/bootstrap-dts.css'|static_url }}">
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_fjpulewgukjfw29.css">
+  <!-- 自定义CSS -->
+  {% block css %}{% endblock %}
+</head>
+
+<body class="flex flex-col">
+<!-- 导航条 -->
+<nav class="bg-white simple navbar navbar-default navbar-static-top flex-none">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      {% if request.session.admin_logo_obj.logo_path == '' %}
+        <a class="navbar-brand simple" href="{{ request.session.admin_logo_obj.logo_href }}" id="base_admin_href">
+          <img id="base_admin_logo" src="{{ 'dtsadmin/img/logo.png'|static_url }}">
+        </a>
+      {% else %}
+        <a class="navbar-brand simple" href="/dtsadmin/dts_home/" id="base_admin_href">
+          <img id="base_admin_logo" src="{{ request.session.admin_logo_obj.logo_path|media_url }}">
+        </a>
+      {% endif %}
+    </div>
+    <div class="collapse navbar-collapse">
+      <i class="iconfont icon-caidan menu-btn"></i>
+      <ul class="nav navbar-nav simple navbar-left">
+        <li class="{% active_url 'dts_home' %}"><a href="{% url 'dtsadmin:dts_home' %}">首页<span
+            class="sr-only">首页</span></a></li>
+        <li class="{% active_url 'basic_settings' %}"><a href="{% url 'dtsadmin:basic_info' %}">基本设置<span
+            class="sr-only">基本设置</span></a></li>
+        <li class="{% active_url 'info_manage' %}"><a href="{% url 'dtsadmin:enterprise_list' %}">信息管理<span
+            class="sr-only">信息管理</span></a></li>
+        <li class="{% active_url 'good_manage' %}"><a href="{% url 'dtsadmin:good_category' %}">商品管理<span
+            class="sr-only">商品管理</span></a></li>
+        <li class="{% active_url 'order_manage' %}"><a href="{% url 'dtsadmin:order_list' %}">订单管理<span class="sr-only">订单管理</span></a>
+        </li>
+        <li class="{% active_url 'template_list' %}"><a href="{% url 'dtsadmin:template_list' %}">商城装修<span
+            class="sr-only">商城装修</span></a></li>
+        <li class="{% active_url 'supplier_list' %}"><a href="{% url 'dtsadmin:supplier_list' %}">供货商管理<span
+            class="sr-only">供货商管理</span></a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right simple">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+             aria-expanded="false"><img src="{{ 'dtsadmin/img/enterprise.png'|static_url }}"/>{{ request.user.enterprise }}<span
+              class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/eshop/user_logout">商城预览</a></li>
+            <li><a id="personage_info" data-pk="{{ request.user.id }}">个人资料</a></li>
+            <li><a id="personage_password" data-pk="{{ request.user.id }}">修改密码</a></li>
+            <li><a id="log_out">退出</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="bg-white flex flex-row flex-ai-stretch flex-auto">
+
+  <!-- 侧边栏 -->
+  {% block sidebar %}{% endblock %}
+
+  <!-- 主区域 -->
+  <div class="admin-main">
+
+    <!-- 面包屑 -->
+    {% block breadcrumb %}{% endblock %}
+
+    <!-- 内容面板 -->
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
+<!-- 模态对话框 -->
+{% include 'dtsadmin/modals/modal_alert_confirm.html' %}
+{% include 'dtsadmin/modals/modal_personage_info.html' %}
+{% include 'dtsadmin/modals/modal_personage_password.html' %}
+{% block modal %}
+{% endblock %}
+
+<script type="text/javascript" src="{{ 'plugins/jquery/jquery-3.1.1.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/bootstrap/js/bootstrap.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/dataTables/js/jquery.dataTables.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/FixedHeader/dataTables.fixedHeader.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/jquery-validation/jquery.validate.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/jquery-validation/messages_zh.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/datetimepicker/js/bootstrap-datetimepicker.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js'|static_url }}"></script>
+<script type="text/javascript" src={{ 'ckeditor/ckeditor/ckeditor.js'|static_url }}></script>
+<script type="text/javascript" src={{ 'ckeditor/ckeditor-init.js'|static_url }}></script>
+<script type="text/javascript" src="{{ 'common/js/common.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'common/js/modal_drug.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'dtsadmin/js/base.js'|static_url }}"></script>
+
+<!-- 自定义JS -->
+{% block js %}{% endblock %}
+</body>
+
+</html>

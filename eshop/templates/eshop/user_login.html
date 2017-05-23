@@ -1,0 +1,162 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}用户登录 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <style>
+  .time_60{
+    float: right;
+    display: inline;
+    width: 110px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #0090FF;
+    background: #f3f3f3;
+    border:1px solid #bdbdbd;
+  }
+
+
+  </style>
+
+
+<link rel="stylesheet" type="text/css" href="{{ 'eshop/css/user_login.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+<div id="wrap">
+  <div id="header">
+    <div class="header">
+      <a href="{% url 'eshop:eshop_home' %}"><img src="{{ 'eshop/images/logo.png'|static_url }}"/></a>
+      <span>欢迎登录</span>
+      <div>
+        <p>服务热线：<span>027-88608011</span>服务时间：<span>09:00-18:00</span></p>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <div class="main">
+      <div class="login-form">
+        <div class="login-tab">
+          <a class="login-tab-l active">账户密码登录</a>
+          <a class="login-tab-r">动态密码登录</a>
+        </div>
+        <div class="login-box">
+          <div class="error">
+            <i class="iconfont icon-jinzhi"></i>
+            <span id="err_msg"></span>
+          </div>
+          <form id="user_login" method="post" action="">
+            {% csrf_token %}
+            <input type="hidden" name="method" value="user">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="iconfont icon-yonghu"></i></span>
+              <input type="text" class="form-control phone_number" name="name" placeholder="用户名">
+            </div>
+            <div class="input-group password">
+              <span class="input-group-addon"><i class="iconfont icon-mima"></i></span>
+              <input type="password" class="form-control" name="passwd" placeholder="请输入密码">
+            </div>
+
+{#            <div class="code">#}
+{#              <div class="input-group">#}
+{#                <span class="input-group-addon"><i class="iconfont icon-yanzhengma"></i></span>#}
+{#                <input type="text" class="form-control" name="captcha" placeholder="验证码">#}
+{##}
+{#              </div>#}
+{#              <span class="img-code">#}
+{#										<img src="../../static/eshop/images/code.png"/>#}
+{#										<a>换一张</a>#}
+{#							</span>#}
+{#              <a class="send-code">发送验证码</a>#}
+{#            </div>#}
+
+            <div class="code">
+            {{ form.captcha }}
+            </div>
+
+            <div class="safe">
+              <span><input type="checkbox" name="auto_logo">自动登录</span>
+              <a href="{% url 'eshop:forget_password' %}">忘记密码</a>
+            </div>
+            <div class="login-btn">
+              <a id="login_submit"
+                 class="login_submit"
+                 api="{% url 'eshop:user_login' %}"
+                 href="javascript:;">登&nbsp;录</a>
+            </div>
+          </form>
+
+          <form id="phone_login" method="post" action="" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="method" value="phone">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="iconfont icon-yonghu"></i></span>
+              <input type="text" id="phone" class="form-control phone_number" name="phone" placeholder="手机号">
+            </div>
+
+
+            <div class="code">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="iconfont icon-yanzhengma"></i></span>
+                <input type="text" class="form-control" name="captcha" placeholder="验证码">
+              </div>
+              <a class="send-code" id="send_sms">发送验证码</a>
+            </div>
+
+
+
+
+            <div class="safe">
+              <span><input type="checkbox" name="auto_logo">自动登录</span>
+              <a href="{% url 'eshop:forget_password' %}">忘记密码</a>
+            </div>
+            <div class="login-btn">
+              <a id="login_submit"
+                 class="login_submit"
+                 api="{% url 'eshop:user_login' %}"
+                 href="javascript:;">登&nbsp;录</a>
+            </div>
+          </form>
+        </div>
+        <div class="coagent">
+          <span>还不是会员？<a href="{% url 'eshop:user_register' %}">立即注册</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+    <div class="copy">
+      <ul>
+        <li>
+          <a href="#">关于我们</a>
+        </li>
+        <li>
+          <a href="#">联系我们</a>
+        </li>
+        <li>
+          <a href="#">人才招聘</a>
+        </li>
+        <li>
+          <a href="#">商家入驻</a>
+        </li>
+        <li>
+          <a href="#">友情链接</a>
+        </li>
+        <li>
+          <a href="#">销售联盟</a>
+        </li>
+      </ul>
+      <div>Copyright@2016-2017 葫芦娃hlw.com版权所有</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+<script type="text/javascript" src="{{ 'eshop/js/user_login.js'|static_url }}"></script>
+{% endblock %}
+

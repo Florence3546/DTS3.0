@@ -1,0 +1,294 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}购物车 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/shopping_cart_list.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/member_site_nav.html' %}
+
+    <div id="shopping-section">
+      <form class="form-inline">
+        <div class="logo-content">
+          <div class="logo-group">
+            <div class="logo-img">
+              <a href="{% url 'eshop:eshop_home' %}"><img src="{{ 'eshop/images/huluwa.png'| static_url }}"></a></div>
+            <div class="logo-title">购物车</div>
+          </div>
+          <div class="form-group search-group">
+            <div class="input-group search-bar">
+              <input type="search" class="form-control search-box">
+              <div class="input-group-addon btn-addon-defined search-note">搜索</div>
+            </div>
+          </div>
+        </div>
+        <div class="all-good">全部商品(5)</div>
+        <div class="shopping-list">
+          <ul>
+            <li class="list-header">
+              <div class="check-good">
+                <input type="checkbox" id="check-all-top" class="check-all"><label for="check-all-top">全选</label>
+              </div>
+              <div class="good-name">商品名称</div>
+              <div class="good-code">商品编码</div>
+              <div class="produce-fatory">生产厂家</div>
+              <div class="sigle-price">单价</div>
+              <div class="good-number">数量</div>
+              <div class="sub-total">小计</div>
+              <div class="operate">操作</div>
+            </li>
+            <li>
+              <div class="check-good">
+                <input type="checkbox" class="check-box">
+                <div class="img-box">
+                  <img src="{{ 'eshop/images/medicine.png'|static_url }}" alt="图片未加载出来" title="可定 瑞舒伐他汀钙片"></div>
+              </div>
+              <div class="good-name">
+                <p>可定 舒瑞伐他汀钙片 10mg*7片/盒</p>
+              </div>
+              <div class="good-code">
+                <p>Q254136557457</p>
+              </div>
+              <div class="produce-fatory">
+                <p>黑龙江省哈尔滨第六制药厂</p>
+              </div>
+              <div class="sigle-price promotion">
+                <p>
+                  <del>￥
+                    <span class="old-price">17.00</span></del>
+                </p>
+                <p>
+                  ￥
+                  <span class="price">10.00</span>
+                </p>
+              </div>
+              <div class="good-number">
+                <div class="form-group-defined">
+                  <div class="input-group input-group-defined">
+                    <div class="input-group-addon btn-addon-defined reduce-number">-</div>
+                    <input type="text" class="form-control input-add-subtract" value="5">
+                    <div class="input-group-addon btn-addon-defined add-number">+</div>
+                  </div>
+                </div>
+              </div>
+              <div class="sub-total">
+                <p>
+                  ￥
+                  <span class="count-money">304.00</span>
+                </p>
+              </div>
+              <div class="operate">
+                <p>
+                  <a>移到收藏夹</a>
+                </p>
+                <p>
+                  <a>删除</a>
+                </p>
+              </div>
+            </li>
+            <li>
+              <div class="check-good">
+                <input type="checkbox" class="check-box">
+                <div class="img-box">
+                  <img src="{{ 'eshop/images/medicine.png'|static_url }}" alt="图片未加载出来" title="可定 瑞舒伐他汀钙片"></div>
+              </div>
+              <div class="good-name">
+                <p>可定 舒瑞伐他汀钙片 10mg*7片/盒</p>
+              </div>
+              <div class="good-code">
+                <p>Q254136557457</p>
+              </div>
+              <div class="produce-fatory">
+                <p>黑龙江省哈尔滨第六制药厂</p>
+              </div>
+              <div class="sigle-price">
+                <p>￥17.00</p>
+              </div>
+              <div class="good-number">
+                <div class="form-group-defined">
+                  <div class="input-group input-group-defined">
+                    <div class="input-group-addon btn-addon-defined reduce-number">-</div>
+                    <input type="text" class="form-control input-add-subtract" value="5">
+                    <div class="input-group-addon btn-addon-defined add-number">+</div>
+                  </div>
+                </div>
+              </div>
+              <div class="sub-total">
+                <p>
+                  ￥
+                  <span class="count-money">304.00</span>
+                </p>
+              </div>
+              <div class="operate">
+                <p>
+                  <a>移到收藏夹</a>
+                </p>
+                <p>
+                  <a>删除</a>
+                </p>
+              </div>
+            </li>
+            <li>
+              <div class="check-good">
+                <input type="checkbox" class="check-box">
+                <div class="img-box">
+                  <img src="{{ 'eshop/images/medicine.png'|static_url }}" alt="图片未加载出来" title="可定 瑞舒伐他汀钙片"></div>
+              </div>
+              <div class="good-name">
+                <p>可定 舒瑞伐他汀钙片 10mg*7片/盒</p>
+              </div>
+              <div class="good-code">
+                <p>Q254136557457</p>
+              </div>
+              <div class="produce-fatory">
+                <p>黑龙江省哈尔滨第六制药厂</p>
+              </div>
+              <div class="sigle-price">
+                <p>￥17.00</p>
+              </div>
+              <div class="good-number">
+                <div class="form-group-defined">
+                  <div class="input-group input-group-defined">
+                    <div class="input-group-addon btn-addon-defined reduce-number">-</div>
+                    <input type="text" class="form-control input-add-subtract" value="5">
+                    <div class="input-group-addon btn-addon-defined add-number">+</div>
+                  </div>
+                </div>
+                <p class="max-number text-red hide">最多购买10件</p>
+              </div>
+              <div class="sub-total">
+                <p>
+                  ￥
+                  <span class="count-money">304.00</span>
+                </p>
+              </div>
+              <div class="operate">
+                <p>
+                  <a>移到收藏夹</a>
+                </p>
+                <p>
+                  <a>删除</a>
+                </p>
+              </div>
+            </li>
+            <li class="stockout">
+              <div class="check-good">
+                <input type="checkbox" class="check_box" disabled="disabled">
+                <div class="img-box">
+                  <img src="{{ 'eshop/images/medicine.png'|static_url }}" alt="图片未加载出来" title="可定 瑞舒伐他汀钙片"></div>
+                <div class="stockout-img">缺货商品</div>
+              </div>
+              <div class="good-name">
+                <p>可定 舒瑞伐他汀钙片 10mg*7片/盒</p>
+              </div>
+              <div class="good-code">
+                <p>Q254136557457</p>
+              </div>
+              <div class="produce-fatory">
+                <p>黑龙江省哈尔滨第六制药厂</p>
+              </div>
+              <div class="sigle-price">
+                <p>￥17.00</p>
+              </div>
+              <div class="good-number">
+                <p>无货</p>
+                <p>
+                  <a>登记缺货</a>
+                </p>
+              </div>
+              <div class="sub-total">
+                <p>
+                  ￥
+                  <span class="count-money">304.00</span>
+                </p>
+              </div>
+              <div class="operate">
+                <p>
+                  <a>移到收藏夹</a>
+                </p>
+                <p>
+                  <a>删除</a>
+                </p>
+              </div>
+            </li>
+            <li class="stockout">
+              <div class="check-good">
+                <input type="checkbox" class="check-box" disabled>
+                <div class="img-box">
+                  <img src="{{ 'eshop/images/medicine.png'|static_url }}" alt="图片未加载出来" title="可定 瑞舒伐他汀钙片"></div>
+                <div class="stockout-img">失效商品</div>
+              </div>
+              <div class="good-name">
+                <p>可定 舒瑞伐他汀钙片 10mg*7片/盒</p>
+              </div>
+              <div class="good-code">
+                <p>Q254136557457</p>
+              </div>
+              <div class="produce-fatory">
+                <p>黑龙江省哈尔滨第六制药厂</p>
+              </div>
+              <div class="sigle-price">
+                <p>￥17.00</p>
+              </div>
+              <div class="good-number">
+                <p>失效</p>
+              </div>
+              <div class="sub-total">
+                <p>
+                  ￥
+                  <span class="count-money">304.00</span>
+                </p>
+              </div>
+              <div class="operate">
+                <p>
+                  <a>移到收藏夹</a>
+                </p>
+                <p>
+                  <a>删除</a>
+                </p>
+              </div>
+            </li>
+            <li class="list-footer">
+              <div class="select-operate">
+                <input type="checkbox" id="check-all-bottom" class="check-all"><label for="check-all-bottom">全选</label>
+                <a>删除选中的商品</a>
+                <a>移到收藏夹</a>
+                <a>删除失效商品</a>
+              </div>
+              <div class="total-number">
+                <p>
+                  已选中
+                  <span>6</span>
+                  件商品
+                </p>
+                <p>
+                  总价：
+                  <span>￥500.00</span>
+                </p>
+              </div>
+              <div id="submit-account"><a href="{% url 'eshop:shopping_balance' %}">去结算</a></div>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  {#  <script src="{{ 'eshop/js/shopping_cart_list.js'|static_url }}"></script>#}
+{% endblock %}
+

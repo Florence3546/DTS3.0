@@ -1,0 +1,347 @@
+[
+  {
+    "model": "order.shippingmethod",
+    "pk": 1,
+    "fields": {
+      "name_cn": "\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 2,
+    "fields": {
+      "name_cn": "\u7269\u6d41",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 3,
+    "fields": {
+      "name_cn": "\u81ea\u63d0",
+      "shipping_type": 2,
+      "logo": "",
+      "website": "",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 4,
+    "fields": {
+      "name_cn": "\u5706\u901a\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.yto.net.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 5,
+    "fields": {
+      "name_cn": "\u4e2d\u901a\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.zto.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 6,
+    "fields": {
+      "name_cn": "\u97f5\u8fbe\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.yundaex.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 7,
+    "fields": {
+      "name_cn": "\u767e\u4e16\u6c47\u901a\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.htky365.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 8,
+    "fields": {
+      "name_cn": "\u5b85\u6025\u9001\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.zjs.com.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 9,
+    "fields": {
+      "name_cn": "\u5929\u5929\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.ttkdex.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 10,
+    "fields": {
+      "name_cn": "\u5fb7\u90a6\u7269\u6d41",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.deppon.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 11,
+    "fields": {
+      "name_cn": "\u65b0\u90a6\u7269\u6d41",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.xbwl.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 12,
+    "fields": {
+      "name_cn": "\u5929\u5730\u534e\u5b87",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.hoau.net",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 13,
+    "fields": {
+      "name_cn": "DHL",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.cn.dhl.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 14,
+    "fields": {
+      "name_cn": "UPS",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.ups.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 15,
+    "fields": {
+      "name_cn": "TNT",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.tnt.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 16,
+    "fields": {
+      "name_cn": "FEDEX",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.fedex.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 17,
+    "fields": {
+      "name_cn": "\u5168\u4e00\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.unitop-apex.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 18,
+    "fields": {
+      "name_cn": "\u5168\u5cf0\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.qfkd.com.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 19,
+    "fields": {
+      "name_cn": "\u76db\u8f89\u7269\u6d41",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.shenghui56.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 20,
+    "fields": {
+      "name_cn": "\u4e2d\u94c1\u5feb\u8fd0",
+      "shipping_type": 1,
+      "logo": "",
+      "website": "http://www.cre.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 21,
+    "fields": {
+      "name_cn": "\u987a\u4e30\u901f\u8fd0",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.sf-express.com",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 22,
+    "fields": {
+      "name_cn": "EMS",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.ems.com.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  },
+  {
+    "model": "order.shippingmethod",
+    "pk": 23,
+    "fields": {
+      "name_cn": "\u7533\u901a\u5feb\u9012",
+      "shipping_type": 0,
+      "logo": "",
+      "website": "http://www.sto.cn",
+      "order_no": 1,
+      "is_active": true,
+      "reserved_1": "",
+      "reserved_2": "",
+      "reserved_3": ""
+    }
+  }
+]

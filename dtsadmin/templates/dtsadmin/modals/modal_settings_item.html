@@ -1,0 +1,44 @@
+<div class="modal fade" id="modal_settings_item" tabindex="-1" role="dialog" aria-labelledby="label_settings_item"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+            class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="label_settings_item">添加子项</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="form_settings_item">
+          {% csrf_token %}
+          <input type="hidden" id="settings_item_id" name="id" value="">
+          <input type="hidden" id="settings_item_s_type" name="s_type" value="">
+          <div class="form-group form-group-dts">
+            <label class="control-label">类型：</label>
+            <div id="settings_item_s_type_name" class="form-control-div"></div>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="settings_item_name" class="control-label">设置名：</label>
+            <input type="text" class="form-control" id="settings_item_name" name="name" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="settings_item_value" class="control-label">值：</label>
+            <input type="text" class="form-control" id="settings_item_value" name="value" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="settings_item_note" class="control-label">备注：</label>
+            <textarea class="form-control" id="settings_item_note" name="note" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button" class="btn btn-dts2 btn-s1 enter_click" id="submit_settings_item_add"
+                api="{% url 'dtsadmin:ajax:add_object_byform' form_class='SettingsItemForm' %}">保存
+        </button>
+        <button type="button" class="btn btn-dts2 btn-s1 enter_click" id="submit_settings_item_update"
+                api="{% url 'dtsadmin:ajax:update_object_byform' form_class='SettingsItemForm' %}">保存
+        </button>
+        <button type="button" class="btn btn-dts2 btn-s3" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

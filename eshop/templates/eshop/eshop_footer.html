@@ -1,0 +1,29 @@
+{% load extras %}
+<div id="eshop-footer">
+  <div class="ensure">
+    {% for sectionimage in request.extras.foot_ads.sectionimage_list %}
+      <a target="_blank"><img src="{{ sectionimage.image.name|urlencode|media_url }}"/></a>
+    {% endfor %}
+  </div>
+  <div class="foot-nav">
+    {% for section in request.extras.foot_help_nav.child_list %}
+      <dl>
+        <dt>{{ section.title }}</dt>
+        <dd>
+          {% for sectionhref in section.sectionhref_list %}
+            <a href="{{ sectionhref.href }}" target="_blank">{{ sectionhref.text }}</a>
+          {% endfor %}
+        </dd>
+      </dl>
+    {% endfor %}
+  </div>
+  <div class="copy">
+    <ul>
+      {% for sectionhref in request.extras.foot_about_us.sectionhref_list %}
+        <li><a href="{{ sectionhref.href }}" target="_blank">{{ sectionhref.text }}</a></li>
+      {% endfor %}
+    </ul>
+    {#    <div>Copyright © 2015-2016 武汉葫芦娃科技有限公司版权所有&nbsp;&nbsp;备案号：鄂ICP备16019117号-1</div>#}
+    <div>{{ request.extras.copyright }}&nbsp;&nbsp;备案号：{{ request.extras.site_record_no }}</div>
+  </div>
+</div>

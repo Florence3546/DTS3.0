@@ -1,0 +1,137 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}提交订单 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/submit_order.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <div id="shopping-section">
+      <div class="logo-content">
+        <div class="logo-group">
+          <div class="logo-img">
+            <a href="{% url 'eshop:eshop_home' %}"><img src="{{ 'eshop/images/huluwa.png'|static_url }}"></a></div>
+          <div class="logo-title">收银台</div>
+        </div>
+        <div class="range-group">
+          <div class="prev-step">
+            <div class="shopping-cart">1</div>
+            <div class="shopping-cart-title">我的购物车</div>
+          </div>
+          <div class="new-step">
+            <div class="check-order">2</div>
+            <div class="check-order-title">填写核对订单信息</div>
+          </div>
+          <div class="next-step">
+            <div class="submit-order">3</div>
+            <div class="submit-order-title">成功提交提单</div>
+          </div>
+        </div>
+      </div>
+      <div class="order-number">
+        <p>订单提交成功，请您尽快付款！订单号：{{ order.order_no }}</p>
+        {% if order.payment_method.pay_type == 1 %}
+          <p>线下支付 需要支付的金额：<span>¥<span>{{ order.total_price|multiply:'0.01' }}</span></span></p>
+        {% else %}
+          <p>需要支付的金额：<span>¥<span>{{ order.total_price|multiply:'0.01' }}</span></span></p>
+          <p>请您在<span>30分钟</span>内完成支付，否则订单会被自动取消。</p>
+        {% endif %}
+      </div>
+      <div id="form_submit_order">
+        <form>
+          {#  线上支付   4 支付宝   #}
+          {% if order.payment_method.pay_type == 0 %}
+            <div class="payment-method payment-online">
+              <p>请选择支付方式</p>
+              <div class="payment-box">
+                <div class="payment-img">
+                  <input type="hidden" id="payment_method" value="4">
+                  {% if pay_method %}
+                    {% for pay in pay_method %}
+                      <div data-id="{{ pay.id }}"
+                           class="{% if pay.name_cn == '支付宝' %}active{% endif %}">
+                        <img class="logo_img" src="{{ pay.logo }}">
+                        <img class="active-bg" src="{{ 'eshop/images/active.png'|static_url }}">
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    <p>请开启在线支付方式</p>
+                  {% endif %}
+                </div>
+                <button class="btn-s2" id="pay_online">支付</button>
+              </div>
+            </div>
+          {% endif %}
+          {#  线下支付   1   #}
+          {% if order.payment_method.pay_type == 1 %}
+            <div class="payment-method payment-offline">
+              <p>线下支付方式</p>
+              <div class="payment-box">
+                <div class="payment-bank">
+                  <p><label for="per_back">开户银行：</label>
+                    <input type="text" id="per_back"></p>
+                  <p><label for="per_account">开户账号：</label>
+                    <input type="text" id="per_account"></p>
+                  <p><label for="per_name">开户姓名：</label>
+                    <input type="text" id="per_name"></p>
+                </div>
+                <button class="btn-s2" id="pay_offline">支付</button>
+              </div>
+            </div>
+          {% endif %}
+          {#  预付款支付 2  #}
+          {% if order.payment_method.pay_type == 2 %}
+            <div class="payment-method payment-goodpay">
+              {% csrf_token %}
+              <input type="hidden" id="oid" value="{{ order.order_no }}">
+              <input type="hidden" id="opk" value="{{ order.pk }}">
+              <p>预付款支付</p>
+              <div class="payment-box">
+                <div class="payment-good clearfix">
+                  <span>支付密码：</span>
+                  <input id="entry_password"
+                         style="background: url('{{ 'eshop/images/pay_password.png'|static_url }}') no-repeat"
+                         type="password"
+                         maxlength="6" minlength="6"/>
+                  <a href="{% url 'eshop:forget_password' %}">忘记密码</a>
+                </div>
+                {% if not request.user.pay_password %}
+                  <p class="note-zhuyi">注：您的预存款支付密码为空，为了保障您的账户资金安全，请选择
+                    <a target="_blank" href="/eshop/account_safety/?action=action_4&step=pay_password">【设置支付密码】</a></p>
+                {% endif %}
+                <button class="btn-s2 submit_pay">支付</button>
+              </div>
+            </div>
+          {% endif %}
+          {#  货到付款 3  #}
+          {% if order.payment_method.pay_type == 3 %}
+            <div class="payment-method">
+              <div class="payment-box">
+                <h3>订单已生成，请及时联系商家</h3>
+                <button class="btn-s2">确定</button>
+              </div>
+            </div>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script src="{{ 'eshop/js/submit_order.js'|static_url }}"></script>
+{% endblock %}

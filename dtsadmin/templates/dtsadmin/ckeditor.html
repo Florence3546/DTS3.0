@@ -1,0 +1,159 @@
+{% extends "dtsadmin/base.html" %}
+
+
+{% load extras %}
+
+
+
+{% block title %}基本信息 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    #form_remind_settings table {
+      text-align: center;
+    }
+
+    .nav-tabs {
+      font-weight: bold;
+    }
+
+    #form_consult_settings .form-control.data_time {
+      width: 85px;
+    }
+
+    #form_auth_settings .form-group-dts #select_picture,
+    #form_auth_settings .form-group-dts #select_message {
+      width: 80px;
+    }
+
+    #form_logo_settings .tip_note {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 15px;
+      color: #cccccc;
+    }
+
+    #fixed_telephone {
+      width: 125px;
+    }
+
+    .tab-defined {
+      border-bottom: 2px solid #e5e5e5;
+      height: 32px;
+      margin-bottom: 15px;
+      margin-top: 10px;
+    }
+
+    .tab-defined li {
+      float: left;
+      padding-bottom: 8px;
+      position: relative;
+      top: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tab-defined li.active {
+      border-bottom-color: #0090ff;
+    }
+
+    .tab-defined li.active:after {
+      display: block;
+      content: '';
+      border: 4px solid transparent;
+      border-bottom-color: #0090ff;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -webkit-transform: translate(-4px);
+      -moz-transform: translate(-4px);
+      -ms-transform: translate(-4px);
+      -o-transform: translate(-4px);
+      transform: translate(-4px);
+    }
+
+    .tab-defined li.active a {
+      color: #0090ff;
+    }
+
+    .tab-defined li a {
+      border-right: 1px solid #e5e5e5;
+      padding: 2px 30px;
+      font-size: 14px;
+      font-weight: bolder;
+      color: #999;
+    }
+
+    .logo-pane {
+      overflow: hidden;
+      padding-top: 10px;
+    }
+
+    .logo-pane .upload_file {
+      float: left;
+      display: block;
+      width: 400px;
+      height: 300px;
+      text-align: center;
+      background: #f9f9f9;
+      border: 1px solid #e3e3e3;
+      overflow: hidden;
+      margin-left: 45px;
+    }
+
+    .upload_file span {
+      position: relative;
+      top: 45%;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    #logo_preview img {
+      height: 300px;
+      width: 400px;
+      text-align: center;
+    }
+
+    .tab li:last-of-type a {
+      border-right: none;
+    }
+
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_basic_settings.html' %}
+{% endblock %}
+
+<!-- 内容面板 -->
+{% block content %}
+
+
+
+  <hr>
+
+  <hr>
+  {{ form_full }}
+
+
+  <hr>
+
+  {{ form_basic }}
+  <hr>
+
+
+
+  {#  <textarea name="ck" id="" class="ckeditor" cols="30" rows="10"></textarea>#}
+
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_service_account.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/basic_info.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'ckeditor/ckeditor/ckeditor.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'ckeditor/ckeditor-init.js'|static_url }}"></script>
+{% endblock %}

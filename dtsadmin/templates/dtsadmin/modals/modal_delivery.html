@@ -1,0 +1,89 @@
+<div class="modal fade" id="modal_delivery" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加快递公司</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="form_delivery">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="delivery_id" name="id" value="{{ obj.id }}">
+
+          <div class="form-group form-group-sm">
+            <label for="delivery_name" class="col-sm-3 control-label">请输入公司名称</label>
+            <div class="col-sm-9">
+              <input type="text"
+                     name="name"
+                     value="{{ obj.name }}"
+                     class="form-control"
+                     id="delivery_name">
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="delivery_url" class="col-sm-3 control-label">请输入公司网址</label>
+            <div class="col-sm-9">
+              <input type="text"
+                     class="form-control"
+                     name="website"
+                     value="{{ obj.website }}"
+                     id="delivery_url">
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="delivery_type" class="col-sm-3 control-label">物流类型</label>
+            <div class="col-sm-9">
+              <select class="form-control"
+                      id="delivery_type"
+                      name="delivery_type">
+                <option value="快递" {% if obj.delivery_type == '快递' %}selected{% endif %}>快递</option>
+                <option value="邮政" {% if obj.delivery_type == '邮政' %}selected{% endif %}>邮政</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="delivery_sort" class="col-sm-3 control-label">排序</label>
+            <div class="col-sm-9">
+              <input type="number"
+                     name="order_no"
+                     value="{{ obj.order_no }}"
+                     class="form-control w70" id="delivery_sort">
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="delivery_is_active" class="col-sm-3 control-label">状态</label>
+            <div class="col-sm-9">
+              <select class="form-control"
+                      name="is_active"
+                      id="delivery_is_active">
+                <option value="on" {% if obj.is_active %}selected{% endif %}>开启</option>
+                <option value="" {% if not obj.is_active %}selected{% endif %}>关闭</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-default"
+                data-dismiss="modal">取消
+        </button>
+        <button type="button"
+                id="submit_delivery_add"
+                api="{% url 'dtsadmin:ajax:add_object_byform' form_class='DeliveryForm' %}"
+                class="btn btn-primary">确认
+        </button>
+        <button type="button"
+                id="submit_delivery_update"
+                api="{% url 'dtsadmin:ajax:update_object_byform' form_class='DeliveryForm' %}"
+                class="btn btn-primary">修改
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

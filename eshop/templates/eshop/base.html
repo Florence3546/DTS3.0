@@ -1,0 +1,46 @@
+{% load extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8"/>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}"
+        type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="{{ 'plugins/bootstrap/css/bootstrap.min.css'|static_url }}">
+  <link rel="stylesheet" type="text/css"
+        href="{{ 'plugins/datetimepicker/css/bootstrap-datetimepicker.min.css'|static_url }}">
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_ymji92quba35l8fr.css">
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/common.css'|static_url }}">
+  <!-- 自定义CSS -->
+  {% block css %}{% endblock %}
+</head>
+
+<body>
+<!-- 内容面板 -->
+<div class="eshop-main">
+  {% block content %}{% endblock %}
+</div>
+
+<!-- 模态对话框 -->
+{% include 'eshop/modals/modal_alert_confirm.html' %}
+{% block modal %}
+{% endblock %}
+
+<script type="text/javascript" src="{{ 'plugins/jquery/jquery-3.1.1.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/bootstrap/js/bootstrap.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/jquery-validation/jquery.validate.min.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/jquery-validation/messages_zh.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'plugins/datetimepicker/js/bootstrap-datetimepicker.min.js'|static_url }}"></script>
+<script type="text/javascript"
+        src="{{ 'plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'common/js/common.js'|static_url }}"></script>
+<script type="text/javascript" src="{{ 'eshop/js/base.js'|static_url }}"></script>
+
+
+<!-- 自定义JS -->
+{% block js %}{% endblock %}
+</body>
+
+</html>

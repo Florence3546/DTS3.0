@@ -1,0 +1,91 @@
+{% load extras %}
+<div class="modal fade" id="good_statistic_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">查看</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table-hover dataTable table-bordered" id="modal_good_statistic">
+          <thead>
+          <tr>
+            <th>序号</th>
+            <th>企业名称</th>
+            <th>经营方式</th>
+            <th>注册日期</th>
+            <th>订单数量</th>
+            <th>总销量</th>
+            <th>总销售额（元）</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>北京同仁堂民安药业有限公司</td>
+            <td>批发/零售</td>
+            <td>2013-12-12</td>
+            <td>10</td>
+            <td>100</td>
+            <td>8600.00</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>北京同仁堂民安药业有限公司</td>
+            <td>批发/零售</td>
+            <td>2013-12-12</td>
+            <td>10</td>
+            <td>100</td>
+            <td>8600.00</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>北京同仁堂民安药业有限公司</td>
+            <td>批发/零售</td>
+            <td>2013-12-12</td>
+            <td>10</td>
+            <td>100</td>
+            <td>8600.00</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>北京同仁堂民安药业有限公司</td>
+            <td>批发/零售</td>
+            <td>2013-12-12</td>
+            <td>10</td>
+            <td>100</td>
+            <td>8600.00</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>北京同仁堂民安药业有限公司</td>
+            <td>批发/零售</td>
+            <td>2013-12-12</td>
+            <td>10</td>
+            <td>100</td>
+            <td>8600.00</td>
+          </tr>
+          </tbody>
+        </table>
+        <span
+            class="table-info">每页显示{{ page_limit }}条，总共{{ data_list.paginator.num_pages }}页，共{{ paginator.count }}条</span>
+        <ul class="pagination right">
+          <li><a href="{% if data_list.has_previous %}?page=
+            {{ data_list.previous_page_number }}{% else %}javascript:;{% endif %}">&laquo;</a></li>
+
+          {% for i in paginator.page_range %}
+            {% ifequal i page %}
+              <li class="active"><a href="">{{ i }}</a></li>
+            {% else %}
+              <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endifequal %}
+          {% endfor %}
+          <li><a
+              href="{% if data_list.has_next %}?page={{ data_list.next_page_number }}{% else %}javascript:;{% endif %}">&raquo;</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

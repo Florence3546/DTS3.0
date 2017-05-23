@@ -1,0 +1,109 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}权限管理 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_info_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    #table_permissions {
+      width: 900px;
+    }
+
+    #table_permissions thead th:nth-of-type(1),
+    #table_permissions thead th:nth-of-type(2),
+    #table_permissions thead th:nth-of-type(3) {
+      width: 250px;
+    }
+
+    #table_permissions tbody td:nth-of-type(4) {
+      text-align: center;
+    }
+
+    #table_permissions tr.disabled,
+    #table_permissions tr.disabled a.triangle {
+      color: #ccc;
+    }
+
+    #table_permissions a.triangle {
+      margin: 0;
+      color: #777;
+    }
+
+    a.triangle {
+      position: relative;
+      padding-left: 15px;
+    }
+
+    a.triangle:before {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      display: block;
+      content: '';
+      border-left: 5px solid #7c7c7c;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
+
+    a.triangle.triangle-bottom:before {
+      top: 5px;
+      border-left: 5px solid transparent;
+      border-top: 5px solid #7c7c7c;
+      border-right: 5px solid transparent;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+    <table id="table_permissions" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>权限名</th>
+          <th>权限码</th>
+          <th>备注</th>
+          <th>权限状态</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for obj in data_list %}
+        <tr level="{{ obj.level }}" class="{% if not obj.is_active %}disabled{% endif %} {% if obj.level > 0 %}hide{% endif %}">
+          <td>
+          {% if obj.has_child %}
+            <a class="triangle" style="margin-left: {{ 15|multiply:obj.level }}px;">{{ obj.name }}</a>
+          {% else %}
+            <span style="margin-left: {{ 15|multiply:obj.level }}px;">{{ obj.name }}</span>
+          {% endif %}
+          </td>
+          <td>{{ obj.codename }}</td>
+          <td>{{ obj.note }}</td>
+          <td>
+            <div class="switch-default active_permission" api="{% url 'dtsadmin:ajax:update_object_bypk' model_name='Permission' obj_pk=obj.pk %}" is_active="{{ obj.is_active }}">
+              <div class="switch-on {% if not obj.is_active %}hide{% endif %}">启用</div>
+              <div class="switch-off {% if obj.is_active %}hide{% endif %}">禁用</div>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="text-center">暂无记录</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% csrf_token %}
+{#  {% include 'dtsadmin/modals/modal_permission.html' %}#}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/permission_manage.js'|static_url }}"></script>
+{% endblock %}

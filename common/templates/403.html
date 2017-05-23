@@ -1,0 +1,47 @@
+{% load extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>{% block title %}葫芦娃医药{% endblock %}</title>
+		<link rel="icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}" type="image/x-icon">
+		<link rel="shortcut icon" href="{{ 'favicon.ico'|static_url }}" mce_href="{{ 'favicon.ico'|static_url }}" type="image/x-icon">
+		<!-- 自定义CSS -->
+		{% block css %}
+		<link rel="stylesheet" type="text/css" href="{{ 'dtsadmin/css/dts_home.css'|static_url }}">
+		<style>
+			html,
+			body {
+				background-color: #f8f8f8;
+				height: 100%;
+        margin:0;
+			}
+			
+			div {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+			}
+		</style>
+		{% endblock %}
+	</head>
+
+	<body>
+		{% block content %}
+		<div>
+			<img src="{{ 'common/img/403.png'|static_url }}" class="img">
+		</div>
+		{% endblock %} {% block js %}{% endblock %}
+	</body>
+
+</html>

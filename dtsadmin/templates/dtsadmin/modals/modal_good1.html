@@ -1,0 +1,126 @@
+{% load extras %}
+<div class="modal fade" id="add_good_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加商品信息</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="tab-defined" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#basic_info" role="tab" data-toggle="tab">基本信息</a>
+          </li>
+          <li role="presentation">
+            <a href="#good_detail" role="tab" data-toggle="tab">商品详情</a>
+          </li>
+          <li role="presentation">
+            <a href="#specification" role="tab" data-toggle="tab">说明书</a>
+          </li>
+        </ul>
+        <div class="tab-content small">
+          <div role="tabpanel" class="tab-pane active" id="basic_info">
+            <form class="form-horizontal">
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">商品编码：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">库存数量：</label>
+                <input type="text" class="form-control">
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">商品通用名称：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">供应商：</label>
+                <select class="form-control">
+                  <option value="">请选择……</option>
+                </select>
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">商品名称：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">是否中药保护：</label>
+                <label><input type="radio" name="chinese_medicine">是</label>
+                <label><input type="radio" name="chinese_medicine">否</label>
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">商品分类：</label>
+                <select class="form-control">
+                  <option value="">请选择……</option>
+                </select>
+                <label class="control-label normal">是否委托加工：</label>
+                <label><input type="radio" name="consigned_processing">是</label>
+                <label><input type="radio" name="consigned_processing">否</label>
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">制剂规格：</label>
+                <select class="form-control">
+                  <option value="">请选择……</option>
+                </select>
+                <label class="control-label normal">是否OTC：</label>
+                <label><input type="radio" name="otc">是</label>
+                <label><input type="radio" name="otc">否</label>
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">批准文号：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">是否新药：</label>
+                <label><input type="radio" name="new_drug">是</label>
+                <label><input type="radio" name="new_drug">否</label>
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">厂家：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">OTC类型：</label>
+                <select class="form-control">
+                  <option value="">请选择……</option>
+                </select>
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">产地：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">处方类型：</label>
+                <select class="form-control">
+                  <option value="">请选择……</option>
+                </select>
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">包装单位：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">零售价：</label>
+                <input type="text" class="form-control short">元
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">包装规格：</label>
+                <input type="text" class="form-control">
+                <label class="control-label normal">会员价：</label>
+                <input type="text" class="form-control short">元
+              </div>
+              <div class="form-group form-group-dts">
+                <label class="control-label normal">商品主图：</label>
+                <div class="picture">
+                  <a><span>+</span><i>×</i></a>
+                </div>
+                <label class="control-label normal">商品主图：</label>
+                <div class="picture">
+                  <a class=""><span>+</span></a>
+                </div>
+              </div>
+              <p class="text-red">注：基本信息内容显示在前台商品详情页中</p>
+              <div class="form-group form-group-dts">
+                <button type="button" class="btn btn-dts btn-s3 pull-right" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-dts btn-s1 pull-right">保存</button>
+              </div>
+            </form>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="good_detail">
+            346546
+          </div>
+          <div role="tabpanel" class="tab-pane" id="specification">
+            21321
+          </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

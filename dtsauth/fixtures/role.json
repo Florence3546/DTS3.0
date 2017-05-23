@@ -1,0 +1,1 @@
+[{"model": "dtsauth.role", "pk": 1, "fields": {"name": "\u5ba2\u670d\u4e13\u5458", "usertype": "System", "desc": "\u5ba2\u670d\u4e13\u5458", "is_reserved": false}}, {"model": "dtsauth.role", "pk": 2, "fields": {"name": "\u5ba1\u6838\u4e13\u5458", "usertype": "System", "desc": "\u5ba1\u6838\u4e13\u5458", "is_reserved": false}}]

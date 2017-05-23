@@ -1,0 +1,198 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}会员中心 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/member_center.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/member_site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main clearfix">
+
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_member_center.html' %}
+
+      <div class="section">
+        <div class="basic_inform">
+          <div class="member_inform">
+            <div class="member_img">
+              <img src="{{ 'eshop/images/user.png'|static_url }}">
+            </div>
+            <div class="member_name">
+              <p>快乐的阳光<i class="iconfont icon-bianji"></i></p>
+              <div class="member_grade">普通会员</div>
+            </div>
+          </div>
+          <div class="pre_payment">
+            <div class="pre_payment_box">
+              <p>预存款余额：<span>¥2500.00</span></p>
+              <a href="{% url 'eshop:user_recharge' %}">
+                <button class="btn-s1">充值</button>
+              </a>
+            </div>
+          </div>
+          <div class="integral">
+            <p>积分：<span>100分</span></p>
+            <button class="btn-s1">兑换</button>
+          </div>
+        </div>
+        <div class="count_bar">
+          <ul>
+            <li>
+              <div><img src="{{ 'eshop/images/card.png'|static_url }}"></div>
+              <div>待支付<span>12</span></div>
+            </li>
+            <li>
+              <div><img src="{{ 'eshop/images/shipping.png'|static_url }}"></div>
+              <div>待发货<span>5</span></div>
+            </li>
+            <li>
+              <div><img src="{{ 'eshop/images/box.png'|static_url }}"></div>
+              <div>待收货<span>5</span></div>
+            </li>
+            <li>
+              <div><img src="{{ 'eshop/images/return.png'|static_url }}"></div>
+              <div>待退款<span>12</span></div>
+            </li>
+          </ul>
+        </div>
+        <div class="my_order">
+          <div class="order_title"><b>我的订单</b><a class="pull-right">更多</a></div>
+          <ul class="order_box">
+            <li>
+              <span>2017-1-25</span>
+              <span>10:25:03</span>
+              <span>4211251542385614</span>
+              <span>¥5251.00</span>
+              <span>张丽</span>
+              <span>待付款</span>
+              <span>
+                <a>查看</a>
+              </span>
+            </li>
+            <li>
+              <span>2017-1-25</span>
+              <span>10:25:03</span>
+              <span>4211251542385614</span>
+              <span>¥5251.00</span>
+              <span>张丽</span>
+              <span>待付款</span>
+              <span>
+                <a>查看</a>
+              </span>
+            </li>
+            <li>
+              <span>2017-1-25</span>
+              <span>10:25:03</span>
+              <span>4211251542385614</span>
+              <span>¥5251.00</span>
+              <span>张丽</span>
+              <span>待付款</span>
+              <span>
+                <a>查看</a>
+              </span>
+            </li>
+            <li>
+              <span>2017-1-25</span>
+              <span>10:25:03</span>
+              <span>4211251542385614</span>
+              <span>¥5251.00</span>
+              <span>张丽</span>
+              <span>待付款</span>
+              <span>
+                <a>查看</a>
+              </span>
+            </li>
+            <li>
+              <span>2017-1-25</span>
+              <span>10:25:03</span>
+              <span>4211251542385614</span>
+              <span>¥5251.00</span>
+              <span>张丽</span>
+              <span>待付款</span>
+              <span>
+                <a>查看</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="my_collect">
+          <div class="collect_title"><b>我的收藏</b><a class="pull-right">更多</a></div>
+          <ul class="collect_box">
+            <li>
+              <div class="collect_pic"><img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+              <div class="collect_note">
+                <p>￥25.00</p>
+                <p>百多邦 莫匹罗软膏图纸软膏中美史克</p>
+              </div>
+            </li>
+            <li>
+              <div class="collect_pic"><img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+              <div class="collect_note"><p>￥25.00</p>
+                <p>百多邦 莫匹罗软膏图纸软膏中美史克</p></div>
+            </li>
+            <li>
+              <div class="collect_pic"><img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+              <div class="collect_note"><p>￥25.00</p>
+                <p>百多邦 莫匹罗软膏图纸软膏中美史克</p></div>
+            </li>
+            <li>
+              <div class="collect_pic"><img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+              <div class="collect_note"><p>￥25.00</p>
+                <p>百多邦 莫匹罗软膏图纸软膏中美史克</p></div>
+            </li>
+          </ul>
+          <div class="prev_good"><i class="iconfont icon-youbian-copy"></i></div>
+          <div class="next_good"><i class="iconfont icon-youbian"></i></div>
+        </div>
+      </div>
+      <div class="right_bar">
+        <div class="history_title">浏览记录</div>
+        <ul class="history_box">
+          <li>
+            <div class="history_pic">
+              <img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+            <div class="history_note">
+              <p>会员价：<span>￥25.00</span></p>
+              <p>百多邦 莫匹罗软膏图纸软膏中美史克</p>
+            </div>
+          </li>
+          <li>
+            <div class="history_pic">
+              <img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+            <div class="history_note">
+              <p>会员价：<span>￥25.00</span></p>
+              <p>百多邦 莫匹罗软膏图纸软膏中美史克</p>
+            </div>
+          </li>
+          <li>
+            <div class="history_pic">
+              <img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+            <div class="history_note">
+              <p>会员价：<span>￥25.00</span></p>
+              <p>百多邦 莫匹罗软膏图纸软膏中美史克</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}{% endblock %}
+

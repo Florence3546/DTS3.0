@@ -1,0 +1,423 @@
+.range-group {
+  float: right;
+  position: relative;
+  width: 480px;
+  height: 100%;
+  padding-top: 38px;
+}
+.range-group .prev-step {
+  position: absolute;
+  left: 0;
+  width: 162px;
+  height: 5px;
+  border-radius: 2px;
+  background: #78db9e;
+}
+.range-group .prev-step .shopping-cart {
+  background: #78db9e;
+}
+.range-group .prev-step .shopping-cart-title {
+  color: #78db9e;
+}
+.range-group .new-step {
+  position: absolute;
+  z-index: 2;
+  left: 160px;
+  width: 160px;
+  height: 5px;
+  border-radius: 2px;
+  background: #33cc6d;
+}
+.range-group .new-step .check-order {
+  background: #33cc6d;
+}
+.range-group .new-step .check-order-title {
+  color: #33cc6d;
+}
+.range-group .next-step {
+  position: absolute;
+  left: 316px;
+  width: 162px;
+  height: 5px;
+  border-radius: 2px;
+  background: #cccccc;
+}
+.range-group .next-step .submit-order {
+  background: #cccccc;
+}
+.range-group .next-step .submit-order-title {
+  color: #cccccc;
+}
+.check-order,
+.shopping-cart,
+.submit-order {
+  position: absolute;
+  left: 68px;
+  top: -10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  line-height: 24px;
+}
+.check-order-title,
+.shopping-cart-title,
+.submit-order-title {
+  margin-top: 20px;
+  text-align: center;
+}
+.common-title {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #5e5e5e;
+  border-bottom: 2px solid #f0f0f0;
+}
+.common-title a {
+  float: right;
+  font-size: 12px;
+  font-weight: normal;
+}
+.delivery-inform {
+  width: 100%;
+  margin-top: 25px;
+}
+.delivery-inform .delivery-inform-box {
+  padding: 25px 18px;
+}
+.delivery-inform .delivery-inform-box .delivery-address {
+  height: 30px;
+  line-height: 30px;
+  margin: 15px 0;
+}
+.delivery-inform .delivery-inform-box .delivery-address .delivery-name {
+  float: left;
+  width: 118px;
+  height: 30px;
+  border: 2px solid #dfdfdf;
+  text-align: center;
+  line-height: 26px;
+  cursor: pointer;
+}
+.delivery-inform .delivery-inform-box .delivery-address .delivery-name.active {
+  border: 2px solid #33cc6d;
+  background: url("../images/active.png") 100px 14px no-repeat;
+}
+.delivery-inform .delivery-inform-box .delivery-address span {
+  margin-left: 30px;
+}
+.delivery-inform .delivery-inform-box .delivery-address a {
+  margin-left: 15px;
+}
+.delivery-inform .delivery-inform-box .delivery-address span:nth-child(3) {
+  margin-left: 30px;
+}
+.delivery-inform .delivery-inform-box .more-address {
+  width: 100%;
+  margin-top: 17px;
+}
+.delivery-inform .delivery-inform-box #address_list {
+  max-height: 185px;
+  overflow-y: auto;
+}
+.delivery-inform .delivery-inform-box #address_list p {
+  line-height: 24px;
+}
+.delivery-inform .delivery-inform-box #address_list p .check-address {
+  margin-left: 10px;
+}
+.delivery-inform .delivery-inform-box #address_list p span {
+  margin: 0 15px;
+}
+.delivery-inform .delivery-inform-box #address_list p a {
+  margin-left: 15px;
+}
+.delivery-inform .delivery-inform-box .btn-more-address {
+  display: block;
+  margin-top: 15px;
+}
+.payment-method {
+  width: 100%;
+  height: 145px;
+}
+.payment-method .payment-method-box {
+  padding: 25px 18px;
+}
+.payment-method .payment-method-box div {
+  float: left;
+  width: 118px;
+  height: 30px;
+  border: 2px solid #dfdfdf;
+  margin-right: 30px;
+  text-align: center;
+  line-height: 26px;
+  cursor: pointer;
+}
+.payment-method .payment-method-box div.active {
+  border: 2px solid #33cc6d;
+  background-image: url("../images/active.png");
+  background-repeat: no-repeat;
+  background-position: 99px 14px;
+}
+.delivery-method {
+  width: 100%;
+  height: 145px;
+}
+.delivery-method .delivery-method-box {
+  padding: 25px 18px;
+}
+.delivery-method .delivery-method-box div {
+  float: left;
+  width: 118px;
+  height: 30px;
+  border: 2px solid #dfdfdf;
+  margin-right: 30px;
+  text-align: center;
+  line-height: 26px;
+  cursor: pointer;
+}
+.delivery-method .delivery-method-box div.active {
+  border: 2px solid #33cc6d;
+  background-image: url("../images/active.png");
+  background-repeat: no-repeat;
+  background-position: 99px 14px;
+}
+.return-cart {
+  width: 100%;
+  height: 30px;
+  padding: 5px 0;
+}
+.return-cart a {
+  float: right;
+}
+.good-info {
+  width: 100%;
+  height: auto;
+  background: #fafafa;
+}
+.good-info .good-nav {
+  width: 100%;
+  height: 34px;
+  border: 1px solid #efefef;
+  border-bottom: 0;
+  line-height: 34px;
+  box-sizing: border-box;
+  background: #f6f6f6;
+}
+.good-info .good-nav .sigle-price,
+.good-info .good-nav .sub-total {
+  font-weight: normal;
+}
+.good-info ul li.good-item {
+  width: 100%;
+  height: 118px;
+  background: #fff;
+  border: 1px solid #f9f9f9;
+}
+.good-info ul li:nth-child(2) {
+  border-bottom: 0;
+}
+.good-info ul li div {
+  float: left;
+}
+.good-info ul li .good-inform {
+  width: 440px;
+  padding-left: 18px;
+}
+.good-info ul li .good-code {
+  width: 180px;
+}
+.good-info ul li .produce-fatory {
+  width: 150px;
+}
+.good-info ul li .sigle-price {
+  width: 150px;
+  font-weight: bolder;
+}
+.good-info ul li .sigle-price span {
+  font-family: "微软雅黑";
+}
+.good-info ul li .good-number {
+  width: 150px;
+}
+.good-info ul li .sub-total {
+  width: 128px;
+  font-weight: bolder;
+}
+.good-info ul li .sub-total span {
+  font-family: "微软雅黑";
+}
+.good-item div {
+  margin-top: 18px;
+}
+.good-item div img {
+  float: left;
+}
+.good-item div p {
+  margin-left: 100px;
+  color: #777;
+}
+.good-item div p:hover {
+  color: #0090ff;
+}
+.total {
+  padding: 28px 18px;
+  padding-bottom: 50px;
+}
+.good-bottom {
+  border-bottom: 1px dashed #c4c4c4;
+}
+.good-bottom .leave-massage {
+  float: left;
+  width: 900px;
+}
+.good-bottom .leave-massage label {
+  font-weight: normal;
+}
+.good-bottom .leave-massage input {
+  width: 350px;
+  height: 24px;
+  border: 1px solid #dddddd;
+  padding: 0 8px;
+}
+.good-bottom .leave-massage p:nth-child(3) {
+  margin-top: 15px;
+}
+.good-bottom .leave-massage p {
+  margin: 0;
+  height: 30px;
+  line-height: 30px;
+}
+.good-bottom .leave-massage p .iconfont {
+  font-size: 14px;
+  margin-right: 5px;
+  color: #0090ff;
+}
+.good-bottom .goods-total-amount {
+  float: left;
+  width: 250px;
+}
+.good-bottom .goods-total-amount p {
+  display: flex;
+}
+.good-bottom .goods-total-amount p span:nth-child(1) {
+  flex: 2;
+  text-align: right;
+}
+.good-bottom .goods-total-amount p span:nth-child(2) {
+  flex: 3;
+  text-align: right;
+  font-family: "微软雅黑";
+  color: #ff7e00;
+  font-weight: bolder;
+}
+.totla-money {
+  float: right;
+  margin-top: 13px;
+  margin-right: 12px;
+  font-size: 16px;
+  line-height: 36px;
+  font-weight: bolder;
+}
+.totla-money .total-money-text {
+  color: #5e5e5e;
+}
+.totla-money .total-money-no {
+  color: #ff6600;
+  font-family: "微软雅黑";
+}
+#shopping-section .btn-s2 {
+  color: #fff;
+  float: right;
+  margin-left: 15px;
+  background: #ff7e00;
+  border-color: #ff7e00;
+}
+#shopping-section .btn-s2:hover {
+  color: #fff;
+}
+.invoice-box {
+  width: 450px;
+  padding: 20px 0;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  display: none;
+}
+.invoice-box .form-group label {
+  width: 100px;
+  text-align: right;
+}
+.invoice-box .form-group .form-control {
+  width: 285px;
+  display: inline-block;
+  font-size: 12px;
+}
+.invoice-box .form-group div {
+  display: none;
+  margin-left: 105px;
+  color: #ff0000;
+}
+.invoice-box .btn {
+  display: inline-block;
+  width: 80px;
+  padding: 0;
+  border: 0;
+  font-size: 12px;
+}
+.invoice-box .btn:nth-child(5) {
+  margin-left: 205px;
+}
+.invoice-box .btn:nth-child(6) {
+  margin-left: 20px;
+}
+.invoice-box #invoice_cancel {
+  background: #e4e4e4;
+  color: #484848;
+}
+#modal_address .form-control {
+  font-size: 12px;
+}
+#modal_address label:not(.error) {
+  width: 100px;
+  text-align: right;
+}
+#modal_address #person {
+  width: 100px;
+}
+#modal_address #distpicker {
+  display: inline-block;
+}
+#modal_address #distpicker label.error {
+  margin-left: -4px;
+}
+#modal_address select {
+  display: inline-block;
+  width: 100px;
+  margin-right: 14px;
+  font-size: 12px;
+}
+#modal_address input {
+  display: inline-block;
+  width: 340px;
+  height: 30px;
+}
+#modal_address .btn {
+  width: 60px;
+  height: 30px;
+  padding: 0;
+  border-radius: 3px;
+  line-height: 28px;
+}
+#modal_address .enter_click {
+  margin-left: 400px;
+  background: #33cc6d;
+  color: #ffffff;
+}
+#modal_address .btn-cancel {
+  margin-left: 10px;
+  background: #e3e3e3;
+  color: #777777;
+}

@@ -1,0 +1,13 @@
+{% load extras %}
+<div class="bg-blue sidebar-left">
+  <div class="small list-group">
+    <div class="list-group-item"><i class="iconfont icon-dingdan"></i>订单管理</div>
+    <a href="{% url 'dtsadmin:order_list' %}" class="list-group-item {% active_url 'order_list' %}">订单列表</a>
+    <a href="{% url 'dtsadmin:approval_list' %}?slug=is_my_start"
+       class="list-group-item {% active_url 'approval_list' %}">改价审批</a>
+    <a href="{% url 'dtsadmin:returns_and_refunds' %}" class="list-group-item {% active_url 'returns_and_refunds' %}">退货退款</a>
+    <a href="{% url 'dtsadmin:trading_record' %}" class="list-group-item {% active_url 'trading_record' %}">交易记录</a>
+    <a href="{% url 'dtsadmin:lack_good' %}" class="list-group-item {% active_url 'lack_good' %}">缺货登记</a>
+    <a href="{% url 'dtsadmin:order_statistic' %}" class="list-group-item {% active_url 'order_statistic' %}">订单统计</a>
+  </div>
+</div>

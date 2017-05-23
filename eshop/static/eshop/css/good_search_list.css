@@ -1,0 +1,314 @@
+.main-menu {
+  height: 45px;
+  overflow: hidden;
+}
+.main-menu:hover {
+  height: 520px;
+  background: #fff;
+  border: 1px solid #16b753;
+  border-top: none;
+  overflow: visible;
+  z-index: 5;
+}
+.main-menu:hover li:first-of-type {
+  padding-left: 11px;
+}
+.crumb {
+  padding-left: 10px;
+  overflow: hidden;
+}
+.crumb ul {
+  overflow: hidden;
+}
+.crumb li {
+  float: left;
+  padding-left: 6px;
+  height: 50px;
+  line-height: 50px;
+}
+.crumb li i.greater-than {
+  position: relative;
+  top: 3px;
+}
+.crumb li select {
+  padding-left: 6px;
+  width: 114px;
+  height: 24px;
+  border: 1px solid #e5e5e5;
+}
+.crumb li div {
+  margin: 13px 0;
+  padding: 0 6px;
+  height: 24px;
+  line-height: 22px;
+  border: 1px solid #ff7e00;
+}
+.crumb li div span {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.crumb li div span:hover {
+  color: #f43434;
+}
+.crumb li.goods-No {
+  padding: 0 14px;
+}
+.crumb li.goods-No span {
+  padding: 0 6px;
+  color: #ff7e00;
+}
+.crumb li a.empty i {
+  margin: 0 3px;
+}
+.attrs {
+  border-top: 1px solid #e5e5e5;
+}
+.brand-attr div {
+  float: left;
+  padding-top: 16px;
+  width: 84px;
+  text-align: center;
+  font-weight: bolder;
+}
+.brand-attr ul,
+.brand-attr li {
+  float: left;
+}
+.brand-attr,
+.origin-attr,
+.formulation-attr,
+.sort-attr {
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  border-top: none;
+}
+.brand-attr div,
+.origin-attr div,
+.formulation-attr div,
+.sort-attr div {
+  float: left;
+  padding-top: 16px;
+  width: 85px;
+  line-height: 12px;
+  text-align: center;
+  font-weight: bolder;
+}
+.brand-attr ul,
+.origin-attr ul,
+.formulation-attr ul,
+.sort-attr ul {
+  float: left;
+  padding: 8px 0 8px 12px;
+  width: 950px;
+  min-height: 44px;
+  border-left: 1px solid #e5e5e5;
+}
+.brand-attr ul li,
+.origin-attr ul li,
+.formulation-attr ul li,
+.sort-attr ul li {
+  float: left;
+  margin-right: 2px;
+  line-height: 28px;
+}
+.brand-attr ul li a,
+.origin-attr ul li a,
+.formulation-attr ul li a,
+.sort-attr ul li a {
+  padding: 3px 13px;
+}
+.brand-attr ul li a:hover,
+.origin-attr ul li a:hover,
+.formulation-attr ul li a:hover,
+.sort-attr ul li a:hover,
+.brand-attr ul li a.active,
+.origin-attr ul li a.active,
+.formulation-attr ul li a.active,
+.sort-attr ul li a.active {
+  background: #ff7e00;
+  color: #fff;
+}
+.brand-attr .multiple-choice,
+.origin-attr .multiple-choice,
+.formulation-attr .multiple-choice,
+.sort-attr .multiple-choice {
+  display: none;
+  margin: 0 8px 0 40px;
+  padding: 2px 6px;
+  line-height: 44px;
+  background: #f6f6f6;
+}
+.brand-attr .more,
+.origin-attr .more,
+.formulation-attr .more,
+.sort-attr .more {
+  display: none;
+}
+.brand-attr .more i,
+.origin-attr .more i,
+.formulation-attr .more i,
+.sort-attr .more i {
+  position: relative;
+  top: 3px;
+}
+.more-choices div {
+  height: 5px;
+  background: #f4f4f4;
+  border: 1px solid #e5e5e5;
+}
+.more-choices a {
+  position: relative;
+  top: -1px;
+  display: block;
+  margin: 0 0 40px 540px;
+  width: 120px;
+  height: 23px;
+  line-height: 16px;
+  text-align: center;
+  background: #f4f4f4;
+  border: 1px solid #e5e5e5;
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.good-list {
+  float: left;
+  margin-left: 20px;
+  width: 980px;
+  margin-bottom: 80px;
+}
+.filter {
+  padding-left: 10px;
+  height: 40px;
+  background: #f9f9f9;
+  border: 1px solid #e5e5e5;
+}
+.filter > a {
+  float: left;
+  display: block;
+  margin-top: 8px;
+  padding-left: 15px;
+  width: 60px;
+  height: 24px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+}
+.filter > a:nth-of-type(2) {
+  border-left: none;
+  border-right: none;
+}
+.filter > a:nth-of-type(3) {
+  margin-right: 5px;
+}
+.filter > a.active {
+  color: #fff;
+  background: #ff7e00;
+}
+.filter > a i {
+  position: relative;
+  top: 2px;
+  margin-left: 2px;
+}
+.filter .input-group {
+  float: left;
+  display: none;
+  margin: 8px 10px 0 20px;
+  width: 220px;
+  font-size: 12px;
+}
+.filter .input-group .form-control {
+  height: 24px;
+  font-size: 12px;
+}
+.filter .input-group button {
+  height: 24px;
+  line-height: 10px;
+  font-size: 12px;
+  color: #777;
+  background: #f4f4f4;
+}
+.filter .pagination {
+  float: right;
+  margin-right: 12px;
+  line-height: 0;
+}
+.filter .pagination i {
+  position: relative;
+  top: 2px;
+}
+.filter .pagination span:nth-of-type(1) {
+  color: #FF7E00;
+}
+.choose {
+  float: left;
+  display: none;
+  padding-top: 12px;
+}
+.choose a {
+  float: left;
+  display: block;
+  margin: 0 2px 0 10px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #e5e5e5;
+}
+.choose a i {
+  position: relative;
+  top: -3px;
+  left: -1px;
+  color: transparent;
+}
+.choose a.active {
+  border: 1px solid #ff7e00;
+}
+.choose a.active i {
+  color: #ff7e00;
+}
+.arrangement {
+  float: left;
+  display: none;
+  margin-top: 8px;
+  border: 1px solid #e5e5e5;
+}
+.arrangement a {
+  float: left;
+  display: block;
+  width: 60px;
+  height: 23px;
+  line-height: 21px;
+}
+.arrangement a i {
+  position: relative;
+  top: 2px;
+  margin: 0 6px 0 8px;
+}
+.arrangement a.active {
+  background: #FF7E00;
+  color: #fff;
+}
+.empty {
+  overflow: hidden;
+  padding: 118px 114px;
+}
+.empty img {
+  width: 69px;
+  height: 51px;
+  float: left;
+  margin: -8px 10px 0 260px;
+}
+.empty a {
+  color: #0090ff;
+  line-height: 24px;
+}
+.empty p {
+  text-align: center;
+}
+.empty p i {
+  margin-right: 10px;
+  vertical-align: middle;
+  font-size: 40px;
+  color: #ff7e00;
+}
+.empty p span {
+  color: #ff7e00;
+}

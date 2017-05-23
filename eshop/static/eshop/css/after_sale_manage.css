@@ -1,0 +1,113 @@
+.header-member .menu a.active {
+  background: transparent;
+}
+.after-sale-manage {
+  float: left;
+  padding-top: 40px;
+  width: 1070px;
+  margin-bottom: 80px;
+}
+.tab {
+  border-bottom: 2px solid #e5e5e5;
+  height: 32px;
+  margin-bottom: 15px;
+}
+.tab li {
+  float: left;
+  padding-bottom: 8px;
+  position: relative;
+  top: 2px;
+  border-bottom: 2px solid transparent;
+}
+.tab li.active {
+  border-bottom-color: #33cc6d;
+}
+.tab li.active a {
+  color: #33cc6d;
+}
+.tab li:last-of-type a {
+  border-right: none;
+}
+.tab li a {
+  border-right: 1px solid #e5e5e5;
+  padding: 2px 12px;
+  font-size: 14px;
+  font-weight: bolder;
+  color: #999;
+}
+.h6 {
+  overflow: hidden;
+  padding-left: 12px;
+  margin-bottom: 0;
+}
+.form-group {
+  float: left;
+  width: 330px;
+  margin-bottom: 10px;
+}
+.form-group:last-of-type {
+  width: 500px;
+}
+.form-group label {
+  float: left;
+  line-height: 30px;
+}
+.form-group .form-control {
+  float: left;
+  width: 200px;
+  height: 30px;
+  font-size: 12px;
+  color: #777;
+}
+.form-group .date {
+  width: 90px;
+}
+.form-group .control-text {
+  font-size: 12px;
+  line-height: 18px;
+  min-width: 10px;
+  padding: 5px 0;
+  margin: 0 3px 0 7px;
+  float: left;
+}
+.form-group a {
+  display: block;
+  float: left;
+  margin-left: 20px;
+}
+.table {
+  margin-bottom: 0;
+}
+.table thead {
+  background: #f6f6f6;
+}
+.table thead tr th {
+  height: 40px;
+  line-height: 21px;
+  text-align: center;
+  border-bottom-width: 1px;
+  font-weight: normal;
+}
+.table tbody tr td {
+  text-align: center;
+  height: 38px;
+  line-height: 21px;
+}
+.table tbody tr td:nth-of-type(5),
+.table tbody tr td:nth-of-type(6) {
+  text-align: right;
+  font-family: "微软雅黑";
+  font-weight: bolder;
+  color: #ff6600;
+  padding-right: 20px;
+}
+.table tbody tr td:last-of-type a {
+  color: #0090ff;
+}
+.table tbody tr td:last-of-type a:hover {
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+}
+.table tbody tr td a:hover {
+  color: #0090ff;
+}

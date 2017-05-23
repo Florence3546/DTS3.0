@@ -1,0 +1,242 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}信息发布 - DTS管理后台{% endblock %}
+
+{#  侧边栏  #}
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_info_manage.html' %}
+{% endblock %}
+
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #table-info tbody tr td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    #table-info tbody tr td p {
+      margin: 0;
+      height: 24px;
+      line-height: 24px;
+    }
+
+    #order-code {
+      margin-right: 35px;
+    }
+
+    .text-dark {
+      color: #cccccc;
+    }
+
+    input[type=radio] {
+      position: relative;
+      top: 1px;
+      margin-right: 5px;
+    }
+
+    .text-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #484848;
+    }
+
+    #modal_info_preview .modal-dialog, #modal_information .modal-dialog {
+      width: 900px;
+    }
+
+    #modal_information label {
+      width: 110px;
+      padding-right: 0;
+    }
+
+    #modal_information label.error {
+      width: 140px;
+    }
+
+    #cke_info_content {
+      width: 740px !important;
+    }
+
+    #modal_information .form-control {
+      margin-left: 0;
+    }
+
+    #modal_information .form-control.date {
+      width: 200px;
+    }
+
+    .container-fluid p {
+      line-height: 24px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <div class="small" id="content">
+    <form id="publish_search_from" class="form-inline" role="form" method="get" action="">
+      {% csrf_token %}
+      <input type="hidden" id="total_count" value="{{ info_list.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="s_info_name" class="control-label normal">信息名称</label>
+          <input type="text" id="s_info_name" name="s_info_name" class="form-control" value="{{ kwargs.name }}"
+                 placeholder="请输入查询关键字">
+          <input type="hidden" id="op_type" name="op_type" value="info_list">
+          <button type="button" class="control-btn btn btn-dts btn-s1 mrg-l-30" id="info_search_btn">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="order-code" class="control-label normal">信息类型</label>
+          <select class="form-control" name="s_info_type" id="s_info_type">
+            <option value="" {% ifequal kwargs.info_type '' %}selected{% endifequal %}>请选择……</option>
+            <option value="N" {% ifequal kwargs.info_type 'N' %}selected{% endifequal %}>公告</option>
+            <option value="I" {% ifequal kwargs.info_type 'I' %}selected{% endifequal %}>资讯</option>
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="data_type" class="control-label normal">信息状态</label>
+          <select class="form-control" name="s_info_status" id="s_info_status">
+            <option value="" {% ifequal kwargs.info_status '' %}selected{% endifequal %}>请选择……</option>
+            <option value="0" {% ifequal kwargs.info_status '0' %}selected{% endifequal %}>待投放</option>
+            <option value="1" {% ifequal kwargs.info_status '1' %}selected{% endifequal %}>投放中</option>
+            <option value="2" {% ifequal kwargs.info_status '2' %}selected{% endifequal %}>已屏蔽</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <div class="spacing">
+      <button class="control-btn btn btn-dts btn-s2" id="add_info">添加信息</button>
+      <button class="control-btn btn btn-dts btn-s2" id="pub_batch_btn">投放</button>
+      <button class="control-btn btn btn-dts btn-s2" id="shield_batch_btn">屏蔽</button>
+      <button class="control-btn btn btn-dts btn-s2" id="delete_batch_btn">删除</button>
+    </div>
+    <table id="table-info" class="table-bordered table-hover" width="100%">
+      <thead>
+      <tr>
+        <th width="32"><input type="checkbox" class="check-all"></th>
+        <th>信息类型</th>
+        <th>信息名称</th>
+        <th>显示排序</th>
+        <th>信息状态</th>
+        <th>有效时间</th>
+        <th>修改人/时间</th>
+        <th>审核人/时间</th>
+        <th>置顶</th>
+        <th>可见对象</th>
+        <th width="100">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for info in info_list %}
+        <tr class="{% ifequal info.info_status 2 %}text-dark{% endifequal %}" id="{{ info.id }}">
+          <td><input type="checkbox" class="check-item" value="{{ info.id }}"></td>
+          <td>{{ info.get_info_type_display }}</td>
+          <td><a href="javascript:;" class="info_show"
+                 api="{% url 'dtsadmin:ajax:get_info_publish' modal_name='InformationShow' obj_id=info.id %}">{{ info.name }}</a>
+          </td>
+          <td>{{ info.order_no }}</td>
+          <td>{{ info.get_info_status_display }}</td>
+          <td>
+            <p>{{ info.start_date|date:"Y-m-d" }}</p>
+            <p>{{ info.end_date|date:"Y-m-d" }}</p>
+          </td>
+          <td>
+            <p>{{ info.update_user.first_name }}</p>
+            <p>{{ info.update_date|date:"Y-m-d H:i:s" }}</p>
+          </td>
+          <td>
+            {% ifnotequal info.reviewer.first_name None %}
+              <p>{{ info.reviewer.first_name }}</p>
+              <p>{{ info.review_date|date:"Y-m-d H:i:s" }}</p>
+            {% endifnotequal %}
+          </td>
+          <td>{% if info.is_top %}是{% else %}否{% endif %}</td>
+          <td>{{ info.get_audience_display }}</td>
+          <td class="dropdown" style="width: 99px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              管理
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" style="top: 100%;">
+              <li>
+                <a href="javascript:;" class="info_show"
+                   api="{% url 'dtsadmin:ajax:get_info_publish' modal_name='InformationShow' obj_id=info.id %}">查看</a>
+              </li>
+              <li>
+                <a href="javascript:;" class="update info_update"
+                   api="{% url 'dtsadmin:ajax:get_info_publish' modal_name='InformationAttr' obj_id=info.id %}"
+                   id="{{ info.id }}">修改</a>
+              </li>
+              <li>
+                <a href="javascript:;" class="delete info_delete"
+                   api="{% url 'dtsadmin:ajax:delete_info_publish' modal_name='InformationAttr' obj_id=info.id %}"
+                   id="{{ info.id }}">删除</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      {% empty %}
+        <tr class="no_data">
+          <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if info_list.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ info_list.paginator.per_page }}条，总共{{ info_list.paginator.num_pages }}页，共{{ info_list.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if info_list.has_previous %}{{ info_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == info_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span class="page-count">…</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == info_list.number %}active{% endif %}"><a class="btn_page"
+                                                                            page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span class="page-count">…</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == info_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="
+
+                 {% if info_list.has_next %}{{ info_list.next_page_number }}{% else %}{{ info_list.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+
+{% endblock %}
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_informations.html' %}
+  {% include 'dtsadmin/modals/modal_informations_preview.html' %}
+  {% include 'dtsadmin/modals/modal_alert_confirm.html' %}
+{% endblock %}
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/info_publish.js'|static_url }}"></script>
+{% endblock %}

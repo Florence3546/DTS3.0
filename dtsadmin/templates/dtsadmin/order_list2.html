@@ -1,0 +1,309 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}订单列表 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    #table_order thead th:nth-of-type(1) {
+      width: 32px;
+    }
+
+    #table_order thead th:nth-last-of-type(1) {
+      width: 100px;
+    }
+
+    #table_order tr td:nth-of-type(1),
+    #table_order tr td:nth-of-type(3),
+    #table_order tr td:nth-of-type(5),
+    #table_order tr td:nth-of-type(6),
+    #table_order tr td:nth-of-type(8),
+    #table_order tr td:nth-of-type(9),
+    #table_order tr td:nth-of-type(10),
+    #table_order tr td:nth-of-type(11) {
+      text-align: center;
+    }
+
+    #table_order tr td:nth-of-type(6),
+    #table_order tr td:nth-of-type(7) {
+      text-align: right;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+    <form class="form-inline bordered" id="search_order_form" method="get" action="">
+
+      <div class="h6">
+        <div class="form-group form-group-dts">
+          <label for="order_no" class="control-label normal">订单编号</label>
+          <input type="text" class="form-control" id="order_no" name="order_no">
+          <button type="submit" class="control-btn btn btn-dts btn-s1">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+
+      <div class="h6 query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="order_transaction_state" class="control-label normal">订单状态</label>
+          <select class="form-control"
+                  id="order_transaction_state"
+                  name="transaction_state">
+            <option value="">----请选择----</option>
+            {% for choice in obj.transaction_state_choices %}
+              <option value="{{ choice.0 }}"
+                      {% if request.GET.transaction_state == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+            {% endfor %}
+
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="order_buyer_name" class="control-label normal">下单人</label>
+          <input type="text" class="form-control" id="order_buyer_name" name="buyer_name"
+                 value="{{ request.GET.buyer_name }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="order_purchaser_name" class="control-label normal">企业名称</label>
+          <input type="text" class="form-control" id="order_purchaser_name" name="purchaser_name"
+                 value="{{ request.GET.purchaser_name }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="payment_method_name_cn" class="control-label normal">支付方式</label>
+          <select class="form-control"
+                  id="payment_method_name_cn"
+                  name="payment_method_name">
+            <option value="">----请选择----</option>
+            {% for pay in obj.paymentmethod %}
+              <option value="{{ pay.id }}"
+                      {% if request.GET.payment_method_name == pay.id %}selected{% endif %}>{{ pay.name }}</option>
+
+            {% endfor %}
+
+
+            <option>在线支付</option>
+            <option>线下支付</option>
+            <option>货到付款</option>
+          </select>
+        </div>
+      </div>
+      <div class="h6 query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="ord_time_from" class="control-label normal">下单时间</label>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd"
+                 id="ord_time_from"
+                 name="ord_time_from"
+                 value="{{ request.GET.ord_time_from }}"
+                 placeholder="请选择日期">
+          <span class="control-text">~</span>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd"
+                 id="ord_time_to"
+                 name="ord_time_to"
+                 value="{{ request.GET.ord_time_to }}"
+                 placeholder="请选择日期">
+        </div>
+
+        <div class="form-group form-group-dts">
+          <label for="total_price_from" class="control-label normal">订单金额</label>
+          <input type="text" class="form-control money"
+                 id="total_price_from"
+                 name="total_price_from"
+                 value="{{ request.GET.total_price_from }}">
+          <span class="control-text">~</span>
+          <input type="text" class="form-control money"
+                 id="total_price_to"
+                 name="total_price_to" value="{{ request.GET.total_price_to }}">
+        </div>
+
+        <div class="form-group form-group-dts">
+          <label for="order_good_name" class="control-label normal">商品信息</label>
+          <input type="text" class="form-control"
+                 id="order_good_name"
+                 value="{{ request.GET.order_good_name }}"
+                 name="order_good_name">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="order_invoice_state" class="control-label normal">开票状态</label>
+          <select class="form-control"
+                  id="order_invoice_state"
+                  name="order_invoice_state">
+            <option value="">----请选择----</option>
+            {% for choice in obj.invoice_state_choices %}
+              <option value="{{ choice.0 }}"
+                      {% if request.GET.order_invoice_state == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+            {% endfor %}
+
+          </select>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="h6">
+      <button type="button"
+              id="verify_pass"
+              api="{% url 'dtsadmin:ajax:order_verify' %}"
+              class="control-btn btn btn-dts btn-s2 is_pass">通过
+      </button>
+      <button type="button"
+              id="verify_no_pass"
+              api="{% url 'dtsadmin:ajax:order_verify' %}"
+              class="control-btn btn btn-dts btn-s2 is_pass">不通过
+      </button>
+    </div>
+
+    <table id="table_order" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>
+          <input type="checkbox" class="check-all"></th>
+        <th>订单编号</th>
+        <th>下单人</th>
+        <th>企业名称</th>
+        <th>协议客户</th>
+        <th>订单金额</th>
+        <th>实付金额</th>
+        <th>支付方式</th>
+        <th>改价状态</th>
+        <th>开票状态</th>
+        <th>审核状态</th>
+        <th>交易状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+
+
+      {% for data in data_list %}
+        <tr>
+          <td>
+            <input type="checkbox" name="chk_list" value="{{ data.id }}"></td>
+          <td>{{ data.order_no }}</td>
+          <td>{{ data.buyer.username }}</td>
+          <td>{{ data.purchaser.name }}</td>
+          <td>{% bool_str data.is_purchasea_greement %}</td>
+          <td>{{ data.total_price | multiply:'0.01' }}</td>
+          <td>{{ data.total_price | multiply:'0.01' }}</td>
+          <td>{{ data.payment_method.name_cn }}</td>
+          <td>{{ data.get_change_price_state_display }}</td>
+          <td>{{ data.get_invoice_state_display }}</td>
+          <td>{{ data.get_verify_state_display }}</td>
+          <td>{{ data.get_transaction_state_display }}</td>
+          <td class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">修改
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#">审核</a>
+              </li>
+              <li>
+                <a href="javascript:;"
+                   api="{% url 'dtsadmin:ajax:get_modal_byid' modal_name='Order' obj_id=data.id %}"
+                   class="update">修改</a>
+              </li>
+              <li>
+                <a href="javascript:;"
+                   class="delete"
+                   api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='Enterprise' obj_id=data.id %}">删除</a>
+              </li>
+              <li>
+                <a href="#">经营范围</a>
+              </li>
+              <li>
+                <a href="#">修改积分</a>
+              </li>
+              <li>
+                <a href="#">修改信用额度</a>
+              </li>
+              <li>
+                <a href="#">修改会员等级</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+
+
+      <tr>
+        <td>
+          <input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>张新新</td>
+        <td>东力药业</td>
+        <td>否</td>
+        <td>52000.00</td>
+        <td>52000.00</td>
+        <td>网银在线</td>
+        <td>已开票</td>
+        <td>交易成功</td>
+        <td>交易成功</td>
+        <td>交易成功</td>
+        <td class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            修改
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">审核</a>
+            </li>
+            <li>
+              <a href="#">修改</a>
+            </li>
+            <li>
+              <a href="#">删除</a>
+            </li>
+            <li>
+              <a href="#">经营范围</a>
+            </li>
+            <li>
+              <a href="#">修改积分</a>
+            </li>
+            <li>
+              <a href="#">修改信用额度</a>
+            </li>
+            <li>
+              <a href="#">修改会员等级</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+    <span class="table-info">每页显示{{ page_limit }}条，总共{{ data_list.paginator.num_pages }}页，共{{ paginator.count }}条</span>
+    <ul class="pagination right">
+      <li><a href="{% if data_list.has_previous %}?page=
+        {{ data_list.previous_page_number }}{% else %}javascript:;{% endif %}">&laquo;</a></li>
+
+      {% for i in paginator.page_range %}
+        {% ifequal i page %}
+          <li class="active"><a href="">{{ i }}</a></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endifequal %}
+      {% endfor %}
+      <li><a href="{% if data_list.has_next %}?page={{ data_list.next_page_number }}{% else %}javascript:;{% endif %}">&raquo;</a>
+      </li>
+
+
+    </ul>
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_order.html' %}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/order_list.js'|static_url }}"></script>
+{% endblock %}

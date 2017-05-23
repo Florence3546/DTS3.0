@@ -1,0 +1,253 @@
+{% load extras %}
+<div class="modal fade" id="modal_payment" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="form_payment">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="id_payment_id" name="id" value="{{ obj.id }}">
+
+          <div class="form-group form-group-sm pay-type">
+            <label class="col-sm-3 control-label normal"><span class="must-note">*</span>选择支付类型</label>
+            <div class="col-sm-9">
+              <select class="form-control middle" name="pay_type" id="id_pay_type" required>
+                <option value="">请选择……</option>
+                {% for choice in obj.pay_type_choices %}
+                  <option value="{{ choice.0 }}"
+                          {% if obj.pay_type == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group form-group-sm pay-method hide">
+            <label class="col-sm-3 control-label normal"><span class="must-note">*</span>选择支付种类</label>
+            <div class="col-sm-9">
+              <select class="form-control middle" name="logo" id="id_logo" required>
+                <option value="" logo="123">请选择……</option>
+                <option value="alipay" logo="{{ 'dtsadmin/img/alipay.png'|static_url }}" id="pay_alipay">支付宝</option>
+                <option value="weixin" logo="{{ 'dtsadmin/img/weixin.png'|static_url }}" id="pay_weixin">微信支付</option>
+                <option value="wealth" logo="{{ 'dtsadmin/img/wealth.png'|static_url }}" id="pay-wealth">财付通</option>
+                <option value="onlinepay" logo="{{ 'dtsadmin/img/onlinepay.png'|static_url }}" id="pay_onlinepay">线上支付
+                </option>
+                <option value="e-bank" logo="{{ 'dtsadmin/img/e-bank.png'|static_url }}" id="pay_ebank">网银支付</option>
+                <option value="offlinepay" logo="{{ 'dtsadmin/img/offlinepay.png'|static_url }}" id="pay_off">线下支付
+                </option>
+                <option value="predeposit" logo="{{ 'dtsadmin/img/predeposit.png'|static_url }}" id="pay_advance">
+                  预存款支付
+                </option>
+                <option value="cashondelivery" logo="{{ 'dtsadmin/img/cashondelivery.png'|static_url }}" id="pay_good">
+                  货到付款
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="logo-name hide">
+            <div class="form-group form-group-sm logo">
+              <label class="col-sm-3 control-label normal">显示</label>
+              <div class="col-sm-9">
+                <img src="{{ obj.logo }}" alt="图片加载失败">
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_name_cn" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>支付方式名称</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control middle" id="id_name_cn" name="name_cn" value="{{ obj.name_cn }}"
+                       placeholder="请输入支付名称" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="id_support_money" class="col-sm-3 control-label normal">支持交易货币</label>
+            <div class="col-sm-9" id="id_support_money">
+              <span>人民币</span>
+            </div>
+          </div>
+          <div id="alipay_msg" class="pay-msg online-msg hide">
+            <div class="form-group form-group-sm">
+              <label for="id_taobao_account" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>签约支付宝账号</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long" id="id_taobao_account"
+                       value="{{ obj.api_args.taobao_account }}" required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_cooperate_id" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>合作者身份</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long" id="id_cooperate_id"
+                       value="{{ obj.api_args.cooperate_id }}" required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_security_note" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>安全校验码</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long" id="id_security_note"
+                       value="{{ obj.api_args.security_note }}" required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_public_key" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>公钥</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long" id="id_public_key" value="{{ obj.api_args.public_key }}"
+                       required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_private_key" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>私钥</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long" id="id_private_key" value="{{ obj.api_args.private_key }}"
+                       required>
+              </div>
+            </div>
+          </div>
+          <div id="weixin_msg" class="pay-msg online-msg hide">
+            <div class="form-group form-group-sm">
+              <label for="id_weixin_no" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>微信号</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_weixin_no"
+                       value="{{ obj.api_args.weixin_no }}" required>
+              </div>
+            </div>
+          </div>
+          <div id="wealth_msg" class="pay-msg online-msg hide">
+            <div class="form-group form-group-sm">
+              <label for="id_wealth_no" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>财付通账号</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_wealth_no"
+                       value="{{ obj.api_args.wealth_no }}" required>
+              </div>
+            </div>
+          </div>
+          <div id="onlinepay_msg" class="pay-msg online-msg hide">
+            <div class="form-group form-group-sm">
+              <label for="id_onlinepay_no" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>支付接口</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_onlinepay_no"
+                       value="{{ obj.api_args.onlinepay_no }}" required>
+              </div>
+            </div>
+          </div>
+          <div id="e-bank_msg" class="pay-msg online-msg hide">
+            <div class="form-group form-group-sm">
+              <label for="id_open_ebank" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>开户行</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_open_ebank"
+                       value="{{ obj.api_args.open_ebank }}" required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_open_eaccount" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>开户账号</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_open_eaccount"
+                       value="{{ obj.api_args.open_eaccount }}" required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_open_ename" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>开户姓名</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_open_ename"
+                       value="{{ obj.api_args.open_ename }}" required>
+              </div>
+            </div>
+          </div>
+          <div class="pay-msg offline-msg hide">
+            <div class="form-group form-group-sm">
+              <label for="id_open_bank" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>开户行</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_open_bank"
+                       value="{{ obj.api_args.open_name }}" required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_open_account" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>开户账号</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_open_account"
+                       value="{{ obj.api_args.open_name }}" required>
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="id_open_name" class="col-sm-3 control-label normal"><span
+                  class="must-note">*</span>开户姓名</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control long middle" id="id_open_name"
+                       value="{{ obj.api_args.open_name }}" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm hide">
+            <label for="id_api_msg" class="col-sm-3 control-label normal"><span
+                class="must-note">*</span>api</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control long" id="id_api_msg" name="api_args" value="{{ obj.api_args }}"
+                     placeholder="api_args">
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="id_order_no" class="col-sm-3 control-label normal"><span class="must-note">*</span>排序序号</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="id_order_no" name="order_no" value="{{ obj.order_no }}"
+                     required>
+            </div>
+          </div>
+          <div class="form-group form-group-sm on-off">
+            <label for="express_state" class="col-sm-3 control-label normal">状态</label>
+            <div class="col-sm-9">
+              {% if obj.is_active %}
+                <label for="yes" class="normal"><input type="radio" name="is_active" id="yes" value="1"
+                                                       checked>开启</label>
+                <label for="no" class="normal"><input type="radio" name="is_active" id="no" value="">关闭</label>
+              {% else %}
+                <label for="yes" class="normal"><input type="radio" name="is_active" id="yes" value="1">开启</label>
+                <label for="no" class="normal"><input type="radio" name="is_active" id="no" value="" checked>关闭</label>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="text-area" class="col-sm-3 control-label normal">支付方式介绍</label>
+            <div class="col-sm-9">
+              <textarea class="form-control" name="" id="text-area" cols="5" rows="5"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                id="submit_payment_add"
+                api="{% url 'dtsadmin:ajax:add_object_byform' form_class='PaymentMethodForm' %}"
+                class="btn btn-save btn-dts2 btn-s1 enter_click">保存
+        </button>
+        <button type="button"
+                id="submit_payment_update"
+                api="{% url 'dtsadmin:ajax:update_object_byform' form_class='PaymentMethodForm' %}"
+                class="btn btn-save btn-dts2 btn-s1 enter_click">保存
+        </button>
+        <button type="button"
+                class="btn btn-dts2 btn-s3 "
+                data-dismiss="modal">取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

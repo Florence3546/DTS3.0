@@ -1,0 +1,163 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}首页 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <style>
+    .main-menu {
+      height: 45px;
+      overflow: hidden;
+    }
+
+    .main-menu:hover {
+      height: 520px;
+      background: #fff;
+      border: 1px solid #16b753;
+      border-top: none;
+      overflow: visible;
+      z-index: 5;
+    }
+
+    .main-menu:hover li:first-of-type {
+      padding-left: 11px;
+    }
+
+    .notice {
+      width: 1200px;
+      min-height: 350px;
+      margin: 20px auto;
+    }
+
+    .notice-crumb {
+      height: 30px;
+    }
+
+    .notice-title {
+      text-align: center;
+      border-bottom: thin dashed #ddd;
+    }
+
+    .text-name {
+      color: #484848;
+      line-height: 50px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .text-time {
+      height: 30px;
+    }
+
+    .notice-box {
+      margin-top: 20px;
+    }
+
+    .notice-box p {
+      line-height: 24px;
+      text-indent: 2em;
+    }
+  </style>
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+    <!--site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+    <div id="content">
+      <div class="main-nav">
+        <div class="nav">
+          <!--
+          <a href="index.html">首页</a>
+          <a href="#">热销商品</a>
+          <a href="#">医药咨询</a>
+          <a href="#">快速下单</a>
+          <a href="#">供应招商</a>
+          <ul class="main-menu">
+            <li><i class="iconfont icon-shangpinfenlei"></i>全部商品分类</li>
+            <li>
+              <p>中药</p>
+              <a href="#">中成药</a>
+              <a href="#">中药引片</a>
+              <a href="#">中药材</a>
+            </li>
+            <li>
+              <p>西药</p>
+              <a href="#">抗生素</a>
+              <a href="#">肽类激素</a>
+              <a href="#">化学原料药</a>
+            </li>
+            <li>
+              <p>医药器械</p>
+              <a href="#">Ⅰ类</a>
+              <a href="#">Ⅱ类</a>
+              <a href="#">Ⅲ类</a>
+            </li>
+            <li>
+              <p>计生用品</p>
+              <a href="#">终止妊娠药品</a>
+              <a href="#">其他计生用品</a>
+            </li>
+            <li>
+              <p>保健品</p>
+              <a href="#">保健药品</a>
+              <a href="#">保健食品</a>
+            </li>
+            <li>
+              <p>进口药品</p>
+              <a href="#">进口药品</a>
+              <a href="#">进口计生</a>
+            </li>
+            <li>
+              <p>其他</p>
+              <a href="#">消毒用品</a>
+              <a href="#">日化用品</a>
+              <a href="#">非药品</a>
+            </li>
+          </ul>-->
+           <!-- 主导航 -->
+          {% for obj in home_section.main_nav.sectionhref_list %}
+            <a href="{{ obj.href }}" target="_blank">{{ obj.text }}</a>
+          {% endfor %}
+          <ul class="main-menu">
+            <!-- 全部商品分类 -->
+            <li>
+              <a href="{{ home_section.category_nav.href }}" target="_blank" style="color: #fff;">
+                {{ home_section.category_nav.icon|safe }}{{ home_section.category_nav.title }}
+              </a>
+            </li>
+            {% for obj in home_section.category_nav.child_list %}
+              <li>
+                <p>{{ obj.title }}</p>
+                {% for sectionhref in obj.sectionhref_list %}
+                  <a href="{{ sectionhref.href }}" target="_blank">{{ sectionhref.text }}</a>
+                {% endfor %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="notice">
+      <div class="notice-crumb">首页 > {{ obj.get_info_type_display }}</div>
+      <div class="notice-title">
+        <p class="text-name">【{{ obj.get_info_type_display }}】{{ obj.name }}</p>
+        <p class="text-time">{{ obj.start_date|date:"Y-m-d" }}</p>
+      </div>
+      <div class="notice-box">
+        {{ obj.content|safe }}
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+  </div>
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}{% endblock %}
+

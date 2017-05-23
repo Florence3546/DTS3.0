@@ -1,0 +1,43 @@
+<div class="modal fade" id="check_user_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">查看</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <tr>
+            <td>用户类型</td>
+            <td>{{ user.get_usertype_display }}</td>
+          </tr>
+          <tr>
+            <td>用户名</td>
+            <td>{{ user.username }}</td>
+          </tr>
+          <tr>
+            <td>姓名</td>
+            <td>{{ user.first_name }}</td>
+          </tr>
+          <tr>
+            <td>手机号</td>
+            <td>{{ user.phone }}</td>
+          </tr>
+          <tr>
+            <td>邮箱</td>
+            <td>{{ user.email }}</td>
+          </tr>
+          <tr>
+            <td>性别</td>
+            <td>{{ user.get_gender_display|default:'' }}</td>
+          </tr>
+          <tr>
+            <td>企业名称</td>
+            <td>{{ user.enterprise.name }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

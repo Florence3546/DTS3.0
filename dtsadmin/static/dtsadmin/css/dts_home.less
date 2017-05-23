@@ -1,0 +1,188 @@
+.content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  .title {
+    height: 24px;
+    padding: 0 6px;
+    color: #878787;
+    line-height: 24px;
+    border-bottom: 1px solid #e7e7e7;
+    font-weight: bolder;
+    a {
+      float: right;
+      color: #777;
+      font-weight: normal;
+    }
+    i {
+      color: #ccc;
+      font-weight: normal;
+    }
+  }
+  .left {
+    height: 700px;
+    margin: 0 430px 0 48px;
+    .order-info {
+      margin: 45px 0 80px;
+      overflow: hidden;
+      a {
+        display: block;
+        width: 30.2%;
+        height: 88px;
+        float: left;
+        padding: 28px 20px;
+        border-radius: 4px;
+        &:nth-of-type(1) {
+          background: #1fbd5b;
+          margin-right: 4.7%;
+        }
+        &:nth-of-type(2) {
+          background: #0090ff;
+          margin-right: 4.7%;
+        }
+        &:nth-of-type(3) {
+          background: #f88311;
+        }
+        i {
+          color: #fff;
+          font-size: 30px;
+          float: left;
+          line-height: 36px;
+        }
+        .icon-shangsheng {
+          float: right;
+          font-size: 20px;
+          line-height: 38px;
+        }
+        .txt, .num {
+          color: #fff;
+          margin-left: 16px;
+        }
+        .num {
+          font-size: 16px;
+          font-family: "微软雅黑";
+        }
+      }
+    }
+    .todo {
+      .todo-list {
+        padding-top: 15px;
+        a {
+          display: block;
+          width: 22%;
+          height: 66px;
+          float: left;
+          padding: 0 1%;
+          background: #f2f2f2;
+          line-height: 66px;
+          color: #777;
+          border-radius: 4px;
+          margin: 25px 4% 0 0;
+          &:nth-of-type(4), &:nth-of-type(8), &:nth-of-type(12) {
+            margin-right: 0;
+          }
+          i {
+            font-size: 30px;
+            color: #a3a3a3;
+            margin-right: 2%;
+            float: left;
+          }
+          span {
+            display: inline-block;
+            min-width: 32px;
+            height: 16px;
+            line-height: 16px;
+            text-align: center;
+            margin-top: 25px;
+            float: right;
+            font-weight: bolder;
+            font-size: 14px;
+            font-family: "微软雅黑";
+            color: #fff;
+            border-radius: 3px;
+            &.competent {
+              background: #ff9600;
+            }
+            &.unauthorized {
+              background: #cfcfcf;
+            }
+            &.zero {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+  }
+  .right {
+    position: absolute;
+    width: 326px;
+    height: 700px;
+    float: right;
+    padding-top: 20px;
+    right: 38px;
+    top: 0;
+    .info {
+      padding-top: 6px;
+      a:visited {
+        color: #ccc;
+        b {
+          color: #ccc;
+        }
+      }
+      a:hover {
+        color: #0090ff;
+        b {
+          color: #0090ff;
+        }
+      }
+      a {
+        display: block;
+        height: 24px;
+        line-height: 24px;
+        color: #777;
+        .matter {
+          display: inline-block;
+          max-width: 229px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        b {
+          font-size: 14px;
+          font-family: "微软雅黑";
+          color: #9c9c9c;
+          margin-right: 5px;
+        }
+        .data {
+          position: relative;
+          top: -8px;
+          left: 4px;
+          i {
+            display: inline-block;
+            padding: 0 8px;
+            background: #ff9600;
+            color: #fff;
+            font-style: normal;
+            border-radius: 12px;
+            font-size: 14px;
+            transform: scale(0.52);
+            -webkit-transform: scale(0.52);
+            position: relative;
+            left: -5px;
+          }
+        }
+      }
+    }
+    .announcement {
+      height: 169px;
+    }
+    .consult {
+      height: 290px;
+      overflow: hidden;
+    }
+
+  }
+}

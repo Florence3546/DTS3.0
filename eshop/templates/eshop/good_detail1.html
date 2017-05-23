@@ -1,0 +1,249 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}商品详情 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/good_detail.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <div id="content">
+      <div class="main-nav">
+        <div class="nav">
+          <a href="index.html">首页</a>
+          <a href="#">热销商品</a>
+          <a href="#">医药咨询</a>
+          <a href="#">快速下单</a>
+          <a href="#">供应招商</a>
+          <ul class="main-menu">
+            <li><i class="iconfont icon-shangpinfenlei"></i>全部商品分类</li>
+            <li>
+              <p>中药</p>
+              <a href="#">中成药</a>
+              <a href="#">中药引片</a>
+              <a href="#">中药材</a>
+            </li>
+            <li>
+              <p>西药</p>
+              <a href="#">抗生素</a>
+              <a href="#">肽类激素</a>
+              <a href="#">化学原料药</a>
+            </li>
+            <li>
+              <p>医药器械</p>
+              <a href="#">Ⅰ类</a>
+              <a href="#">Ⅱ类</a>
+              <a href="#">Ⅲ类</a>
+            </li>
+            <li>
+              <p>计生用品</p>
+              <a href="#">终止妊娠药品</a>
+              <a href="#">其他计生用品</a>
+            </li>
+            <li>
+              <p>保健品</p>
+              <a href="#">保健药品</a>
+              <a href="#">保健食品</a>
+            </li>
+            <li>
+              <p>进口药品</p>
+              <a href="#">进口药品</a>
+              <a href="#">进口计生</a>
+            </li>
+            <li>
+              <p>其他</p>
+              <a href="#">消毒用品</a>
+              <a href="#">日化用品</a>
+              <a href="#">非药品</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="main">
+        <div class="crumb">
+          <ul>
+            <li>
+              <span>全部</span>
+              <i class="iconfont icon-shangxiajiantou-copy1"></i>
+            </li>
+            <li>
+              <span>其他用品</span>
+              <i class="iconfont icon-shangxiajiantou-copy1"></i>
+            </li>
+            <li>
+              <span>保健品</span>
+            </li>
+          </ul>
+        </div>
+        <div class="product-detail">
+          <div class="preview">
+            <div class="spec">
+              <img src="../../static/eshop/images/product/good.png"/>
+            </div>
+            <div class="spec-scroll">
+              <a class="prev"><i class="iconfont icon-youbian-copy"></i></a>
+              <div class="spec-list">
+                <div>
+                  <ul>
+                    <li class="active"><img src="../../static/eshop/images/product/01.png"/></li>
+                    <li><img src="../../static/eshop/images/product/02.png"/></li>
+                    <li><img src="../../static/eshop/images/product/03.png"/></li>
+                    <li><img src="../../static/eshop/images/product/04.png"/></li>
+                    <li><img src="../../static/eshop/images/product/04.png"/></li>
+                    <li><img src="../../static/eshop/images/product/04.png"/></li>
+                    <li><img src="../../static/eshop/images/product/04.png"/></li>
+                    <li><img src="../../static/eshop/images/product/04.png"/></li>
+                  </ul>
+                </div>
+              </div>
+              <a class="next"><i class="iconfont icon-youbian"></i></a>
+            </div>
+            <div class="share">
+              <a><i class="iconfont icon-iconziti17"></i> 分享</a>
+              <a><i class="iconfont icon-shoucang1"></i> 收藏</a>
+            </div>
+          </div>
+          <div class="inner">
+            <h4>惠氏善存惠氏善存惠氏善存惠氏善存</h4>
+            <p>会员价：<b>￥15.8</b></p>
+            <p>品牌：<span>惠氏善存</span></p>
+            <p>规格：<span>60片</span></p>
+            <p>包装：<span>小盒</span></p>
+            <div class="car-box">
+              <div class="quantity">数量:</div>
+              <div class="count">
+                <span class="add" style="pointer-events: auto;"><i></i></span>
+                <span class="reduce" style="pointer-events: auto;"><i></i></span>
+                <input type="text" value="1">
+              </div>
+              <a class="addCart" href="{% url 'eshop:shopping_cart_list' %}">加入购物车</a>
+            </div>
+            <div class="hint">请仔细阅读说明书并按说明书使用或在药师指导下购买和使用</div>
+          </div>
+        </div>
+        <div class="hot-goods">
+          <div class="goods">
+            <div>热销商品</div>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+          <a href="#"><img src="../../static/eshop/images/sousuo/guanggao1.png"> </a>
+          <a href="#"><img src="../../static/eshop/images/sousuo/guanggao2.png"> </a>
+        </div>
+        <div class="main-right">
+          <div class="tab-defined">
+            <ul class="tabs_nav">
+              <li class="active" data-tab="introduce"><a>商品介绍</a></li>
+              <li data-tab="specification"><a>说明书</a></li>
+            </ul>
+          </div>
+          <div class="tab-content">
+            <div class="introduce">
+              <div>
+                <p>商品名称：<span>惠氏 善存 多维元素片(29) 60 片</span></p>
+                <p>规格：<span>60 片</span></p>
+                <p>生产厂家：<span>惠氏制药有限公司</span></p>
+                <p>品牌：<span>惠氏善存</span></p>
+                <p>保质期：<span>24个月</span></p>
+                <p>批准文号：<span>国药准字H2545844165441</span></p>
+              </div>
+              <img src="../../static/eshop/images/product/goodInfo.png"/>
+            </div>
+            <div class="specification hide">
+              <img src="../../static/eshop/images/product/goodInfo.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+    <div class="right-tab">
+      <a href="#"><i class="iconfont icon-qq"></i></a>
+      <a href="#"><i class="iconfont icon-gouwuche"></i></a>
+      <a href="#"><i class="iconfont icon-liuyan"></i></a>
+      <a href="#"><i class="iconfont icon-huidaodingbu"></i></a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/good_detail.js'|static_url }}"></script>
+{% endblock %}
+
+

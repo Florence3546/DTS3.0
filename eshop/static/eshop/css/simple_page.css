@@ -1,0 +1,123 @@
+.main-menu {
+  height: 45px;
+  overflow: hidden;
+}
+.main-menu:hover {
+  height: 520px;
+  background: #fff;
+  border: 1px solid #16b753;
+  border-top: none;
+  overflow: visible;
+  z-index: 5;
+}
+.main-menu:hover li:first-of-type {
+  padding-left: 11px;
+}
+.crumb {
+  padding-left: 10px;
+  overflow: hidden;
+}
+.crumb ul {
+  overflow: hidden;
+}
+.crumb li {
+  float: left;
+  padding-left: 6px;
+  height: 50px;
+  line-height: 50px;
+}
+.crumb li i.greater-than {
+  position: relative;
+  top: 3px;
+}
+.sidebar-member {
+  margin-top: 0;
+}
+.help-content {
+  float: left;
+  width: 1070px;
+  min-height: 570px;
+  border: 1px solid #efefef;
+  margin-bottom: 110px;
+}
+.help-content .help-title {
+  margin: 0 20px 20px;
+  height: 70px;
+  line-height: 70px;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 16px;
+  border-bottom: 1px dashed #e5e5e5;
+}
+.help-content .help-body {
+  padding: 0 30px 30px;
+}
+.help-content .mrg-b-30 {
+  margin-bottom: 30px;
+}
+.help-content .mrg-t-30 {
+  margin-top: 30px;
+}
+.help-content .mrg-t-20 {
+  margin-top: 20px;
+}
+.help-content .mrg-b-20 {
+  margin-bottom: 20px;
+}
+.help-content .mrg-l-18 {
+  margin-left: 18px;
+}
+.help-content .mrg-l-12 {
+  margin-left: 12px;
+}
+.help-content .text-content {
+  text-indent: 24px;
+  line-height: 24px;
+}
+.help-content .border {
+  border: 1px solid #e5e5e5;
+}
+.help-content img {
+  display: block;
+  margin: 0 auto;
+}
+.help-content dt {
+  font-weight: normal;
+  color: #33cc6d;
+  line-height: 24px;
+}
+.help-content dd {
+  margin-left: 12px;
+  line-height: 24px;
+}
+.help-content dd .num {
+  color: #33cc6d;
+}
+.help-content .purchase-process {
+  margin: 0 0 20px 30px;
+  overflow: hidden;
+}
+.help-content .purchase-process li {
+  float: left;
+  width: 150px;
+  margin-right: 65px;
+  text-align: center;
+}
+.help-content .purchase-process li:last-of-type {
+  margin-right: 0;
+}
+.help-content .annotation dt {
+  line-height: 18px;
+  color: #999;
+}
+.help-content .annotation dd {
+  line-height: 18px;
+  color: #999;
+  margin-left: 24px;
+}
+.help-content ul {
+  line-height: 24px;
+}
+.help-content li.attention {
+  color: #ff5555;
+}

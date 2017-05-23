@@ -1,0 +1,62 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}首页 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'dtsadmin/css/dts_home.css'|static_url }}">
+  <style>
+    .content {
+      width: 1200px;
+      margin: 0 auto;
+    }
+
+    .notice-crumb {
+      height: 30px;
+    }
+
+    .notice-title {
+      text-align: center;
+      border-bottom: thin dashed #ddd;
+    }
+
+    .text-name {
+      color: #484848;
+      line-height: 50px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .text-time {
+      height: 30px;
+    }
+
+    .notice-box {
+      margin-top: 20px;
+    }
+
+    .notice-box p {
+      line-height: 24px;
+      text-indent: 2em;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="content small">
+    <div class="notice">
+      <div class="notice-crumb">首页 > {{ obj.get_info_type_display }}</div>
+      <div class="notice-title">
+        <p class="text-name">【{{ obj.get_info_type_display }}】{{ obj.name }}</p>
+        <p class="text-time">{{ obj.start_date|date:"Y-m-d" }}</p>
+      </div>
+      <div class="notice-box">
+        {{ obj.content|safe }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/dts_home.js'|static_url }}"></script>
+{% endblock %}

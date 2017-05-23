@@ -1,0 +1,89 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}售后服务 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>售后服务</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>退款退货政策</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">退款退货政策</div>
+        <div class="help-body">
+          <dl>
+            <dt>1. 以下情况可支持退货退款：</dt>
+            <dd>(1)由于产品本身存在质量原因，经我方质量管理部门检验，确属质量问题的；</dd>
+            <dd>(2)由于我方原因造成发货错误，而给您带来不便的；</dd>
+            <dd>(3)国家权威管理部门发布公告的产品（如停售、收回等）；</dd>
+            <dd>(4)收到货物时，部分商品破损、溢漏、配件缺失，配送人员当场确认的。</dd>
+            <dd>*温馨提示：</dd>
+            <dd>(1) 物流配送途中，外包装有明显挤压变形、破损等情况的，请您必须在配送人员在场情况下联系国药网客服处理；</dd>
+            <dd>(2) 包裹商品的数量、种类等与您的订单不一致的。为防止配送途中的掉包或是配错情况，请您必须在配送人员在场情况下，联系国药网客服确认包裹情况， 再确认是否签收。</dd>
+          </dl>
+          <dl>
+            <dt>2. 以下情况不支持退换货：</dt>
+            <dd>(1)任何本平台出售的商品；</dd>
+            <dd>(2)任何已使用的商品，有质量问题除外（签收日起7天内，按照物流签收后的第二天零时起计算时间，满168小时为7天）；</dd>
+            <dd>(3)超出退货规定时间的商品；</dd>
+            <dd>(4)因客户本身使用和储藏不当而造成商品损坏、污染等质量问题；</dd>
+            <dd>(5)需要低温储藏的商品；</dd>
+            <dd>(6)退回商品外包装或其他商品附属物不完整或有毁损的；</dd>
+            <dd>(7)商品批号、规格与售出时不符的，不能提供本平台消费凭证的商品；</dd>
+            <dd>(8)按照国家食品药品监督管理局新版GSP（卫生部第90号令）第一百七十七条规定：</dd>
+            <dd>(9)商品的附件、赠品（需要和主商品一起退换）、发票缺失或涂改等影响商品外完好的情形；</dd>
+            <dd>(10)购买时明确说明不支持退换货的商品；</dd>
+            <dd>(11)其他依法不应办理退换货的商品；</dd>
+            <dd>(12)客户预订、本公司专门为其采购的商品；</dd>
+            <dd>*温馨提示：</dd>
+            <dd>(1)因拍摄灯光及不同显示器色差等问题可能造成商品图片实物有色差，一切以实物为准；</dd>
+            <dd>(2)建议妥善保管商品的外包装、附件、赠品至少7天；</dd>
+            <dd>(3)由于您使用失误、使用环境限制造成的误报以及实际情况与您描述不符，需由您承担商品往返所产生的费用（且商品需确保完好）。</dd>
+          </dl>
+          <dl>
+            <dt>3.退货款结算按本公司出库实际结算价进行结算，相关促销政策同时扣除。</dt>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

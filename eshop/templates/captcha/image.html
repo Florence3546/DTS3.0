@@ -1,0 +1,12 @@
+{% load i18n %}
+{#{% spaceless %}#}
+{#    {% if audio %}<a title="{% trans "Play CAPTCHA as audio file" %}" href="{{audio}}">{% endif %}<img src="{{image}}" alt="captcha" class="captcha" />{% if audio %}</a>{% endif %}#}
+{#{% endspaceless %}#}
+
+
+<span class="img-code">
+  <img class="captcha" src="{{ image }}"/>
+  <a class="captcha">换一张</a>
+</span>
+
+<a class="send-code" id="send_tuxin">发送验证码</a>

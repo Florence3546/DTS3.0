@@ -1,0 +1,147 @@
+@mainColor: #33cc6d;
+@orangeColor: #ff7e00;
+.header-member .menu a.active {
+  background: transparent;
+}
+
+.main {
+  min-height: 466px;
+}
+
+.section {
+  float: left;
+  width: 1070px;
+  height: auto;
+  padding-top: 40px;
+  margin-bottom: 80px;
+  .message-title {
+    width: 100%;
+    padding: 2px 0 8px 12px;
+    border-bottom: 2px solid #33cc6d;
+  }
+  .message-content {
+    width: 100%;
+    .message-time {
+      font-weight: bold;
+    }
+  }
+}
+
+.message-title {
+  span {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  a {
+    float: right;
+    color: #0090ff;
+    margin-left: 12px;
+  }
+}
+
+.message-content > div {
+  padding: 10px 12px;
+  border-bottom: 1px dashed #b6b6b6;
+  p {
+    margin-top: 5px;
+  }
+  line-height: 24px;
+}
+
+.message-content {
+  .com-title {
+    > span:nth-child(1) {
+      position: relative;
+      top: 6px;
+      float: left;
+      width: 11px;
+      height: 11px;
+    }
+    > span:nth-child(2) {
+      font-weight: bold;
+      margin-left: 5px;
+    }
+    a.unread {
+      color: #0090ff;
+      position: relative;
+
+    }
+    .tooltip-inner {
+      background: #eaeaea;
+      color: #777;
+    }
+    .tooltip-arrow {
+      border-right-color: #eaeaea;
+    }
+  }
+  .com-box {
+    margin-left: 20px;
+    a {
+      margin-right: 32px;
+      color: #0090ff;
+    }
+    p.text-overflow {
+      word-break: break-all;
+      text-overflow: ellipsis;
+      display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+      -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    }
+  }
+}
+
+.order-inform .com-title {
+  > span:nth-child(1) {
+    background: #ffbb59;
+  }
+  > span:nth-child(2) {
+    color: #ffbb59;
+  }
+}
+
+.system-message .com-title {
+  > span:nth-child(1) {
+    background: #33cc6d;
+  }
+  > span:nth-child(2) {
+    color: #33cc6d;
+  }
+}
+
+.section > .page-nav {
+  float: right;
+  margin-top: 34px;
+  ul {
+    float: left;
+  }
+  ul > li {
+    float: left;
+    width: 21px;
+    height: 21px;
+    margin-right: 10px;
+    background: #33cc6d;
+    text-align: center;
+    line-height: 20px;
+    color: #ffffff;
+  }
+  div {
+    float: left;
+    span {
+      line-height: 22px;
+      margin-right: 8px;
+    }
+  }
+}
+.empty{
+    overflow: hidden;
+    padding: 114px;
+    text-align: center;
+    img{
+        width: 69px;
+        height:51px;
+        margin: 0 auto;
+    }
+    p{
+       text-align: center;
+       line-height: 30px;
+    }
+}

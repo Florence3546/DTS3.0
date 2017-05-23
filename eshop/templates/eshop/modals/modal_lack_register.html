@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal_lack_register" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">缺货登记</h4>
+      </div>
+      <form class="form-horizontal">
+        {% if obj.csrfmiddlewaretoken %}
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+        {% else %}
+          {% csrf_token %}
+        {% endif %}
+        <input type="hidden" id="payment_id" name="id" value="{{ obj.id }}">
+        <div class="modal-body clearfix">
+
+
+          <div class="form-group form-group-sm">
+            {#            <label for="lack_note" class="col-sm-3 control-label"><span class="text-red">*</span>备注：</label>#}
+            {#            <div class="col-sm-8">#}
+            {#              <textarea class="form-control" name="note" value="{{ obj.note }}" id="lack_note" cols="5" rows="5"></textarea>#}
+            {#            </div>#}
+            <label class="col-sm-1 control-label"></label>
+            <div class="col-sm-8">
+              <p>登记缺货成功！</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-btn">
+            <button type="button" id="submit_payment_add" api="{% url 'good:ajax:create_lack_register' %}"
+                    class="btn enter_click btn-save">确定
+            </button>
+            {#                      <button type="button"#}
+            {#                              id="submit_payment_add"#}
+            {#                              api="{% url 'good:ajax:create_lack_register' %}"#}
+            {#                              class="btn enter_click btn-save">保存#}
+            {#                      </button>#}
+            {#                      <button type="button"#}
+            {#                              class="btn btn-cancel"#}
+            {#                              data-dismiss="modal">取消#}
+            {#                      </button>#}
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

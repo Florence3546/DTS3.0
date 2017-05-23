@@ -1,0 +1,312 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}退款退货 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ 'eshop/css/changing_or_refunding.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+<div id="wrap">
+
+  <!--member_site_nav部分-->
+  {% include 'eshop/site_nav.html' %}
+
+  <!--top_box部分-->
+  {% include 'eshop/member_center_top.html' %}
+
+  <div class="main">
+    <div class="changing-or-refunding">
+    	{% csrf_token %}
+			<div class="crumb">
+				<ul>
+					<li>
+						<a href="{% url "eshop:member_center" %}">会员中心</a>
+						<i class="iconfont icon-shangxiajiantou-copy1"></i>
+					</li>
+					<li>
+						<a href="{% url "eshop:my_order" %}">订单管理{{ refund_status }}</a>
+						<i class="iconfont icon-shangxiajiantou-copy1"></i>
+					</li>
+					<li>
+						<span>我的订单</span>
+					</li>
+				</ul>
+			</div>
+			<div class="step-money {% if not refund_type == 0 %}hide{% endif %}">
+				<div class="progress-wrap">
+					<div class="progress-bar1"></div>
+					<div class="progress-bar2 {% if refund_status and refund_status > 0 and not refund_status == 5 or refund_status == 0 %}pass{% endif %}"></div>
+					<div class="progress-bar3 {% if refund_status and refund_status > 0 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar4 {% if refund_status and refund_status > 0 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar5 {% if refund_status and refund_status > 1 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar6 {% if refund_status and refund_status > 1 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar7 {% if refund_status and refund_status > 1 and not refund_status == 5 %}pass{% endif %}"></div>
+				</div>
+				<ul>
+					<li class="active">买家申请退款退货</li>
+					<li>平台售后审核</li>
+					<li>平台退款审核</li>
+					<li>退款完成</li>
+				</ul>
+     </div>
+			<div class="step-good {% if not refund_type == 1 %}hide{% endif %}">
+				<div class="progress-wrap">
+					<div class="progress-bar1"></div>
+					<div class="progress-bar2 {% if refund_status and refund_status > 0 and not refund_status == 5 or refund_status == 0 %}pass{% endif %}"></div>
+					<div class="progress-bar3 {% if refund_status and refund_status > 0 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar4 {% if refund_status and refund_status > 0 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar5 {% if refund_status and refund_status > 1 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar6 {% if refund_status and refund_status > 1 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar7 {% if refund_status and refund_status > 2 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar8 {% if refund_status and refund_status > 3 and not refund_status == 5 %}pass{% endif %}"></div>
+					<div class="progress-bar9 {% if refund_status and refund_status > 3 and not refund_status == 5 %}pass{% endif %}"></div>
+				</div>
+				<ul>
+					<li class="active">买家申请退款退货</li>
+					<li>平台售后审核</li>
+					<li>平台退款审核</li>
+					<li>买家退货给平台</li>
+					<li>平台确认收货，退款完成</li>
+				</ul>
+     </div>
+			<h5>订单信息</h5>
+
+			<ul class="subnav">
+				<li>下单时间{{ refund_status }}</li>
+				<li>订单编号</li>
+				<li>订单金额</li>
+				<li>实付金额</li>
+				<li>收货人</li>
+				<li>商品种类</li>
+			</ul>
+			<ul class="order-info">
+
+				<li>
+					<span>{{ order.ord_time | date:"Y-m-d H:m" }}</span>
+					<span><a>{{ order.order_no}}</a></span>
+					<span><b>￥{{ order.total_price|multiply:0.01 }}</b></span>
+					<span><b>￥{{ order.real_price|multiply:0.01 }}</b></span>
+					<span>{{ order.receiving_address.people }}</span>
+					<span><a class="sort-of-goods">共{{ order.orderitem_set.all | length }}种商品</a></span>
+					<div class="goods-information">
+						<ul class="goods-nav">
+							<li>商品信息</li>
+							<li>商品编号</li>
+							<li>商品数量</li>
+							<li>单价(元)</li>
+							<li>单价优惠(元)</li>
+							<li>小计(元)</li>
+							<li>实付金额(元)</li>
+						</ul>
+						<ul class="goods-list">
+              {% for item in order_item_set %}
+                <li>
+                  <div>
+                  	<a class="good-name" href="{% url 'eshop:good_detail' good_id=item.good.id %}">
+	                    <img src="{% if sectiongood.good.main_photo.name %}{{ sectiongood.good.main_photo.name|urlencode|media_url }}{% else %}{{ 'common/img/good_placeholder.png'|static_url }}{% endif %}"/>
+	                    <p>
+	                      <span>{{ item.good.trade_name }}</span>
+	                      <span>{{ item.good.prep_spec }}*{{ item.good.pack_spec }}/{{ item.good.unit }}</span>
+	                    </p>
+	                  </a>
+                    <a class="add_cart"
+                       data-id="{{ item.good.id }}"
+                       api="{% url 'order:cart' %}">加入购物车</a>
+                  </div>
+                  <div>{{ item.good.external_id }}</div>
+                  <div>{{ item.quantity }}</div>
+                  <div>{{ item.price|multiply:0.01 }}</div>
+                  <div>{% if item.preferential_price %}{{ item.preferential_price|multiply:0.01 }}{% else %}0{% endif %}</div>
+                  <div>{{ item.subtotal|multiply:0.01 }}</div>
+                  <div>{{ item.real_subtotal|multiply:0.01 }}</div>
+                </li>
+              {% endfor %}
+            </ul>
+					</div>
+				</li>
+			</ul>
+			<div class="type">
+				请选择您要服务的类型
+				<a class="return-money {% if refund_type == 0 %}active{% endif %}" refund_type = {{ refund_type }}>我要退款</a>
+				<a class="return-good {% if refund_type == 1 %}active{% endif %}" refund_type = {{ refund_type }}>我要退货</a>
+			</div>
+			<div class="cause {% if refund_type == '' %}hide{% endif %}">
+				{% if refund_status == 0 or refund_status == '' or refund_status == 5 %}
+					<form class="return-good-form hide" id="" method="post">
+						<div class="form-group">
+							<label><span class="necessary">*</span>退款金额：</label>
+							<input class="form-control short money" id="return_money" real_price="{{ order.real_price|multiply:0.01 }}" type="text" value="{% if refund_status == '' %}{{ order.real_price|multiply:0.01 }}{% else %}{{ refund_return.refund|multiply:0.01 }}{% endif %}"/>&nbsp;元 (最多￥{{ order.real_price|multiply:0.01 }})
+						</div>
+						<div class="form-group">
+							<label class="reason">退款说明：</label>
+							<textarea class="return_reasons"></textarea>
+						</div>
+						<div class="form-group">
+							<a class="submit" id="submit_return" data-id="{{ order.id }}" op_type="apl" api="{% url 'eshop:changing_or_refunding' %}" refund_type="1">提交退货申请</a>
+						</div>
+					</form>
+					<form class="return-money-form hide" id="" method="post">
+						<div class="form-group">
+							<label><span class="necessary">*</span>退款金额：</label>
+							<input class="form-control short money" id="refund_money" type="text" real_price="{{ order.real_price|multiply:0.01 }}" value="{% if refund_status == '' %}{{ order.real_price|multiply:0.01 }}{% else %}{{ refund_return.refund|multiply:0.01 }}{% endif %}" />&nbsp;元 (最多￥{{ order.real_price|multiply:0.01 }})
+						</div>
+						<div class="form-group">
+							<label class="reason">退款说明：</label>
+							<textarea class="refund_reasons"></textarea>
+						</div>
+						<div class="form-group">
+							<a class="submit" id="submit_refund" data-id="{{ order.id }}" op_type="apl" api="{% url 'eshop:changing_or_refunding' %}" refund_type="0">提交退款申请</a>
+						</div>
+					</form>
+          <div class="wait wait-money {% if not refund_type == 0 or refund_status == 5 %}hide{% endif %}">
+            <p>您已成功发起退款申请，请耐心等待审核处理!</p>
+            <p>
+              审核通过后请等待退款处理，处理后系统将钱退至您的预存款账户中。<br />
+              若审核不通过，您可以修改申请，再次申请发起，商家会重新处理。<br />
+              为了快速处理，您在申请前请联系客服，看是否达到“<a href='#'>退款退货政策</a>”要求。
+            </p>
+            <p>
+              <a class="revise">修改申请</a>
+              <a class="cancel" data-id="{{ order.id }}" op_type="cel" api="{% url 'eshop:changing_or_refunding' %}">取消申请</a>
+            </p>
+          </div>
+          <div class="wait wait-good {% if not refund_type == 1 or refund_status == 5 %}hide{% endif %}">
+            <p>您已成功发起退货申请，请耐心等待审核处理!</p>
+            <p>
+              审核通过后请等待退款处理，处理后系统将钱退至您的预存款账户中。<br />
+              若审核不通过，您可以修改申请，再次申请发起，商家会重新处理。<br />
+              为了快速处理，您在申请前请联系客服，看是否达到“<a href='#'>退款退货政策</a>”要求。
+            </p>
+            <p>
+              <a class="revise">修改申请</a>
+              <a class="cancel" data-id="{{ order.id }}"  op_type="cel" api="{% url 'eshop:changing_or_refunding' %}">取消申请</a>
+            </p>
+          </div>
+        {% endif %}
+        {% if refund_status == 1 %}
+        	<div class="wait wait-money">
+            <p>您的售后审批已经处理，请耐心等待退款审核！</p>
+            <p>
+              审核通过后请等待退款处理，处理后系统将钱退至您的预存款账户中。<br />
+              若审核不通过，您可以修改申请，再次申请发起，平台会重新处理。<br />
+            </p>
+          </div>
+        {% endif %}
+        {% if refund_status > 1 and refund_type == 0 and not refund_status == 5 %}
+        	<div class="wait wait-money">
+            <p>您的退款审核已经通过！</p>
+            <p>
+              退款金额：￥{{ refund_return.refund|multiply:0.01 }}<br />
+              系统将钱自动退至您的预存款账户中。<br />
+            </p>
+          </div>
+        {% endif %}
+        {% if refund_status == 3 %}
+        	<div class="wait wait-money">
+            <p>您已成功退货，请耐心等待平台确认收货！</p>
+            <p>
+              平台确认收货后，系统将钱退至您的预存款账户中。<br />
+              请耐心等待！有任何问题请联系客服。<br />
+            </p>
+          </div>
+        {% endif %}
+        {% if refund_status == 4 and refund_type == 1 %}
+        	<div class="wait wait-money">
+            <p>退款成功！</p>
+            <p>
+              退款金额：￥{{ refund_return.refund|multiply:0.01 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if refund_status == 5 %}
+        	<div class="wait wait-money shut_down">
+            <p>退款关闭！</p>
+            <p>
+			如果存在问题，建议您咨询客服后重新发起申请，谢谢！
+            </p>
+            <p>
+              <a class="revise">重新申请</a>
+            </p>
+          </div>
+        {% endif %}
+        {% if refund_status == 2 and refund_type == 1 %}
+	        <form class="delivery-address" id="" method="post">
+						<p>请退货并填写物流信息!</p>
+						<p>退货地址：湖北省武汉市汉阳区龙阳大道898号 电商事业部收 18802311200</p>
+						<p>
+							退货说明：请在退货包裹内留下纸条，写上退货编号、订单编号、您的用户名以及联系方式，以便及时确认完成退货。<br />
+							请填写真实退货物流信息。
+						</p>
+						<div class="form-group">
+							<label><span class="necessary">*</span>物流公司：</label>
+							<input class="form-control shipping_method" type="text"/>
+						</div>
+						<div class="form-group">
+							<label><span class="necessary">*</span>物流单号：</label>
+							<input class="form-control waybill_no" type="text"/>
+						</div>
+						<div class="form-group">
+							<a class="submit" id="return_info" data-id="{{ order.id }}" op_type="der" api="{% url 'eshop:changing_or_refunding' %}" refund_type="1">提交退货信息</a>
+						</div>
+					</form>
+				{% endif %}
+			</div>
+			<div class="applicant {% if refund_type == '' %}hide{% endif %}">
+				<h5>售后信息</h5>
+				<table>
+					<thead>
+						<tr>
+							<th width="180">申请时间</th>
+							<th width="960">处理信息</th>
+							<th width="100">操作人</th>
+						</tr>
+					</thead>
+					<tbody>
+            {% for op in op_logs %}
+              <tr>
+                <td>{{ op.created|date:'Y-m-d H:i:s' }}</td>
+                <td>{{ op.note }}</td>
+                <td>{{ op.operator.first_name }}</td>
+              </tr>
+            {% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="service-introduce">
+				<h5>服务介绍</h5>
+				<div>
+					<p>1. 退货流程</p>
+					<p>(1)用户查看“<a href='#'>退款退货政策</a>”，联系客服确认，符合退换条件后进行申请；</p>
+					<p>(2)客服针对您提供的申请信息，进行审核，审核通过后客服将与您取得联系了解商品情况，请务必登记准确的联系方式，期间保持手机或电话畅通；</p>
+					<p>(3)用户将商品包裹安全，寄回我方（地址将由我司与您联系确认）；</p>
+					<p>(4)售后中心收货并检测商品，符合退货条件会退款，退货结束。</p>
+				</div>
+				<div>
+					<p>2. 我要退货</p>
+					<p>申请条件：符合“<a href='#'>退款退货政策</a>”，若您未收到货，请选择“仅退款”选项。</p>
+					<p>退款流程：1.联系客服，确认符合条件>2.申请退款 >3.我方公司进行审核>4.审核通过，同意退款申请 >5.退款成功</p>
+				</div>
+				<div>
+					<p>3. 我要退款</p>
+					<p>申请条件：若为商品问题，符合“<a href='#'>退款退货政策</a>”，请选择“退货退款”选项，退货后请保留物流底单。</p>
+					<p><i>退货流程：</i>1.联系客服，确认符合条件 >2.申请退货 >3.我方公司进行审核 >4.审核通过，发送退货地址给买家 >5.买家退货并填写退货物流信息
+             <b>>6.我方公司检测商品，符合退货条件确认收货，退款成功</b></p>
+				</div>
+			</div>
+		</div>
+  </div>
+
+  <!--footer部分-->
+  {% include 'eshop/eshop_footer.html' %}
+
+</div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+<script type="text/javascript" src="{{ 'eshop/js/changing_or_refunding.js'|static_url }}"></script>
+{% endblock %}
+

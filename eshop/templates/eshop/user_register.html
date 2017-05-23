@@ -1,0 +1,380 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}用户注册 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ 'eshop/css/user_register.css'|static_url }}">
+
+  <style>
+  .img_file img{
+    width: 100%;
+  }
+
+  .hide {
+    display: none;
+  }
+  .time_60{
+    display: inline-block;
+    width: 86px;
+    text-align: center;
+    background: #ededed;
+    color: #0090FF;
+    margin-left: 4px;
+    line-height: 30px;
+
+  }
+
+
+
+  </style>
+
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+<div id="wrap">
+  <div id="header">
+    <div class="header">
+      <a href="{% url 'eshop:eshop_home' %}"><img src="../../static/eshop/images/shouye/logo.jpg"/></a>
+      <span>注册</span>
+      <p>已有账户？
+        <a href="{% url 'eshop:user_login' %}">立即登录</a>
+      </p>
+    </div>
+  </div>
+  <div id="content">
+    <div class="main">
+      <div class="register">
+        <div class="step">
+          <div class="first active"><span>1</span>选择账号类型</div>
+          <div class="second"><span>2</span>完善资料</div>
+          <div class="third"><span>3</span>提交注册</div>
+        </div>
+        <div class="step1 {% if request.GET.step %}hide{% endif %}">
+          <div class="merchant active">
+            <a class="user"><img src="../../static/eshop/images/enterprise_logo.png"></a>
+            <p>采购商</p>
+            <span>针对药房/医院/诊所/医药公司/制药厂等</span>
+          </div>
+          <div class="personage">
+            <a class="user"><img src="../../static/eshop/images/geren.png"></a>
+            <p>个人会员</p>
+            <span>针对普通个人用户</span>
+          </div>
+          <div class="next-step">
+            <a class="next btn-s2">下一步</a>
+          </div>
+        </div>
+        <div class="step2">
+          <div class="personage" {% if request.GET.step == 'personage' %}style="display: block"{% endif %}>
+            <form id="member_form" method="post" action="">
+              {% csrf_token %}
+              <input id="id_captcha_member" name="captcha_0" type="hidden" value="">
+              <input type="hidden" name="type" value="member"/>
+              <div class="form-group">
+                <label><span class="necessary">*</span>用户名：</label>
+                <input class="form-control" name="username" type="text"/>
+                <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>姓名：</label>
+                <input class="form-control" name="first_name" type="text"/>
+                <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>手机号：</label>
+                <input class="form-control" name="phone" type="text"/>
+                <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>短信验证码：</label>
+                <input class="form-control code" name="captcha" type="text"/>
+                <a class="send-code">发送验证码</a>
+                <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>密码：</label>
+                <input class="form-control" name="passwd" type="password"/>
+                <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>确认密码：</label>
+                <input class="form-control" name="passwd2" type="password"/>
+                <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>邮箱：</label>
+                <input class="form-control" name="email" type="text"/>
+                <span class="error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="sex">性别：</label>
+                <input type="hidden" name="gender" id="member_gender">
+                <input id="male" type="radio" name="member_sex" value="1" checked/><label class="gender" for="male"> 先生&nbsp;</label>
+                <input id="female" type="radio" name="member_sex" value="2"/><label class="gender" for="female"> 女士</label>
+                <span class="error"></span>
+              </div>
+
+              <div class="form-group">
+                <input type="checkbox" id="member_agreen" name="agreen"/>
+                <a class="agree" href="#">我已阅读并同意《葫芦娃药店服务协议》及隐私声明</a>
+              </div>
+              <a class="next btn-s2"
+                 api="{% url 'eshop:user_register' %}"
+                 id="member_submit">确认提交</a>
+              <a class="back btn-s2">上一步</a>
+            </form>
+          </div>
+
+          <div class="merchant" {% if request.GET.step == 'merchant' %}style="display: block"{% endif %}>
+            <form id="merchant_form" method="post" action="" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input id="id_captcha_mercahnt" name="captcha_0" type="hidden" value="">
+              <input type="hidden" name="type" value="merchant"/>
+              <h5>账户信息<span>(账户登录信息)</span></h5>
+              <div class="form-group">
+                <label><span class="necessary">*</span>用户名：</label>
+                <input class="form-control" name="username" type="text"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>姓名：</label>
+                <input class="form-control" name="first_name" type="text"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>手机号：</label>
+                <input class="form-control" name="phone" type="text"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>短信验证码：</label>
+                <input class="form-control code" name="captcha" type="text"/>
+                <a class="send-code">发送验证码</a>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>密码：</label>
+                <input class="form-control" name="passwd" type="password"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>确认密码：</label>
+                <input class="form-control" name="passwd2" type="password"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>邮箱：</label>
+                <input class="form-control" name="email" type="text"/>
+                  <span class="error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="sex">性别：</label>
+                <input type="hidden" name="gender" id="merchant_gender">
+                <input id="enterprise-male" type="radio" name="merchant_sex" value="1" checked/><label class="gender" for="enterprise-male"> 先生&nbsp;</label>
+                <input id="enterprise-female" type="radio" name="merchant_sex" value="2"/><label class="gender" for="enterprise-female"> 女士</label>
+              </div>
+
+              <h6>企业信息<span>(企业认证信息)</span></h6>
+              <div class="form-group">
+                <label><span class="necessary">*</span>企业名称：</label>
+                <input class="form-control" name="enterprise_name" type="text"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>企业简称：</label>
+                <input class="form-control" name="short_name" type="text"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>经营方式：</label>
+                <select class="form-control" name="operate_mode">
+                  <option value="">--请选择--</option>
+                  {% for choice in operate_mode_choices %}
+                    <option value="{{ choice.value }}">{{ choice.name }}</option>
+                  {% endfor %}
+                </select>
+              <span class="error"></span>
+              </div>
+              <div id="distpicker" class="form-group dispicker" data-toggle="distpicker">
+                <label><span class="necessary">*</span>所在地区：</label>
+                <input type="hidden" id="region" name="region">
+                <select class="form-control region province">
+                  <option>请选择</option>
+                </select>
+                <select class="form-control region city disno">
+                  <option>请选择</option>
+                </select>
+                <select class="form-control region district disno hide">
+                  <option>请选择</option>
+                </select>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>详细地址：</label>
+                <input class="form-control  long" name="address" type="text" placeholder="默认为收货地址，请在收货地址中修改"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>企业电话：</label>
+                <input class="form-control long" name="enter_phone" type="text"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>法人代表：</label>
+                <input class="form-control long" name="legal_repr" type="text"/>
+                  <span class="error"></span>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>经营范围：</label>
+                <input type="hidden" id="biz_scope" name="biz_scope">
+                <ul class="check_box">
+
+                    {% for item in operate_scope %}
+                        <li><label>
+                            <input value="{{ item.name }}"
+                                   type="checkbox">{{ item.name }}</label></li>
+                    {% endfor %}
+
+
+{#                  <li><label><input type="checkbox" checked>中成药</label></li>#}
+{#                  <li><label><input type="checkbox" checked>中药材</label></li>#}
+{#                  <li><label><input type="checkbox" checked>中药饮片</label></li>#}
+{#                  <li><label><input type="checkbox">化学药制剂</label></li>#}
+{#                  <li><label><input type="checkbox">化学原料药</label></li>#}
+{#                  <li><label><input type="checkbox" checked>抗生素</label></li>#}
+{#                  <li><label><input type="checkbox" checked>生化药品</label></li>#}
+{#                  <li><label><input type="checkbox">生物制品</label></li>#}
+{#                  <li><label><input type="checkbox">疫苗</label></li>#}
+{#                  <li><label><input type="checkbox">二类精神药品</label></li>#}
+{#                  <li><label><input type="checkbox">体外诊断试剂</label></li>#}
+{#                  <li><label><input type="checkbox" checked>含特殊药品复方制剂</label></li>#}
+{#                  <li><label><input type="checkbox" checked>一类医疗器械</label></li>#}
+{#                  <li><label><input type="checkbox" checked>二类医疗器械</label></li>#}
+{#                  <li><label><input type="checkbox">三类医疗器械</label></li>#}
+{#                  <li><label><input type="checkbox" checked>无证的二类的医疗器械</label></li>#}
+{#                  <li><label><input type="checkbox">食品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>化妆品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>消字号产品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>其他商品</label></li>#}
+{#                  <li><label><input type="checkbox">保健药品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>毒性药品</label></li>#}
+{#                  <li><label><input type="checkbox">一类精神药品</label></li>#}
+{#                  <li><label><input type="checkbox">蛋白同化制剂、肽类激素(胰岛素)</label></li>#}
+{#                  <li><label><input type="checkbox">麻醉药品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>放射性药品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>抗生素原料药</label></li>#}
+{#                  <li><label><input type="checkbox">蛋白同化制剂、肽类激素</label></li>#}
+{#                  <li><label><input type="checkbox" checked>终止妊娠药品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>化学试剂</label></li>#}
+{#                  <li><label><input type="checkbox">计生用品</label></li>#}
+{#                  <li><label><input type="checkbox" checked>生物制品(除疫苗)</label></li>#}
+{#                  <li><label><input type="checkbox" checked>保健食品</label></li>#}
+{#                  <li><label><input type="checkbox">抗生素制剂</label></li>#}
+{#                  <li><label><input type="checkbox" checked>一类器械</label></li>#}
+
+
+                </ul>
+              </div>
+              <div class="form-group">
+                <label><span class="necessary">*</span>资质证照：</label>
+                <div class="license">
+                  <p class="uploading">
+                    <a class="upload_file" id="img_qyxk">
+                      <span class="img_file" ></span>
+                      <span>药品经营<br/>企业许可证</span>
+                    </a>
+                    <input type="file" id="qyxk"
+                           class="file" name="qyxk"
+                           onchange="DTS.user_register.preview_img(this.files,'img_qyxk')"
+                           style="display:none">
+                    <a class="upload_file" id="img_yyzz">
+                      <span class="img_file" ></span>
+                      <span>企业法人<br/>营业执照</span>
+                    </a>
+                    <input type="file" id="yyzz"
+                           class="file"
+                           onchange="DTS.user_register.preview_img(this.files,'img_yyzz')"
+                           name="yyzz" style="display:none">
+
+                    <a class="upload_file" id="img_wts">
+                      <span class="img_file" ></span>
+                      <span>法人委托书</span>
+                    </a>
+                    <input type="file" id="wts"
+                           class="file"
+                           onchange="DTS.user_register.preview_img(this.files,'img_wts')"
+                           name="wts" style="display:none">
+
+                  </p>
+                  <p class="annotation">注：法人委托书请加盖红色公章</p>
+                  <p><input type="checkbox" id="merchant_agreen" name="agreen"/>
+                    <a class="agree" href="#">我已阅读并同意《葫芦娃药店服务协议》及隐私声明</a></p>
+                  <p class="function">
+                    <a class="next btn-s2"
+                       id="merchant_submit"
+                       api="{% url 'eshop:user_register' %}">提交确认</a>
+                    <a class="back btn-s2">上一步</a></p>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+        <div class="step3">
+          <div class="personage">
+            <p>恭喜您成功注册会员！</p>
+            <p>请您记住您的用户名和密码，在交易登录时用到它。</p>
+            <a class="next btn-s2" href="{% url 'eshop:eshop_home' %}">开始购物</a>
+          </div>
+          <div class="merchant">
+            <p>恭喜您成功注册会员！请等待管理员审核！</p>
+            <p>请您记住您的用户名和密码，在交易登录时用到它。<br/>为了您能尽快审核成为正式会员，请您的企业 《药品经营业许可证》、《企业法人营业执照》、《法人委托书》的复印件加盖单位红色公章邮寄到以下地址！
+              邮件的资料和上传的资料保存一致。
+            </p>
+            <h5>审核联系信息</h5>
+            <p>单位名称：湖北东力药业有限公司</p>
+            <p>单位地址：湖北武汉市汉阳大道8888号3楼审核部</p>
+            <p>单位邮编：430051</p>
+            <p class="contacts">联系人：周丽</p>
+            <p>联系电话：13022548787</p>
+            <a class="next btn-s2" href="{% url 'eshop:eshop_home' %}">浏览商城</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--footer部分-->
+  {% include 'eshop/eshop_footer.html' %}
+</div>
+
+{% include 'dtsadmin/modals/modal_error.html' %}
+
+{% endblock %}
+
+
+<!-- 自定义JS -->
+
+{% block js %}
+
+{% if request.GET.method == 'merchant' %}
+  {# 已经注册的企业主账号还没有审核时显示的内容 #}
+  <script>
+      $(".step1").hide();
+      $(".step2").hide();
+      $(".second").addClass("pass");
+      $(".third").addClass("active").siblings().removeClass("active");
+      $(".step3 .merchant").show().siblings().hide();
+  </script>
+{% endif %}
+
+
+
+  <script type="text/javascript" src="{{ 'eshop/js/user_register.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/data.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/distpicker.js'|static_url }}"></script>
+{% endblock %}

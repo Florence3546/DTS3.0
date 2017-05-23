@@ -1,0 +1,302 @@
+@mainColor: #33cc6d;
+@orangeColor: #ff7e00;
+.main-menu {
+  height: 45px;
+  overflow: hidden;
+  &:hover {
+    height: 520px;
+    background: #fff;
+    border: 1px solid #16b753;
+    border-top: none;
+    overflow: visible;
+    z-index: 5;
+  }
+  &:hover li:first-of-type {
+    padding-left: 11px;
+  }
+}
+
+//    面包屑
+.crumb {
+  padding-left: 10px;
+  overflow: hidden;
+  ul {
+    overflow: hidden;
+  }
+  li {
+    float: left;
+    padding-left: 6px;
+    height: 50px;
+    line-height: 50px;
+    i.greater-than {
+      position: relative;
+      top: 3px;
+    }
+    select {
+      padding-left: 6px;
+      width: 114px;
+      height: 24px;
+      border: 1px solid #e5e5e5;
+    }
+    div {
+      margin: 13px 0;
+      padding: 0 6px;
+      height: 24px;
+      line-height: 22px;
+      border: 1px solid #ff7e00;
+      span {
+        margin-left: 10px;
+        cursor: pointer;
+        &:hover{
+            color:#f43434;
+        }
+      }
+    }
+    &.goods-No {
+      padding: 0 14px;
+      span {
+        padding: 0 6px;
+        color: #ff7e00;
+      }
+    }
+    a.empty i {
+      margin: 0 3px;
+    }
+  }
+}
+
+//     属性筛选
+.attrs {
+  border-top: 1px solid #e5e5e5;
+}
+
+.brand-attr {
+  div {
+    float: left;
+    padding-top: 16px;
+    width: 84px;
+    text-align: center;
+    font-weight: bolder;
+  }
+  ul, li {
+    float: left;
+  }
+}
+
+.brand-attr, .origin-attr, .formulation-attr, .sort-attr {
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  border-top: none;
+  div {
+    float: left;
+    padding-top: 16px;
+    width: 85px;
+    line-height: 12px;
+    text-align: center;
+    font-weight: bolder;
+  }
+  ul {
+    float: left;
+    padding: 8px 0 8px 12px;
+    width: 950px;
+    min-height:44px;
+    border-left: 1px solid #e5e5e5;
+    li {
+      float: left;
+      margin-right: 2px;
+      line-height: 28px;
+      a {
+        padding: 3px 13px;
+      }
+      a:hover,
+      a.active {
+        background: #ff7e00;
+        color: #fff;
+      }
+    }
+  }
+  .multiple-choice {
+    display: none;
+    margin: 0 8px 0 40px;
+    padding: 2px 6px;
+    line-height: 44px;
+    background: #f6f6f6;
+  }
+  .more {
+    display: none;
+    i {
+      position: relative;
+      top: 3px;
+    }
+  }
+}
+
+.more-choices {
+  div {
+    height: 5px;
+    background: #f4f4f4;
+    border: 1px solid #e5e5e5;
+  }
+  a {
+    position: relative;
+    top: -1px;
+    display: block;
+    margin: 0 0 40px 540px;
+    width: 120px;
+    height: 23px;
+    line-height: 16px;
+    text-align: center;
+    background: #f4f4f4;
+    border: 1px solid #e5e5e5;
+    border-top: none;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+}
+
+.good-list {
+  float: left;
+  margin-left: 20px;
+  width: 980px;
+  margin-bottom: 80px;
+}
+
+//     过滤器
+.filter {
+  padding-left: 10px;
+  height: 40px;
+  background: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  > a {
+    float: left;
+    display: block;
+    margin-top: 8px;
+    padding-left: 15px;
+    width: 60px;
+    height: 24px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    &:nth-of-type(2) {
+      border-left: none;
+      border-right: none;
+    }
+    &:nth-of-type(3) {
+      margin-right: 5px;
+    }
+    &.active {
+      color: #fff;
+      background: #ff7e00;
+    }
+    i {
+      position: relative;
+      top: 2px;
+      margin-left: 2px;
+    }
+  }
+
+  .input-group {
+    float: left;
+    display: none;
+    margin: 8px 10px 0 20px;
+    width: 220px;
+    font-size: 12px;
+    .form-control {
+      height: 24px;
+      font-size: 12px;
+    }
+    button {
+      height: 24px;
+      line-height: 10px;
+      font-size: 12px;
+      color: #777;
+      background: #f4f4f4;
+    }
+  }
+  .pagination {
+    float: right;
+    margin-right: 12px;
+    line-height: 0;
+    i {
+      position: relative;
+      top: 2px;
+    }
+    span:nth-of-type(1) {
+      color: #FF7E00;
+    }
+  }
+}
+
+.choose {
+  float: left;
+  display: none;
+  padding-top: 12px;
+  a {
+    float: left;
+    display: block;
+    margin: 0 2px 0 10px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #e5e5e5;
+    i {
+      position: relative;
+      top: -3px;
+      left: -1px;
+      color: transparent;
+    }
+    &.active {
+      border: 1px solid #ff7e00;
+      i {
+        color: #ff7e00;
+      }
+    }
+  }
+}
+
+.arrangement {
+  float: left;
+  display: none;
+  margin-top: 8px;
+  border: 1px solid #e5e5e5;
+  a {
+    float: left;
+    display: block;
+    width: 60px;
+    height: 23px;
+    line-height: 21px;
+    i {
+      position: relative;
+      top: 2px;
+      margin: 0 6px 0 8px;
+    }
+  }
+  a.active {
+    background: #FF7E00;
+    color: #fff;
+  }
+}
+.empty{
+    overflow: hidden;
+    padding: 118px 114px;
+    img{
+        width: 69px;
+        height:51px;
+        float: left;
+        margin: -8px 10px 0 260px;
+    }
+    a{
+        color:#0090ff;
+        line-height: 24px;
+    }
+    p{
+        text-align: center;
+        i{
+            margin-right: 10px;
+            vertical-align: middle;
+            font-size: 40px;
+            color:@orangeColor;
+        }
+        span{
+            color:@orangeColor;
+        }
+    }
+}

@@ -1,0 +1,467 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}订单列表 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #table_order thead th:nth-of-type(1) {
+      width: 32px;
+    }
+
+    #table_order thead th:nth-last-of-type(1) {
+      width: 100px;
+    }
+
+    #table_order tr td {
+      text-align: center;
+    }
+
+    #table_order tr td:nth-of-type(4) {
+      text-align: left;
+    }
+
+    #table_order tr td:nth-of-type(6),
+    #table_order tr td:nth-of-type(7) {
+      width: 70px;
+      text-align: right;
+    }
+
+    #table_order tr.closed {
+      color: #ccc;
+    }
+
+    /**********************改价模态框*******************************/
+    #change_price_modal .modal-body {
+      padding: 25px;
+    }
+
+    .personal-info tr td:nth-of-type(odd) {
+      width: 80px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .personal-info tr td:nth-of-type(even) {
+      vertical-align: middle;
+    }
+
+    .good-info .form-control.short {
+      width: 45px;
+      padding: 6px;
+      font-size: 12px;
+      height: 24px;
+      line-height: 12px;
+      display: inline-block;
+    }
+
+    .good-info .form-control.short:nth-of-type(2) {
+      text-align: right;
+    }
+
+    .good-info img {
+      border: 1px solid #efefef;
+      width: 63px;
+      height: 63px;
+    }
+
+    .good-info thead {
+      background: #f6f6f6;
+    }
+
+    .good-info thead tr th {
+      border-bottom: none;
+      text-align: center;
+      height: 40px;
+      font-weight: normal;
+      line-height: 23px;
+    }
+
+    .good-info tbody tr td:nth-of-type(1),
+    .good-info tbody tr td:nth-of-type(4),
+    .good-info tbody tr td:nth-of-type(5) {
+      text-align: center;
+    }
+
+    .good-info tbody tr td:nth-of-type(3),
+    .good-info tbody tr td:nth-of-type(6),
+    .good-info tbody tr td:nth-of-type(7) {
+      text-align: right;
+    }
+
+    #change_price_modal p {
+      padding-left: 12px;
+      background: #fff5f5;
+      color: #ed8484;
+      border: 1px solid #fcbaba;
+    }
+
+    .totle_money {
+      font-weight: bolder;
+      text-align: right;
+    }
+
+    .totle_money a {
+      float: left;
+      font-weight: normal;
+      color: #0090ff;
+    }
+
+    .totle_money span {
+      color: #e13838;
+      font-size: 14px;
+      font-family: "微软雅黑";
+    }
+
+    /**********************发货*******************************/
+    #order_invoice_modal .modal-body,
+    #deliver_goods_modal .modal-body {
+      padding: 10px 25px;
+    }
+
+    #order_invoice_modal h6,
+    #approve_goods_modal h6,
+    #deliver_goods_modal h6 {
+      margin-bottom: 20px;
+    }
+
+    #order_invoice_modal label,
+    #deliver_goods_modal label {
+      width: 76px;
+      padding-right: 0;
+    }
+
+    #order_invoice_modal input,
+    #deliver_goods_modal input {
+      height: 30px;
+      color: #0090ff;
+      font-size: 16px;
+      font-family: "微软雅黑";
+      font-weight: bolder;
+    }
+
+    /**********************审核*******************************/
+    #approve_goods_modal .modal-body {
+      padding: 10px 25px 5px;
+    }
+
+    #approve_goods_modal .personal-info a {
+      color: #0090ff;
+    }
+
+    #approve_goods_modal .personal-info a:hover,
+    #approve_goods_modal .personal-info a:focus {
+      color: #0090ff;
+    }
+
+    .operating-info {
+      display: none;
+    }
+
+    .withdraw-claim {
+      display: none;
+    }
+
+    #export_good_modal .good-export {
+      display: none;
+    }
+
+    #export_good_modal .modal-footer {
+      border-top: none;
+    }
+
+    /******************************收款****************************/
+    #order_gathering_modal .control-label {
+      min-width: 84px;
+    }
+
+    #order_gathering_modal .receivable-amount {
+      line-height: 24px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+    {% csrf_token %}
+    <form class="form-inline bordered" method="get" action="" id="search_order_form">
+      {% csrf_token %}
+      <input type="hidden" name="choose" id="ex_choose" value="">
+      <input type="hidden" name="order_ids" id="ex_order_ids" value="">
+      <input type="hidden" id="total_count" value="{{ order_data.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="input_enter_name" class="control-label normal">订单编号</label>
+          <input type="text" class="form-control" id="input_enter_name" name="order_no">
+          <button type="submit" class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">交易状态</label>
+
+          <select class="form-control" name="trade_state">
+            <option value="">请选择……</option>
+            {% for choice in choices.trade_state %}
+              <option value="{{ choice.0 }}"
+                      {% if request.GET.trade_state == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="buyer_name" class="control-label normal">下单人</label>
+          <input type="text"
+                 value="{{ request.GET.buyer_name }}"
+                 class="form-control" id="buyer_name" name="buyer_name">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="enter_name" class="control-label normal">企业名称</label>
+          <input type="text"
+                 value="{{ request.GET.purchaser_name }}"
+                 class="form-control" id="enter_name" name="purchaser_name">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">支付方式</label>
+          <select class="form-control" name="payment_method_type">
+            <option value="">请选择……</option>
+            {% for choice in choices.payment_method %}
+              <option {% if request.GET.payment_method_type == choice.0|stringformat:'s' %}selected{% endif %}
+                      value="{{ choice.0 }}">{{ choice.1 }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">下单时间</label>
+          <input type="text" class="form-control date"
+                 data-date-format="yyyy-mm-dd" id=""
+                 value="{{ request.GET.ord_time_from }}"
+                 name="ord_time_from"
+                 placeholder="请选择日期">
+          <span class="control-text">-</span>
+          <input type="text" class="form-control date"
+                 data-date-format="yyyy-mm-dd" id=""
+                 value="{{ request.GET.ord_time_to }}"
+                 name="ord_time_to" placeholder="请选择日期">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">订单金额</label>
+          <input type="text" class="form-control money"
+                 id=""
+                 value="{{ request.GET.total_price_from }}"
+                 name="total_price_from">
+          <span class="control-text">-</span>
+          <input type="text" class="form-control money"
+                 id=""
+                 value="{{ request.GET.total_price_to }}"
+                 name="total_price_to">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="good_name" class="control-label normal">商品名称</label>
+          <input type="text" class="form-control"
+                 id="good_name"
+                 value="{{ request.GET.order_good_name }}"
+                 name="order_good_name">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">开票状态</label>
+          <select class="form-control" name="order_invoice_state">
+            <option value="">请选择……</option>
+            <option value="1" {% if request.GET.order_invoice_state == '1' %}selected{% endif %}>已开票</option>
+            <option value="0" {% if request.GET.order_invoice_state == '0' %}selected{% endif %}>未开票</option>
+          </select>
+        </div>
+
+        <div class="spacing query_conditions hide">
+          <div class="form-group form-group-dts">
+            <label for="" class="control-label normal">审核状态</label>
+            <select class="form-control" name="verify_state">
+              <option value="">请选择……</option>
+              {% for choice in choices.review_status %}
+                <option {% if request.GET.verify_state == choice.0 %}selected{% endif %}
+                        value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+
+            </select>
+          </div>
+
+        </div>
+
+      </div>
+    </form>
+    <div class="spacing">
+      <button type="button" class="control-btn btn btn-dts btn-s2" data-toggle="modal" data-target="#export_good_modal">
+        导出
+      </button>
+    </div>
+
+    <table id="table_order" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>
+          <input type="checkbox" class="check-all"></th>
+        <th>订单编号</th>
+        <th>下单人</th>
+        <th>企业名称</th>
+        <th>协议客户</th>
+        <th>订单金额(元)</th>
+        <th>实付金额(元)</th>
+        <th>支付方式</th>
+        <th>订单来源</th>
+        <th>改价状态</th>
+        <th>是否开票</th>
+        <th>开票状态</th>
+        <th>审核状态</th>
+        <th>交易状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+
+
+      {% for order in order_data %}
+        {#  6 交易关闭      #}
+        <tr class="{% if order.trade_state == 6 %}closed {% endif %}">
+          <td>
+            <input type="checkbox" class="check-item" value="{{ order.id }}"></td>
+          <td>{{ order.order_no }}</td>
+          <td>{{ order.buyer.username }}</td>
+          <td>{{ order.purchaser.name }}</td>
+          <td>{% bool_str order.is_purchasea_greement %}</td>
+          <td>{{ order.total_price | multiply:0.01 }}</td>
+          <td class="real_money">{% if not order.trade_state == 0 %}{{ order.real_price | multiply:0.01 }}{% else %}0.00{% endif %}</td>
+          <td>{{ order.payment_method.name_cn }}</td>
+          <td>{{ order.order_source }}</td>
+          <td class="{% if order.change_price_state == 3 %}text-red{% endif %}">
+            {{ order.get_change_price_state_display }}
+          </td>
+          <td>{% bool_str order.invoice_no %}</td>
+          <td>
+            {% if order.invoice_no %}
+              <span>已开票</span>
+              <a data-value="{{ order.invoice_no }}" data-pk="{{ order.pk }}" api="{% url 'dtsadmin:order_list' %}" class="look_invoice_no" href="javascript:;">查看发票号</a>
+            {% else %}
+              <span>未开票</span>
+            {% endif %}
+          </td>
+          <td>{{ order.get_verify_state_display }}</td>
+          <td class="trade_state">{{ order.get_trade_state_display }}</td>
+          <td class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">管理
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a data-pk="{{ order.pk }}" api="{% url 'dtsadmin:order_list' %}" class="look_order">查看</a>
+              </li>
+              {% if order.verify_state == 1 or order.verify_state == 0 %}
+                {% if order.trade_state != 5 %}
+                  <li>
+                    <a data-pk="{{ order.pk }}" api="{% url 'dtsadmin:order_list' %}" class="get_verify_order">审核</a>
+                  </li>
+                {% endif %}
+              {% endif %}
+              {% if order.trade_state == 0 %}
+                <li>
+                  <a data-pk="{{ order.pk }}" api="{% url 'dtsadmin:order_list' %}" class="get_change_price">改价</a>
+                </li>
+              {% endif %}
+              {% if order.trade_state == 3 %}
+                <li>
+                  <a data-pk="{{ order.pk }}" api="{% url 'dtsadmin:order_list' %}" class="order_invoice">开票</a>
+                </li>
+              {% endif %}
+              {% if order.trade_state == 2 %}
+                <li>
+                  <a data-pk="{{ order.pk }}" api="{% url 'dtsadmin:order_list' %}" class="deliver_order">发货</a>
+                </li>
+              {% endif %}
+              {% if order.trade_state == 0 and order.change_price_state != 1 %}
+                <li>
+                  <a data-pk="{{ order.pk }}"
+                     api="{% url 'dtsadmin:order_list' %}"
+                     class="receipt_order"
+                     receivable-amount="{{ order.real_price | multiply:0.01 }}">收款</a>
+                </li>
+              {% endif %}
+              <li>
+                <a href="javascript:;"
+                   api="{% url 'dtsadmin:ajax:get_order_log' modal_name='OperateRecord' obj_id=order.id %}"
+                   class="ord_log">日志</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      {% empty %}
+        <tr class="no_data">
+          <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if order_data.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ order_data.paginator.per_page }}条，总共{{ order_data.paginator.num_pages }}页，共{{ order_data.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if order_data.has_previous %}{{ order_data.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == order_data.number %}active{% endif %}"><a class="btn_page"
+                                                                               page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span class="page-count">…</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == order_data.number %}active{% endif %}"><a class="btn_page"
+                                                                             page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span class="page-count">…</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == order_data.number %}active{% endif %}"><a class="btn_page"
+                                                                               page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="
+
+                 {% if order_data.has_next %}{{ order_data.next_page_number }}{% else %}{{ order_data.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_change_price.html' %}  {# 改价 公用 #}
+  {% include 'dtsadmin/modals/modal_order_approve.html' %} {# 审核 查看 #}
+  {% include 'dtsadmin/modals/modal_common_log.html' %}
+  {% include 'dtsadmin/modals/modal_deliver_order.html' %} {# 发货 #}
+  {% include 'dtsadmin/modals/modal_good_export.html' %}   {# 导出 公用 #}
+  {% include 'dtsadmin/modals/modal_order_invoice.html' %} {# 开票 #}
+  {% include 'dtsadmin/modals/modal_order_gathering.html' %} {# 收款 #}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/order_list.js'|static_url }}"></script>
+{% endblock %}

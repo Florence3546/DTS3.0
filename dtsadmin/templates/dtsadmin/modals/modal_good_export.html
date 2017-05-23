@@ -1,0 +1,41 @@
+<div class="modal fade" id="export_good_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title good-export">导出商品</h4>
+        <h4 class="modal-title order-export">导出excel</h4>
+      </div>
+      <div class="modal-body good-export" id="good-export-pane">
+        <p>选择您要导出的商品</p>
+        <p>
+          <label><input type="radio" name="choose" value="ck">当前页复选框选中的商品</label><br/>
+          <label><input type="radio" name="choose" value="ls">当前列表中搜索的商品</label>
+        </p>
+        <p class="text-red">导出数据较多，可能比较缓慢，请耐心等待！</p>
+      </div>
+      <div class="modal-body order-export" id="order-export-pane">
+        <p>您要导出的内容是：</p>
+        <p>
+          <label><input type="radio" name="choose" value="ck">当前页复选框选中的订单</label><br/>
+          <label><input type="radio" name="choose" value="ls">当前列表中搜索出的所有订单</label>
+        </p>
+        <p class="text-red">最大导出订单数为5000条</p>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button" class="btn btn-dts1 btn-s1 good-export" id="good-export-btn">导出excel</button>
+        <button type="button" class="btn btn-dts1 btn-s1 order-export order-export-btn" id="order-export-btn"
+                data-api="/dtsadmin/exportOrderList/">导出订单
+        </button>
+        <button type="button" class="btn btn-dts1 btn-s1 order-export order-export-btn" id="orderdetail-export-btn"
+                data-api="/dtsadmin/exportOrderDetailList/">导出订单明细
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+	

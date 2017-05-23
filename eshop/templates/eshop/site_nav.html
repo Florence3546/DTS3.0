@@ -1,0 +1,39 @@
+<div id="site-wrap">
+  <div class="site-nav" id="site-nav">
+    <div class="pull-left">欢迎进入葫芦娃医药商城！
+      {% if request.user.is_authenticated == True %}
+        <a href="" target="view_window">{{ request.user.username }}</a>&nbsp;
+        <a href="{% url 'eshop:user_logout' %}" target="">退出</a>&nbsp;
+        <a href="{% url 'eshop:site_message' %}" target="_blank">消息
+        	<span class="badge badge-defined" id="unread_count" data-url="{% url 'eshop:site_message' %}?is_read=unread"></span>
+        </a>
+      {% else %}
+        <a href="{% url 'eshop:user_login' %}">请登录</a>
+        <a href="{% url 'eshop:user_register' %}">免费注册</a>
+      {% endif %}
+    </div>
+    <ul class="pull-right">
+      </li>
+      <li><a href="{% url 'eshop:my_collect' %}?state=0">收藏夹</a></li>
+      <li>
+      	<a href="{% url 'eshop:shopping_cart_list' %}">购物车
+      		<span class="badge badge-defined shopping_cart_count" id="shopping_cart_count" data-url="{% url 'eshop:shopping_cart_list' %}?shopping_cart_count=shopping_cart_count"></span>
+      	</a>
+      <li class="fore">
+        <a href="{% url 'eshop:my_order' %}" target="_blank">我的订单</a><i class="iconfont icon-shangxiajiantou"></i>
+        <ul id="id_order_count" data-url="{% url 'eshop:my_order' %}?order_state=order_state">
+          <li><a href="{% url 'eshop:my_order' %}?state=0" target="_blank">待付款
+            <span class="not_paid"></span>
+          </a></li>
+          <li><a href="{% url 'eshop:my_order' %}?state=2" target="_blank">待发货
+            <span class="is_picking"></span>
+          </a></li>
+          <li><a href="{% url 'eshop:my_order' %}?state=3" target="_blank">待收货
+            <span class="is_shipping"></span></a></li>
+        </ul>
+      </li>
+      <li><a href="{% url 'eshop:member_center' %}">会员中心</a></li>
+      <li><a href="{% url 'eshop:eshop_home' %}">返回首页</a></li>
+    </ul>
+  </div>
+</div>

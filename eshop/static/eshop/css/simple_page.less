@@ -1,0 +1,131 @@
+@mainColor: #33cc6d;
+.main-menu {
+  height: 45px;
+  overflow: hidden;
+  &:hover {
+    height: 520px;
+    background: #fff;
+    border: 1px solid #16b753;
+    border-top: none;
+    overflow: visible;
+    z-index: 5;
+  }
+  &:hover li:first-of-type {
+    padding-left: 11px;
+  }
+}
+
+//    面包屑
+.crumb {
+  padding-left: 10px;
+  overflow: hidden;
+  ul {
+    overflow: hidden;
+  }
+  li {
+    float: left;
+    padding-left: 6px;
+    height: 50px;
+    line-height: 50px;
+    i.greater-than {
+      position: relative;
+      top: 3px;
+    }
+  }
+}
+
+.sidebar-member {
+  margin-top: 0;
+}
+
+.help-content {
+  float: left;
+  width: 1070px;
+  min-height: 570px;
+  border: 1px solid #efefef;
+  margin-bottom: 110px;
+  .help-title {
+    margin: 0 20px 20px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 16px;
+    border-bottom: 1px dashed #e5e5e5;
+  }
+  .help-body {
+    padding: 0 30px 30px;
+  }
+  .mrg-b-30 {
+    margin-bottom: 30px;
+  }
+  .mrg-t-30 {
+    margin-top: 30px;
+  }
+  .mrg-t-20 {
+    margin-top: 20px;
+  }
+  .mrg-b-20 {
+    margin-bottom: 20px;
+  }
+  .mrg-l-18 {
+    margin-left: 18px;
+  }
+  .mrg-l-12 {
+    margin-left: 12px;
+  }
+  .text-content {
+    text-indent: 24px;
+    line-height: 24px;
+  }
+  .border {
+    border: 1px solid #e5e5e5;
+  }
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+  dt {
+    font-weight: normal;
+    color: @mainColor;
+    line-height: 24px;
+  }
+  dd {
+    margin-left: 12px;
+    line-height: 24px;
+    .num {
+      color: @mainColor;
+    }
+  }
+  .purchase-process {
+    margin: 0 0 20px 30px;
+    overflow: hidden;
+    li {
+      float: left;
+      width: 150px;
+      margin-right: 65px;
+      text-align: center;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+  .annotation {
+    dt {
+      line-height: 18px;
+      color: #999;
+    }
+    dd {
+      line-height: 18px;
+      color: #999;
+      margin-left: 24px;
+    }
+  }
+  ul {
+    line-height: 24px;
+  }
+  li.attention {
+    color: #ff5555;
+  }
+}
+

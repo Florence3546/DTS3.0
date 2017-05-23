@@ -1,0 +1,27 @@
+<div id="header">
+  <div class="header">
+    <a href="{% url 'eshop:eshop_home' %}"><img src="/static/eshop/images/logo.png"/></a>
+    <div class="search">
+      <form action="{% url 'eshop:good_search_list' %}" method="get">
+        <div class="input-group">
+          <input type="text"
+                 name="keyword"
+                 value="{{ request.GET.keyword }}"
+                 class="form-control" placeholder="">
+          <span class="input-group-btn">
+            <a href="{% url 'eshop:good_search_list' %}"><button class="btn" type="submit">搜索</button></a>
+          </span>
+        </div>
+      </form>
+      <a href="{% url 'eshop:good_search_list' %}?category=中成药" target="_blank">中成药</a>
+      <a href="{% url 'eshop:good_search_list' %}?category=抗生素" target="_blank">抗生素</a>
+      <a href="{% url 'eshop:good_search_list' %}?category=保健食品" target="_blank">保健食品</a>
+      <a href="{% url 'eshop:good_search_list' %}?category=进口药品" target="_blank">进口药品</a>
+      <a href="{% url 'eshop:good_search_list' %}?category=日化用品" target="_blank">日化用品</a>
+    </div>
+    <a class="shopping-cart" href="{% url 'eshop:shopping_cart_list' %}">
+      <i class="iconfont icon-gouwuche"></i>我的购物车
+			<span class="badge badge-defined shopping_cart_count" id="shopping_cart_count" data-url="{% url 'eshop:shopping_cart_list' %}?shopping_cart_count=shopping_cart_count"></span>
+    </a>
+  </div>
+</div>

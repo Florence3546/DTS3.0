@@ -1,0 +1,336 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}角色管理 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_info_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #table_role {
+      width: 710px;
+      margin: 0;
+    }
+
+    #table_role th:nth-child(1) {
+      width: 100px;
+    }
+
+    #table_role th:nth-child(2) {
+      width: 300px;
+    }
+
+    #table_role th:nth-child(3) {
+      width: 100px;
+    }
+
+    #table_role th:nth-child(4) {
+      width: 210px;
+    }
+
+    #table_role tr td:nth-of-type(1),
+    #table_role tr td:nth-of-type(3) {
+      text-align: center;
+    }
+
+    #table_role p {
+      width: 270px;
+      line-height: 28px;
+      word-wrap: break-word;
+      margin: 0;
+    }
+
+    #table_role a {
+      color: #0090ff;
+      margin: 0 13px;
+    }
+
+    .set-top {
+      position: relative;
+      width: 500px;
+      border: 1px #a7d1f3 solid;
+      background-color: #fff;
+    }
+
+    .set-top:before, .set-top:after {
+      width: 0;
+      height: 0;
+      border: transparent solid;
+      position: absolute;
+      content: ""
+    }
+
+    .set-top:before {
+      border-width: 10px;
+      border-right-color: #a7d1f3;
+      top: 50px;
+      left: -20px;
+    }
+
+    .set-top:after {
+      border-width: 9px;
+      border-right-color: #ffffff;
+      top: 51px;
+      left: -17px;
+    }
+
+    #set-permission {
+      position: relative;
+      table-layout: fixed;
+      border: 0;
+    }
+
+    #set-permission td, #set-permission th {
+      border: 1px solid #a7d1f3;
+    }
+
+    #set-permission tbody {
+      display: block;
+      width: 500px;
+      max-height: 290px;
+      overflow-y: auto;
+    }
+
+    #set-permission tbody ::-webkit-scrollbar {
+      width: 5px;
+      height: 16px;
+      background-color: #F5F5F5;
+    }
+
+    #set-permission th {
+      background: #b9e1ff;
+    }
+
+    #set-permission td {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    #set-permission td:nth-child(3) {
+      text-align: center;
+    }
+
+    #set-permission td:nth-child(3) input {
+      margin-left: 0;
+    }
+
+    #set-permission td p {
+      width: 130px;
+      height: 36px;
+      float: left;
+      line-height: 36px;
+      margin-bottom: 0;
+    }
+
+    #set-permission th:nth-child(1) {
+      width: 100px;
+    }
+
+    #set-permission th:nth-child(2) {
+      width: 295px;
+    }
+
+    #set-permission tbody td:nth-child(1) {
+      width: 100px;
+    }
+
+    #set-permission tbody td:nth-child(2) {
+      width: 295px;
+    }
+
+    #set-permission tbody td:nth-child(3) {
+      width: 85px;
+    }
+
+    #set-permission tbody tr:first-child td {
+      border-top: 0;
+    }
+
+    #set-permission tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    #set-permission tbody td:nth-child(1) span {
+      margin-left: 20px;
+    }
+
+    #set-permission input[type="checkbox"] {
+      padding: 0;
+      vertical-align: middle;
+      margin-left: 8px;
+      margin-right: 4px;
+    }
+
+    #set-permission tfoot a {
+      margin-left: 18px;
+    }
+
+    #set-permission button {
+      margin: 20px 0;
+    }
+
+    #set-permission button:nth-child(2) {
+      margin-left: 240px;
+      margin-right: 10px;
+    }
+
+    #set-permission label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    #set-permission i {
+      float: left;
+      cursor: pointer;
+      margin-top: -2px;
+      margin-left: 4px;
+    }
+
+    #table_role .tr-hover {
+      background: #eef8ff;
+    }
+
+    #role_name {
+      width: 340px;
+    }
+
+    #role_desc {
+      height: 150px;
+      width: 340px;
+    }
+
+    .basic-set-tr {
+      cursor: pointer;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small clearfix" id="content">
+    <form class="form-inline">
+      {% csrf_token %}
+      <input type="hidden" id="role_id" value=""/>
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <button type="button" class="control-btn btn btn-dts btn-s1 add">添加角色</button>
+        </div>
+      </div>
+    </form>
+    <table id="table_role" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>角色名称</th>
+        <th>角色描述</th>
+        <th>用户类型</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for data in data_list %}
+        <tr>
+          <td>{{ data.name }}</td>
+          <td><p>{{ data.desc }}</p></td>
+          <td>{{ data.get_usertype_display }}</td>
+          <td>
+            <a class="set" href="javascript:;" id="{{ data.id }}" api="{% url 'dtsadmin:ajax:get_this_perm_role' %}">设置权限</a>
+            <a class="update" href="javascript:;"
+               api="{% url 'dtsadmin:ajax:get_modal_byid' modal_name='Role' obj_id=data.id %}">修改</a>
+            <a class="delete" href="javascript:;" api="{% url 'dtsadmin:ajax:del_role_byid' obj_id=data.id %}">删除</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr class="no_data">
+          <td colspan="6"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <table id="set-permission" class="hide set-top">
+      <thead>
+      <tr>
+        <th>功能菜单</th>
+        <th>角色描述</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody id="set-perm-pane">
+      {% for item in perms.permission_set.all %}
+        <tr>
+          <td class="basic-set-tr"><i class="iconfont icon-opedown basic-set" id="{{ item.id }}"></i>{{ item.name }}
+          </td>
+          <td><p></p></td>
+          <td>
+            <input type="checkbox" class="check-settings ch-all" id="{{ item.id }}"><label
+              for="check_settings">全选</label>
+          </td>
+        </tr>
+
+        {% for sec_item in item.permission_set.all %}
+          <tr class="settings settings-pane-{{ item.id }}">
+            <td><span>{{ sec_item.name }}</span></td>
+            <td class="basic-td">
+              <p>
+                <input class="perm-item ch-perm-{{ item.id }} sec-ch-perm-{{ sec_item.id }}" type="checkbox"
+                       id="{{ sec_item.codename }}" value="{{ sec_item.codename }}">
+                <label for="{{ sec_item.codename }}">浏览</label>
+              </p>
+              {% for thd_item in sec_item.permission_set.all %}
+                <p>
+                  <input type="checkbox" class="perm-item ch-perm-{{ item.id }} sec-ch-perm-{{ sec_item.id }}"
+                         id="{{ thd_item.codename }}" value="{{ thd_item.codename }}">
+                  <label for="{{ thd_item.codename }}">{{ thd_item.name }}</label>
+                </p>
+              {% endfor %}
+            </td>
+            <td><input type="checkbox" class="sec-ch-all sec-ch-all-{{ item.id }}" id="{{ sec_item.id }}"><label
+                for="basic_check">全选</label></td>
+          </tr>
+        {% empty %}
+          <tr class="settings settings-pane-{{ item.id }}">
+            <td><span>{{ item.name }}</span></td>
+            <td class="basic-td">
+              <p>
+                <input class="perm-item ch-perm-{{ item.id }} sec-ch-perm-{{ item.id }}" type="checkbox"
+                       id="{{ item.codename }}" value="{{ item.codename }}">
+                <label for="{{ item.codename }}">浏览</label>
+              </p>
+            </td>
+            <td><input type="checkbox" class="sec-ch-all sec-ch-all-{{ item.id }}" id="{{ item.id }}"><label
+                for="basic_check">全选</label></td>
+          </tr>
+        {% endfor %}
+
+      {% endfor %}
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">
+          <a id="hide_show">全部收起</a>
+          <button class="control-btn btn btn-dts btn-s1" id="role-save"
+                  api="{% url 'dtsadmin:ajax:grant_role_permission' %}">保存
+          </button>
+          <button class="control-btn btn btn-dts btn-s0" id="role-cancel">取消</button>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+{% endblock %}
+
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_role.html' %}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/role_manage.js'|static_url }}"></script>
+{% endblock %}

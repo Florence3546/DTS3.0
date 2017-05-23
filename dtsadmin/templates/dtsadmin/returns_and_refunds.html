@@ -1,0 +1,316 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}退货退款- DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    .form-inline.bordered {
+      border-bottom: none;
+      margin-bottom: 17px;
+    }
+
+    #table_refund_return thead th:nth-of-type(1) {
+      width: 32px;
+    }
+
+    #table_refund_return thead th:nth-last-of-type(1) {
+      width: 100px;
+    }
+
+    #table_refund_return tr td {
+      text-align: center;
+    }
+
+    #table_refund_return tr td:nth-of-type(3) a {
+      color: #777;
+    }
+
+    #table_refund_return tr td:nth-of-type(3) a:hover {
+      color: #0090ff;
+    }
+
+    #table_refund_return tr td:nth-of-type(6),
+    #table_refund_return tr td:nth-of-type(7) {
+      text-align: right;
+    }
+
+    #table_refund_return tr td:nth-of-type(7) {
+      color: #ff6600;
+      font-weight: bolder;
+    }
+
+    /**********************审核*******************************/
+    #returns_refunds_modal .modal-body {
+      padding: 10px 25px 5px;
+    }
+
+    #approve_goods_modal h6,
+    #returns_refunds_modal h6 {
+      margin-bottom: 20px;
+    }
+
+    .personal-info tr td:nth-of-type(odd) {
+      width: 114px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .good-info .form-control.short {
+      width: 45px;
+      padding: 6px;
+      font-size: 12px;
+      height: 24px;
+      line-height: 12px;
+      display: inline-block;
+    }
+
+    .good-info .form-control.short:nth-of-type(2) {
+      text-align: right;
+    }
+
+    .good-info img {
+      border: 1px solid #efefef;
+      width:63px;
+      height:63px;
+    }
+
+    .operation-log thead tr th,
+    .good-info thead tr th {
+      background: #f6f6f6;
+      border-bottom: none;
+      text-align: center;
+      height: 40px;
+      font-weight: normal;
+      line-height: 23px;
+    }
+
+    .good-info tbody tr td:nth-of-type(1),
+    .good-info tbody tr td:nth-of-type(4),
+    .good-info tbody tr td:nth-of-type(5) {
+      text-align: center;
+    }
+
+    .good-info tbody tr td:nth-of-type(3),
+    .good-info tbody tr td:nth-of-type(6),
+    .good-info tbody tr td:nth-of-type(7) {
+      text-align: right;
+    }
+
+    .operation-log td {
+      text-align: center;
+    }
+
+    .uploading a {
+      position: relative;
+      float: left;
+      display: block;
+      margin-right: 8px;
+      width: 92px;
+      height: 92px;
+      border: 1px solid #e3e3e3;
+    }
+
+    .uploading a img {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    #approve_goods_modal .modal-footer {
+      display: none;
+    }
+
+    #approve_goods_modal .personal-info a {
+      color: #0090ff;
+    }
+
+    .form-group-dts .date-text {
+      width: 95px
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+    <ul class="tab-defined">
+      <li class="active">
+        <a data-toggle="tab">全部</a>
+      </li>
+      {#		  <li>#}
+      {#		    <a data-toggle="tab">我收到的退款申请</a>#}
+      {#		  </li>#}
+      {#		  <li>#}
+      {#		    <a data-toggle="tab">我收到的退货申请</a>#}
+      {#		  </li>#}
+    </ul>
+    <form class="form-inline bordered" id="ret_ref_form" action="/dtsadmin/returns_and_refunds/" method="get">
+      {% csrf_token %}
+      <input type="hidden" id="page" name="page" value="{{ data_list.number|default:1 }}">
+      <input type="hidden" id="op_type" name="op_type" value="search">
+      <input type="hidden" id="total_count" value="{{ data_list.paginator.count }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="input_enter_name" class="control-label normal">退款编号</label>
+          <input type="text" class="form-control" id="input_ref_id" name="ref_id" value="{{ request.GET.ref_id }}">
+          <button type="button" class="control-btn btn btn-dts btn-s1 mrg-l-30" id="ret_ref_search">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">申请时间</label>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="start_date" placeholder="请选择日期"
+                 name="start_date" value="{{ request.GET.start_date }}">
+          <span class="control-text">-</span>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="end_date" placeholder="请选择日期"
+                 name="end_date" value="{{ request.GET.end_date }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">订单编号</label>
+          <input type="text" class="form-control" id="order_no" name="order_no" value="{{ request.GET.order_no }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">类型</label>
+          <select id="refund_type" name="refund_type" class="form-control">
+            <option value="">请选择……</option>
+            <option value="0" {% if request.GET.refund_type == '0' %}selected{% endif %}>退款</option>
+            <option value="1" {% if request.GET.refund_type == '1' %}selected{% endif %}>退货</option>
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">状态</label>
+          <select class="form-control" id="refund_status" name="refund_status">
+            <option value="">请选择……</option>
+            <option value="0" {% if  refund_status == '0' %}selected{% endif %}>处理中</option>
+            <option value="1" {% if  refund_status == '1' %}selected{% endif %}>审核中</option>
+            <option value="2" {% if  refund_status == '2' %}selected{% endif %}>等待退货</option>
+            <option value="3" {% if  refund_status == '3' %}selected{% endif %}>等待收货</option>
+            <option value="4" {% if  refund_status == '4' %}selected{% endif %}>退款完成</option>
+            <option value="5" {% if  refund_status == '5' %}selected{% endif %}>退款关闭</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <table id="table_refund_return" class="table table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>
+          <input type="checkbox" class="check-all" value="">
+        </th>
+        <th>退款编号</th>
+        <th>订单编号</th>
+        <th>类型</th>
+        <th>下单人</th>
+        <th>实付金额（元）</th>
+        <th>退款金额（元）</th>
+        <th>申请时间</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for item in data_list %}
+        <tr>
+          <td><input type="checkbox" class="check-item" value="{{ item.id }}"></td>
+          <td>{{ item.id }}</td>
+          <td><a class="look_order" api="{% url 'dtsadmin:ajax:order_no_check' obj_id=item.order.pk %}">{{ item.order.order_no }}</a></td>
+          <td>{{ item.get_refund_type_display }}</td>
+          <td>{{ item.applicant.first_name }}</td>
+          <td>{{ item.order.real_price|multiply:0.01 }}</td>
+          <td>{{ item.refund|multiply:0.01 }}</td>
+          <td>{{ item.created|date:'Y-m-d H:i:s' }}</td>
+          <td class="text-red">
+            {{ item.get_refund_status_display }}
+          </td>
+          <td>
+            {% if item.refund_status == 0 %}
+              {% if item.order.verify_state != 2 %}
+                <a href="javascript:;" class="ref-fsh"
+                   api="{% url 'dtsadmin:ajax:get_refund_form' modal_name='RefundRecord' obj_id=item.id %}">处理</a>
+              {% else %}
+                <a href="javascript:;;" class="ref-verify"
+                   api="{% url 'dtsadmin:ajax:get_refund_form' modal_name='RefundRecord' obj_id=item.id %}">处理</a>
+              {% endif %}
+            {% elif  item.refund_status == 1 %}
+              {% if item.refund_type == 0 %}
+                <a href="javascript:;" class="ref-fsh"
+                   api="{% url 'dtsadmin:ajax:get_refund_form' modal_name='RefundRecord' obj_id=item.id %}">审核</a>
+              {% else %}
+                <a href="javascript:;" class="ref-verify"
+                   api="{% url 'dtsadmin:ajax:get_refund_form' modal_name='RefundRecord' obj_id=item.id %}">审核</a>
+              {% endif %}
+            {% elif item.refund_status == 3 %}
+              <a href="javascript:;;" class="ref-rec"
+                 api="{% url 'dtsadmin:ajax:get_refund_form' modal_name='RefundRecord' obj_id=item.id %}">确认收货</a>
+            {% else %}
+              <a href="javascript:;;" class="ref-look"
+                 api="{% url 'dtsadmin:ajax:get_refund_form' modal_name='RefundRecord' obj_id=item.id %}">查看</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr class="no_data">
+          <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if data_list.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ data_list.paginator.per_page }}条，总共{{ data_list.paginator.num_pages }}页，共{{ data_list.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if data_list.has_previous %}{{ data_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span>...</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                            page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span>...</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="
+                 {% if data_list.has_next %}{{ data_list.next_page_number }}{% else %}{{ data_list.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_returns_refunds.html' %}
+  {% include 'dtsadmin/modals/modal_approve_look_order.html' %}
+  {% include 'dtsadmin/modals/modal_common_log.html' %}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/return_refund.js'|static_url }}"></script>
+{% endblock %}

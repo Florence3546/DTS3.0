@@ -1,0 +1,174 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}结算 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/shopping_balance.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/member_site_nav.html' %}
+
+    <div id="shopping-section">
+      <div class="logo-content">
+        <div class="logo-group">
+          <div class="logo-img">
+            <a href="{% url 'eshop:eshop_home' %}"><img src="{{ 'eshop/images/huluwa.png'|static_url }}"></a></div>
+          <div class="logo-title">结算页面</div>
+        </div>
+        <div class="range-group">
+          <div class="prev-step">
+            <div class="shopping-cart">1</div>
+            <div class="shopping-cart-title">我的购物车</div>
+          </div>
+          <div class="new-step">
+            <div class="check-order">2</div>
+            <div class="check-order-title">填写核对订单信息</div>
+          </div>
+          <div class="next-step">
+            <div class="submit-order">3</div>
+            <div class="submit-order-title">成功提交提单</div>
+          </div>
+        </div>
+      </div>
+      <div class="delivery-inform">
+        <div class="common-title">
+          配送信息
+          <a>新增收货地址</a>
+        </div>
+        <div class="delivery-inform-box">
+          <div class="delivery-address">
+            <div class="delivery-name">张丽</div>
+            <span>张丽</span>
+            <span>湖北省武汉市光谷天地普安药房</span>
+            <span>131****1001</span>
+            <a>修改</a>
+            <a>删除</a>
+          </div>
+          <div class="more-address">
+            <a>更多地址</a>
+          </div>
+        </div>
+      </div>
+      <div class="payment-method">
+        <div class="common-title">支付方式</div>
+        <div class="payment-method-box">
+          <div class="active">在线支付</div>
+          <div>线下支付</div>
+          <div>预付款</div>
+          <div>货到付款</div>
+        </div>
+      </div>
+      <div class="delivery-method">
+        <div class="common-title">配送方式</div>
+        <div class="delivery-method-box">
+          <div class="active">快递</div>
+          <div>自提</div>
+        </div>
+      </div>
+      <div class="return-cart">
+        <a>返回购物车修改</a>
+      </div>
+      <div class="good-info">
+        <ul>
+          <li class="good-nav">
+            <div class="good-inform">商品信息</div>
+            <div class="good-code">商品编号</div>
+            <div class="produce-fatory">生产厂家</div>
+            <div class="sigle-price">单价</div>
+            <div class="good-number">数量</div>
+            <div class="sub-total">小计</div>
+          </li>
+          <li class="good-item">
+            <div class="good-inform">
+              <img src="../../static/eshop/images/medicine.png"/>
+              <p>
+                <span>可定</span>
+                <span>瑞舒伐他汀钙片</span>
+                <span>10mg*7片/盒</span>
+              </p>
+            </div>
+            <div class="good-code">Q254136557457</div>
+            <div class="produce-fatory">哈尔滨第六制药厂</div>
+            <div class="sigle-price"><span>￥17.00</span></div>
+            <div class="good-number">*100</div>
+            <div class="sub-total"><span>￥1170.00</span></div>
+          </li>
+          <li class="good-item">
+            <div class="good-inform">
+              <img src="../../static/eshop/images/medicine.png"/>
+              <p>
+                <span>可定</span>
+                <span>瑞舒伐他汀钙片</span>
+                <span>10mg*7片/盒</span>
+              </p>
+            </div>
+            <div class="good-code">Q254136557457</div>
+            <div class="produce-fatory">哈尔滨第六制药厂</div>
+            <div class="sigle-price"><span>￥17.00</span></div>
+            <div class="good-number">*100</div>
+            <div class="sub-total"><span>￥1170.00</span></div>
+          </li>
+        </ul>
+        <div class="total clearfix">
+          <div class="good-bottom clearfix">
+            <div class="leave-massage">
+              <label for="massage">留言：</label>
+              <input type="text" id="massage" width="350">
+              <p>
+                <i class="iconfont icon-jia"></i>
+                <a>使用优惠券</a>
+              </p>
+              <p>
+                <i class="iconfont icon-jia"></i>
+                <a>使用积分</a>
+              </p>
+              <p>
+                <i class="iconfont icon-jia"></i>
+                <a>发票</a>
+              </p>
+            </div>
+            <div class="goods-total-amount">
+              <p>
+                <span>商品总金额：</span>
+                <span>￥2240.00</span>
+              </p>
+              <p>
+                <span>运费：</span>
+                <span>￥10.00</span>
+              </p>
+              <p>
+                <span>促销优惠金额：</span>
+                <span>￥0.00</span>
+              </p>
+              <p>
+                <span>积分兑换：</span>
+                <span>￥0.00</span>
+              </p>
+            </div>
+          </div>
+          <div class="totla-money">
+            <span>商品总金额(含运费)：</span>
+            <span>￥2563.00</span>
+            <a class="btn-s2" href="{% url 'eshop:submit_order' %}">提交</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script src="{{ 'eshop/js/shopping_balance.js'|static_url }}"></script>
+{% endblock %}

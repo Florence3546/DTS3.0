@@ -1,0 +1,137 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}日志管理 - DTS管理后台{% endblock %}
+
+{#  侧边栏  #}
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_info_manage.html' %}
+{% endblock %}
+
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #table_log tr td {
+      text-align: center;
+    }
+
+    #table_log tr td:nth-of-type(5) {
+      text-align: left;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <div class="small" id="content">
+    <form class="form-inline" id="form_log_manage" role="form" method="get" action="">
+      <input type="hidden" id="total_count" value="{{ data_list.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="id_operator_name" class="control-label normal" id="operate_label">操作人</label>
+          <input type="text" id="id_operator_name" name="operator_name" class="form-control"
+                 value="{{ request.GET.operator_name }}">
+          <button class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="id_data_type" class="control-label normal">数据类型</label>
+          <select name="data_type" class="form-control" id="id_data_type">
+            <option value="">请选择……</option>
+            {% for k, v in RECORD_DATA_TYPE_CHOICES %}
+              <option value="{{ k }}"
+                      {% if request.GET.data_type == k|stringformat:'s' %}selected{% endif %}>{{ v }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="operate_date" class="control-label normal">操作日期</label>
+          <input type="text" name="created_from" class="form-control date xcq" data-date-format="yyyy-mm-dd"
+                 placeholder="请选择日期" value="{{ request.GET.created_from }}">
+          <span class="control-text">-</span>
+          <input type="text" name="created_to" class="form-control date xcq" data-date-format="yyyy-mm-dd"
+                 placeholder="请选择日期" value="{{ request.GET.created_to }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="log_detail" class="control-label normal">日志描述</label>
+          <input type="text" id="log_detail" name="note" class="form-control" placeholder=""
+                 value="{{ request.GET.note }}">
+        </div>
+      </div>
+    </form>
+    <table id="table_log" class="table-bordered table-hover table">
+      <thead>
+      <tr>
+        <th>时间</th>
+        <th>操作人</th>
+        <th>数据类型</th>
+        <th>操作</th>
+        <th>日志描述</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for obj in data_list %}
+        <tr>
+          <td>{{ obj.created|date:'Y-m_d H:i' }}</td>
+          <td>{{ obj.operator.first_name }}</td>
+          <td>{{ obj.get_data_type_display }}</td>
+          <td>{{ obj.operate_cn }}</td>
+          <td>{{ obj.note }}</td>
+        </tr>
+      {% empty %}
+        <tr class="no_data">
+          <td colspan="6"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if data_list.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ data_list.paginator.per_page }}条，总共{{ data_list.paginator.num_pages }}页，共{{ data_list.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if data_list.has_previous %}{{ data_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span class="page-count">…</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                            page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span class="page-count">…</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="
+
+                 {% if data_list.has_next %}{{ data_list.next_page_number }}{% else %}{{ data_list.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/log_manage.js'|static_url }}"></script>
+{% endblock %}

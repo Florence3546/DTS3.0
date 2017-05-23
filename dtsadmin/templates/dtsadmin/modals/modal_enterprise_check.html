@@ -1,0 +1,140 @@
+{% load extras %}
+<div class="modal enterprise_check_modal fade" id="enterprise_check_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">审核</h4>
+      </div>
+      <div class="modal-body">
+        <h6><b>账户信息</b></h6>
+        <table class="table table-bordered">
+          <tr>
+            <td>企业ID</td>
+            <td>{{ obj.pk }}</td>
+            <td>用户名</td>
+            <td>{{ user.username }}</td>
+            <td>姓名</td>
+            <td>{{ user.first_name }}</td>
+            <td>性别</td>
+            <td>{{ user.get_gender_display }}</td>
+          </tr>
+          <tr>
+            <td>手机号</td>
+            <td>{{ user.phone }}</td>
+            <td>邮箱</td>
+            <td>{{ user.email }}</td>
+            <td>预存款余额</td>
+            <td>￥{{ obj.balance |divide:'100' }}</td>
+            <td>信用额度</td>
+            <td>￥{{ obj.overdraft | divide:'100' }}</td>
+          </tr>
+          <tr>
+            <td>会员等级</td>
+            <td>普通会员</td>
+            <td>会员积分</td>
+            <td colspan="5">1000</td>
+          </tr>
+        </table>
+        <h6><b>企业信息</b></h6>
+        <table class="table table-bordered">
+          <tr>
+            <td>企业名称</td>
+            <td>{{ obj.name }}</td>
+            <td>经营方式</td>
+            <td>{{ obj.operate_mode }}</td>
+          </tr>
+          <tr>
+            <td>所在地区</td>
+            <td>{{ obj.region }}</td>
+            <td>详细地址</td>
+            <td>{{ obj.address }}</td>
+          </tr>
+          <tr>
+            <td>企业电话</td>
+            <td>{{ obj.phone }}</td>
+            <td>法人代表</td>
+            <td>{{ obj.legal_repr }}</td>
+          </tr>
+          <tr>
+            <td>注册资本</td>
+            <td>{{ obj.reg_capital }}</td>
+            <td>营业期限</td>
+            <td>{{ obj.valid_to | date:'Y-m-d' }}</td>
+          </tr>
+          <tr>
+            <td>经营范围</td>
+            <td colspan="3" class="empirical-range">
+              {{ obj.biz_scope }}
+            </td>
+          </tr>
+          <tr>
+            <td>资质证照</td>
+            <td colspan="3" class="uploading">
+              {% if qualification.0 %}
+                <a><img src="{{ qualification.0.photo.name|media_url }}"></a>
+              {% endif %}
+              {% if qualification.1 %}
+                <a><img src="{{ qualification.1.photo.name|media_url }}"></a>
+              {% endif %}
+              {% if qualification.2 %}
+                <a><img src="{{ qualification.2.photo.name|media_url }}"></a>
+              {% endif %}
+            </td>
+          </tr>
+        </table>
+        <h6><b>其他信息</b></h6>
+        <table class="table table-bordered">
+          <tr>
+            <td>注册日期</td>
+            <td>{{ obj.valid_from | date:'Y-m-d' }}</td>
+            <td>企业状态</td>
+            <td>{{ obj.get_review_status_display }}</td>
+            <td>用户类型</td>
+            <td>{{ user.get_usertype_display }}</td>
+            <td>企业状态</td>
+            <td>{% if obj.is_lock %}锁定{% else %}未锁定{% endif %}</td>
+          </tr>
+          <tr>
+            <td>审核状态</td>
+            <td>{{ obj.get_review_status_display }}</td>
+            <td>有效期</td>
+            <td>{{ obj.valid_from | date:'Y-m-d' }}至{{ obj.valid_to | date:'Y-m-d' }}</td>
+            <td>备注</td>
+            <td colspan="3">
+              {{ obj.note }}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        {% if obj.review_status != 2 %}
+          <button type="button"
+                  id="verify_enter_pass"
+                  data-method="verify_enter_pass"
+                  data-pk="{{ obj.pk }}"
+                  api="{% url 'dtsadmin:enterprise_list' %}"
+                  class="btn btn-pass verify_enter btn-dts2 btn-s1">通过
+          </button>
+        {% endif %}
+        {% if obj.review_status != 3 %}
+          <button type="button"
+                  id="verify_enter_nopass"
+                  data-method="verify_enter_nopass"
+                  data-pk="{{ obj.pk }}"
+                  api="{% url 'dtsadmin:enterprise_list' %}"
+                  class="btn btn-no-pass verify_enter  btn-dts2 btn-s4"
+              {#                data-dismiss="modal"#}
+          >不通过
+          </button>
+        {% endif %}
+
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+	

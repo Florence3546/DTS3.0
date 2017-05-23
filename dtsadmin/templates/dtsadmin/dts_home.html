@@ -1,0 +1,142 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}首页 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'dtsadmin/css/dts_home.css'|static_url }}">
+{% endblock %}
+
+{% block content %}
+  <div class="content small">
+    <div class="left">
+      <div class="order-info">
+        <a href="/dtsadmin/user_manage/?date_joined_from={{ cur_date|date:'Y-m-d' }}&date_joined_to={{ cur_date|date:'Y-m-d' }}&usertype=Purchaser"
+           target="_blank">
+          <i class="iconfont icon-yonghu"></i>
+          <i class="iconfont icon-shangsheng"></i>
+          <span class="txt">今日新增客户</span><br/>
+          <span class="num">{{ new_user_count|default:0 }}</span>
+        </a>
+        <a href="/dtsadmin/order_list/?ord_time_from={{ cur_date|date:'Y-m-d' }}&ord_time_to={{ cur_date|date:'Y-m-d' }}"
+           target="_blank">
+          <i class="iconfont icon-dingdan"></i>
+          <i class="iconfont icon-shangsheng"></i>
+          <span class="txt">今日新增订单</span><br/>
+          <span class="num">{{ new_order_count|default:0 }}</span>
+        </a>
+        <a href="javascript:;">
+          <i class="iconfont icon-renminbi"></i>
+          <i class="iconfont icon-shangsheng"></i>
+          <span class="txt">今日订单金额</span><br/>
+          <span class="num">{{ new_order_money|multiply:0.01|default:0 }}</span>
+        </a>
+      </div>
+      <div class="todo">
+        <div class="title">
+          待办事项
+          <i class="iconfont icon-14052218"></i>
+        </div>
+        <div class="todo-list">
+          <a href="/dtsadmin/order_list/?verify_state=1" target="_blank">
+            <i class="iconfont icon-icon19"></i>
+            待审核的订单
+            <span
+                class="{% if verify_order_count == 0 %}zero{% elif verify_order_count > 0 %}competent{% endif %}">{{ verify_order_count }}</span>
+          </a>
+          <a href="/dtsadmin/order_list/?trade_state=2" target="_blank">
+            <i class="iconfont icon-fahuo"></i>
+            待发货的订单<span
+              class="{% if pick_order_count == 0 %}zero{% elif pick_order_count > 0 %}competent{% endif %}">{{ pick_order_count }}</span>
+          </a>
+          <a href="/dtsadmin/approval_list/?change_price_state=1">
+            <i class="iconfont icon-tuikuan"></i>
+            待处理的改价申请
+            <span
+                class="{% if change_count == 0 %}zero{% elif change_count > 0 %}competent{% endif %}">{{ change_count }}</span>
+          </a>
+          <a href="/dtsadmin/order_list/?payment_method_name=3&trade_state=0">
+            <i class="iconfont icon-tuihuo"></i>
+            待确认的收款<span
+              class="{% if payment_count == 0 %}zero{% elif payment_count > 0 %}competent{% endif %}">{{ payment_count }}</span>
+          </a>
+          <a href="/dtsadmin/returns_and_refunds/?refund_type=0&refund_status=0" target="_blank">
+            <i class="iconfont icon-henhe"></i>
+            待处理的退款<span
+              class="{% if refund_count == 0 %}zero{% elif refund_count > 0 %}competent{% endif %}">{{ refund_count }}</span>
+          </a>
+          <a href="/dtsadmin/returns_and_refunds/?refund_type=1&refund_status=0" target="_blank">
+            <i class="iconfont icon-icon"></i>
+            {#            unauthorized 没有权限时添加 #}
+            待处理的退货<span
+              class="{% if return_count == 0 %}zero{% elif return_count > 0 %}competent{% endif %}{% notHasPerm dtsadmin.publish_manage %}unauthorized{% endnotHasPerm %}">{{ return_count }}</span>
+          </a>
+          <a href="/dtsadmin/returns_and_refunds/?refund_status=1" target="_blank">
+            <i class="iconfont icon-shenhe"></i>
+            待审核的退款退货<span
+              class="{% if ref_ret_count == 0 %}zero{% elif ref_ret_count > 0 %}competent{% endif %}">{{ ref_ret_count }}</span>
+          </a>
+          <a href="/dtsadmin/returns_and_refunds/?refund_status=3" target="_blank">
+            <i class="iconfont icon-shenhe1"></i>
+            待确认收货<span
+              class="{% if ref_rec_count == 0 %}zero{% elif ref_rec_count > 0 %}competent{% endif %}">{{ ref_rec_count }}</span>
+          </a>
+          <a href="/dtsadmin/enterprise_list/?search_enterprise_review_status=1" target="_blank">
+            <i class="iconfont icon-shenhe2"></i>
+            待审核的企业<span
+              class="{% if erp_rev_count == 0 %}zero{% elif erp_rev_count > 0 %}competent{% endif %}">{{ erp_rev_count }}</span>
+          </a>
+          <a href="/dtsadmin/good_list/?s_is_qua=1" target="_blank">
+            <i class="iconfont icon-shangpin"></i>
+            待审核的商品<span
+              class="{% if gd_rev_count == 0 %}zero{% elif gd_rev_count > 0 %}competent{% endif %}">{{ gd_rev_count }}</span>
+          </a>
+          <a href="/dtsadmin/consult_feedback/?feedback_status=0">
+            <i class="iconfont icon-liuyan"></i>
+            待回复的留言<span
+              class="{% if confd_count == 0 %}zero{% elif confd_count > 0 %}competent{% endif %}">{{ confd_count }}</span>
+          </a>
+          <a href="/dtsadmin/lack_good/?stock_amount=0">
+            <i class="iconfont icon-zongquehuosvgz"></i>
+            缺货登记<span
+              class="{% if lack_count == 0 %}zero{% elif lack_count > 0 %}competent{% endif %}">{{ lack_count }}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="title">
+        公告信息
+        <a href="/dtsadmin/show_publish_more/N/" target="_blank">更多</a>
+      </div>
+      <div class="info announcement">
+        {% for notic in info_notics %}
+          <a href="/dtsadmin/show_publish_detail/{{ notic.id }}">
+            <span class="matter"><b>●</b>{{ notic.name }}</span><span
+              class="data">({{ notic.start_date|date:"Y-m-d" }})</span>
+          </a>
+        {% empty %}
+          <span class="matter">暂无</span>
+        {% endfor %}
+      </div>
+      <div class="title">
+        行业资讯
+        <a href="/dtsadmin/show_publish_more/I/" target="_blank">更多</a>
+      </div>
+      <div class="info consult">
+        {% for info in info_mations %}
+          <a href="/dtsadmin/show_publish_detail/{{ info.id }}" target="_blank">
+            <span class="matter"><b>●</b>{{ info.name }}</span>
+            <span class="data">({{ info.start_date|date:"Y-m-d" }})</span>
+          </a>
+        {% empty %}
+          <span class="matter">暂无</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/dts_home.js'|static_url }}"></script>
+{% endblock %}

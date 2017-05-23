@@ -1,0 +1,162 @@
+{% load extras %}
+<div class="modal fade" id="check_good_modal" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">商品信息</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="check" action="" method="post">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="fk_good_id" name="fk_good_id" value="{{ obj.id }}">
+          <ul class="tab-defined" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#basic_info_check" role="tab" data-toggle="tab">基本信息</a>
+            </li>
+            <li role="presentation">
+              <a href="#good_detail_check" role="tab" data-toggle="tab">商品详情</a>
+            </li>
+            <li role="presentation">
+              <a href="#specification_check" role="tab" data-toggle="tab">说明书</a>
+            </li>
+          </ul>
+          <div class="tab-content small">
+            <div role="tabpanel" class="tab-pane active" id="basic_info_check">
+              <table class="table table-bordered">
+                <tr>
+                  <td>商品编码</td>
+                  <td>{{ obj.external_id }}</td>
+                  <td>供应商</td>
+                  <td>{% if obj.supplier is not None %}{{ obj.supplier }}{% endif %}</td>
+                </tr>
+                <tr>
+                  <td>商品通用名称</td>
+                  <td>{{ obj.name }}</td>
+                  <td>出售状态</td>
+                  <td>{% if obj.is_online %}已上架{% else %}未上架{% endif %}</td>
+                </tr>
+                <tr>
+                  <td>商品名称</td>
+                  <td>{{ obj.trade_name }}</td>
+                  <td>审核状态</td>
+                  <td>{{ obj.get_is_qualified_display }}</td>
+                </tr>
+                <tr>
+                  <td>商品分类</td>
+                  <td>{{ obj.category }}</td>
+                  <td>是否中药保护</td>
+                  <td>{% if obj.drugattr.is_zybh %}是{% else %}否{% endif %}</td>
+                </tr>
+                <tr>
+                  <td>制剂规格</td>
+                  <td>{{ obj.prep_spec }}</td>
+                  <td>是否委托加工</td>
+                  <td>{% if obj.drugattr.is_oem %}是{% else %}否{% endif %}</td>
+                </tr>
+                <tr>
+                  <td>批准文号</td>
+                  <td>{{ obj.drugattr.license }}</td>
+                  <td>是否OTC</td>
+                  <td>{% if obj.drugattr.is_otc %}是{% else %}否{% endif %}</td>
+                </tr>
+                <tr>
+                  <td>厂家</td>
+                  <td>{{ obj.manufacturer }}</td>
+                  <td>是否新药</td>
+                  <td>{% if obj.drugattr.is_new %}是{% else %}否{% endif %}</td>
+                </tr>
+                <tr>
+                  <td>产地</td>
+                  <td>{{ obj.locality }}</td>
+                  <td>OTC类型</td>
+                  <td>{{ obj.drugattr.get_otc_type_display }}</td>
+                </tr>
+                <tr>
+                  <td>包装单位</td>
+                  <td>{{ obj.unit }}</td>
+                  <td>处方类型</td>
+                  <td>{{ obj.drugattr.recipe_type }}</td>
+                </tr>
+                <tr>
+                  <td>包装规格</td>
+                  <td>{{ obj.pack_spec }}</td>
+                  <td>零售价</td>
+                  <td>{{ obj.retail_price|divide:'100' }}元</td>
+                </tr>
+                <tr>
+                  <td>库存数量</td>
+                  <td>{{ obj.stock_amount }}</td>
+                  <td>会员价</td>
+                  <td>{{ obj.member_price|divide:'100' }}元</td>
+                </tr>
+                <tr>
+                  <td>商品图片</td>
+                  <td class="picture">
+                    {% if obj.main_photo.name is not None and obj.main_photo.name != "" %}
+                      <a><img src="{{ obj.main_photo.name|media_url }}"></a>
+                    {% endif %}
+                    {% for item in good_photo %}
+                      <a><img src="{{ item.photo.name|media_url }}"></a>
+                    {% empty %}
+                      {% if obj.main_photo.name == '' %}
+                        <span class="text-red">无</span>
+                      {% endif %}
+                    {% endfor %}
+                    {#      				<a><img src="/static/dtsadmin/img/predeposit.png?v=1491565071.8"></a>#}
+                    {#      				<a><img src="/static/dtsadmin/img/predeposit.png?v=1491565071.8"></a>#}
+                  </td>
+                  <td>商品证照</td>
+                  <td class="picture">
+                    {% for item in qualification %}
+                      <a><img src="{{ item.photo.name|media_url }}"></a>
+                    {% empty %}
+                      <span class="text-red">无</span>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="good_detail_check">
+              <div class="form-group form-group-dts">
+                <div class="container-fluid txt-center">
+                  {% if obj.drugattr.desc_drug != '' %}
+                    {{ obj.drugattr.desc_drug|safe }}
+                  {% else %}
+                    <span style="color:#ddd">暂无数据，请先添加商品详情</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="specification_check">
+              <div class="form-group form-group-dts">
+                <div class="container-fluid txt-center">
+                  {% if obj.drugattr.desc_good != '' %}
+                    {{ obj.drugattr.desc_good|safe }}
+                  {% else %}
+                    <span style="color:#ddd">暂无数据，请先添加商品说明</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group form-group-dts">
+          <button type="button" class="btn btn-dts1 btn-s1 good_check" obj_id="{{ obj.id }}" op_type="pas"
+                  id="good_check">通过并上架
+          </button>
+          <button type="button" class="btn btn-dts1 btn-s4 good_check" obj_id="{{ obj.id }}" op_type="ref"
+                  id="good_refuse">不通过
+          </button>
+        </div>
+      </div><!-- ./modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

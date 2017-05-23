@@ -1,0 +1,100 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}新手入门 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>新手入门</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>常见问题</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">常见问题</div>
+        <div class="help-body">
+          <dl>
+            <dt>1.本网站的药品是正品吗？我如何验证？</dt>
+            <dd>请放心，我们网站的商品都是正规渠道进货，正品有保证。我们是通过国家药监局GSP质量管理认证的药品零售连锁企业，而且我们可以开具药品发票，请您放心选购！</dd>
+          </dl>
+          <dl>
+            <dt>2.本网站的药品的价格为什么这么低？</dt>
+            <dd>网站销售药品，少了销售中间环节；销售量大，促使价格低。</dd>
+          </dl>
+          <dl>
+            <dt>3.网站上购买药品需要注册吗？</dt>
+            <dd>在本网站采购药品需要注册成会员，才能进行药品采购。同时把您的有效证件邮寄到我司进行审核。</dd>
+          </dl>
+          <dl>
+            <dt>4.网站上购买药品支持配送到外地吗？</dt>
+            <dd>只要注册审核通过的会员，在本网站的药品可以配送到国内任意省市地区。</dd>
+          </dl>
+          <dl>
+            <dt>5.为什么上次买的价格与现在的不一样？</dt>
+            <dd>您好，影响商品售价变化的原因有很多。比如促销活动的时间、商品进价的调整、物价因素等，都会导致价格的调整。</dd>
+          </dl>
+          <dl>
+            <dt>6.缺货商品什么时候到货？</dt>
+            <dd>您好，缺货商品无法明确具体到货时间，您可以通过缺货列表来查看到货状态，可以直接加入购物车。</dd>
+          </dl>
+          <dl>
+            <dt>7.如何找回密码？</dt>
+            <dd>登录账号时，忘记密码，点击“忘记密码”；可以通过验证的邮箱及手机找回密码。查看操作详情。</dd>
+          </dl>
+          <dl>
+            <dt>8.手机、邮箱想修改怎么办？</dt>
+            <dd>1)对于未验证的手机或邮箱，若希望更改，可以从“账户设置”中的“账户安全”进行页面验证手机及邮箱即可。</dd>
+            <dd>2)对于已验证的手机或邮箱，可以从“账户设置”中的“账户安全”进行修改验证手机及邮箱。</dd>
+          </dl>
+          <dl>
+            <dt>9.本网站所售的商品是否都支持7天无理由退换货？</dt>
+            <dd>不支持7天无理由退换货，详情请您查看退款退货政策；符合条件的均支持退款退货服务。</dd>
+          </dl>
+          <dl>
+            <dt>10.下单时，未选择开发票可以补开发票？</dt>
+            <dd class="mrg-l-18">可以，但补开发票的期限为7日内（收到订单商品算起）。请接收到商品在补开发票期限内，联系我们的客服，并说明您的订单号、发票抬头、发票内容、邮寄地址、邮
+              编及收件人，我们会在48小时内为您开具发票并以平信方式为您寄出。
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

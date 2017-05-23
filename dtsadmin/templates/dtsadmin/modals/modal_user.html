@@ -1,0 +1,157 @@
+<div class="modal fade" id="common_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="common_form" method="post" action="">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+
+          <input type="hidden" id="post_action" name="action" value="">
+          <input type="hidden" name="user_pk" value="{{ obj.pk }}">
+
+
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">用户类型：</label>
+            <select id="user_type"
+                    class="form-control user_type"
+                    name="user_type" required>
+              <option value="">请选择……</option>
+              {% for choice in choices.usertype %}
+                <option data-value="{{ choice.0 }}"
+                        value="{{ choice.0 }}"
+                        {% if obj.usertype == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+              {% endfor %}
+
+            </select>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">用户名：</label>
+            <input type="text"
+                   id="username"
+                   value="{{ obj.username }}"
+                   class="form-control" name="username" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">姓名：</label>
+            <input type="text"
+                   id="first_name"
+                   value="{{ obj.first_name }}"
+                   class="form-control" name="first_name" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">手机号：</label>
+            <input type="text"
+                   id="phone"
+                   value="{{ obj.phone }}"
+                   class="form-control" name="phone" required>
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">密码：</label>
+            <input type="password"
+                   id="passwd"
+                   value=""
+                   name="passwd"
+                   class="form-control" required>
+            <a class="reset-password reset_password default_passwd">重置密码</a>
+          </div>
+          <div class="form-group form-group-dts passwd2">
+            <label class="control-label normal">重复密码：</label>
+            <input type="password"
+                   id="passwd2"
+                   value=""
+                   name="passwd2" class="form-control" equalTo="#passwd">
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">邮箱：</label>
+            <input type="text"
+                   value="{{ obj.email }}"
+                   class="form-control" name="email">
+          </div>
+          <div class="form-group form-group-dts">
+            <label class="control-label normal">性别：</label>
+            <input type="hidden" name="gender" id="enterprise_gender">
+            <label><input type="radio"
+                          {% if obj.gender == 1 %}checked="checked"{% endif %}
+                          name="sex"
+                          value="1"
+                          class="radio_checked"/>先生</label>
+            <label><input type="radio"
+                          {% if obj.gender == 2 %}checked="checked"{% endif %}
+                          value="2"
+                          name="sex"/>女士</label>
+          </div>
+          <!--       个人会员-->
+          <div class="individual_member">
+            <div class="form-group form-group-dts">
+              <label class="control-label normal">企业名称：</label>
+              <input class="system hide" name="system_enter_pk" data-value="{{ request.user.enterprise.id }}"/>
+              <input class="system_enterprise form-control" data-value="{{ request.user.enterprise }}" value="{{ request.user.enterprise }}" disabled/>
+              <select class="form-control enterprise_name" name="enter_pk" required>
+                <option value="">请选择……</option>
+                {% for enter in choices.enterprise %}
+                  <option value="{{ enter.pk }}"
+                          {% if obj.enterprise_id == enter.pk %}selected{% endif %}>{{ enter.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <!--企业用户-->
+          <div class="enterprise_member">
+            <div class="form-group form-group-dts">
+              <label for="" class="control-label normal">是否为主用户：</label>
+              <input type="hidden" name="is_master" id="is_main">
+              <label><input type="radio" name="master" value="1" {% if obj.is_master %}checked="checked"{% endif %}>是</label>
+              <label><input type="radio" name="master" value="0" class="checkbox_NO" {% if not obj.is_master %}checked="checked"{% endif %}>否</label>
+            </div>
+          </div>
+          <!--       系统用户-->
+          <div class="system_user">
+            <div class="form-group form-group-dts">
+              <label class="control-label normal">部门：</label>
+              <select class="form-control department" name="department">
+                <option value="">请选择……</option>
+                <option value="客服部" {% if obj.department == '客服部' %}selected{% endif %}>客服部</option>
+                <option value="审核部" {% if obj.department == '审核部' %}selected{% endif %}>审核部</option>
+                <option value="售后部" {% if obj.department == '售后部' %}selected{% endif %}>售后部</option>
+              </select>
+            </div>
+            <div class="form-group form-group-dts">
+              <input type="hidden" id="role_list" value="">
+              <label class="control-label normal">角色：</label>
+              {% for role in choices.system_role %}
+                <label><input type="checkbox"
+                              class="role_list"
+                              name="role_list"
+                              {% if role.id in checked %}checked{% endif %}
+                              value="{{ role.id }}">{{ role.name }}</label>
+              {% endfor %}
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button"
+                api="{% url 'dtsadmin:user_manage' %}"
+                id="submit_add"
+                class="btn btn-dts2 btn-s1">保存
+        </button>
+        <button type="button"
+                class="btn btn-dts2 btn-s1"
+                api="{% url 'dtsadmin:user_manage' %}"
+                id="submit_update">保存
+        </button>
+        <button type="button"
+                class="btn btn-dts2 btn-s3" data-dismiss="modal">取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

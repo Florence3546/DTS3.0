@@ -1,0 +1,133 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+
+{% block title %}配送设置 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    #content table > tbody > tr > td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    #content table > thead > tr > th:nth-child(5) {
+      width: 15%;
+    }
+
+    #content table > tbody > tr > td:nth-child(2) {
+      text-align: left;
+    }
+
+    .form-group-dts table .form-control {
+      display: inline-block;
+      float: none;
+      text-align: center;
+    }
+
+    #modal_delivery .modal-content {
+      font-size: 12px;
+    }
+
+    #modal_delivery label {
+      padding: 3px 0;
+      width: 110px;
+    }
+
+    #modal_delivery .form-control {
+      margin-left: 0;
+    }
+
+    #modal_delivery .tip-no {
+      line-height: 24px;
+    }
+
+    #modal_delivery .short {
+      width: 100px;
+    }
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_basic_settings.html' %}
+{% endblock %}
+
+{#内容区#}
+{% block content %}
+  <div class="small" id="content">
+    <div class="form-group form-group-dts clearfix">
+      <button type="button" class="control-btn btn btn-dts btn-s1 add_delivery">添加快递公司</button>
+      <button type="submit" class="control-btn btn btn-dts btn-s1"
+              api="{% url 'dtsadmin:ajax:save_order' model_name='ShippingMethod' %}"
+              id="{% if delivery_list %}btn_save_sort{% endif %}">保存排序
+      </button>
+    </div>
+    <div class="form-group form-group-dts">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>快递名称</th>
+          <th>快递公司网址</th>
+          <th>物流类型</th>
+          <th>显示排序</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for delivery in delivery_list %}
+          <tr>
+            <td>{{ delivery.name_cn }}</td>
+            <td>{{ delivery.website }}</td>
+            <td>{{ delivery.get_shipping_type_display }}</td>
+            <td><input type="text" class="form-control short" data-pk="{{ delivery.pk }}"
+                       value={{ delivery.order_no }}></td>
+            <td class="start_using">
+              {% if delivery.is_active %}
+                <div class="switch-default" is_active="0"
+                     api="{% url "dtsadmin:ajax:switch_bool" model_class='ShippingMethod' obj_id=delivery.id field='is_active' %}"#}>
+                  <div class="switch-on" is_active="0">启用</div>
+                  <div class="switch-off hide">禁用</div>
+                </div>
+              {% else %}
+                <div class="switch-default" is_active="1"
+                     api="{% url "dtsadmin:ajax:switch_bool" model_class='ShippingMethod' obj_id=delivery.id field='is_active' %}"#}>
+                  <div class="switch-on hide" is_active="0">启用</div>
+                  <div class="switch-off">禁用</div>
+                </div>
+              {% endif %}
+
+            </td>
+            <td>
+              <a
+                  class="font_btn update_delivery"
+                  api="{% url 'dtsadmin:ajax:get_modal_byid' modal_name='ShippingMethod' obj_id=delivery.id %}">修改</a>
+              <a
+                  class="font_btn delete_delivery"
+                  api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='ShippingMethod' obj_id=delivery.id %}">删除</a>
+            </td>
+          </tr>
+
+        {% empty %}
+          <tr class="no_data">
+            <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+          </tr>
+
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+{#模态对话框#}
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_shipping_method.html' %}
+  {% include 'dtsadmin/modals/modal_common_delete.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/shipping_method.js'|static_url }}"></script>
+{% endblock %}

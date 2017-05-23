@@ -1,0 +1,69 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}售后服务 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>售后服务</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>退款退货流程</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">退款退货流程</div>
+        <div class="help-body">
+          <img width="788" height="378" src="{{ 'eshop/images/help06.png'|static_url }}"/>
+          <ul class="mrg-b-30 mrg-t-30">
+            <li>(1) 用户查看“退换货政策”，确认符合退换条件后联系平台客服进行申请；</li>
+            <li>(2) 客服针对您提供的申请信息，进行审核，审核通过后客服将与您取得联系了解商品情况，请务必登记准确的联系方式，期间保持手机或电话畅通；</li>
+            <li>(3) 用户将商品包裹安全，寄回平台地址（地址将由我司与您联系确认）；</li>
+            <li>(4) 售后中心收货并检测商品，符合退换条件会处理您的商品退款。</li>
+            <li class="mrg-t-30 attention">退款退货注意事项</li>
+            <li>邮寄时请认真填写以下信息，否则将会影响到您的退款退货办理：</li>
+            <li>·您的姓名、联系方式</li>
+            <li>·订单号、商品名称、数量和型号</li>
+            <li>·退款退货原因</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

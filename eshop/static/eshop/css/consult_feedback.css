@@ -1,0 +1,171 @@
+.header-member .menu a.active {
+  background: transparent;
+}
+.section {
+  float: left;
+  width: 1070px;
+  height: auto;
+  padding-bottom: 110px;
+}
+.section #feedback-nav {
+  margin-top: 40px;
+}
+.feedback-content {
+  overflow: hidden;
+}
+.feedback-content .feedback-pic {
+  float: left;
+  width: 120px;
+}
+.feedback-content .feedback-pic img {
+  margin-left: 20px;
+}
+.feedback-content .feedback-box {
+  float: left;
+  width: 905px;
+}
+.feedback-content .feedback-box .feedback-box-title {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.feedback-content .feedback-box .feedback-box-text {
+  width: 840px;
+  height: 180px;
+  margin-top: 10px;
+  padding: 14px 18px;
+  border: 1px solid #e5e5e5;
+  resize: none;
+}
+.feedback-content .feedback-box .feedback-box-text::-moz-placeholder {
+  color: #cccccc;
+}
+.feedback-content .feedback-box .feedback-box-text::-webkit-input-placeholder {
+  color: #cccccc;
+}
+.feedback-content .feedback-box .feedback-box-text:-ms-input-placeholder {
+  color: #cccccc;
+}
+.feedback-content .feedback-box .feedback-type {
+  margin-top: 20px;
+}
+.feedback-type span {
+  display: block;
+  float: left;
+  line-height: 30px;
+  margin-right: 10px;
+}
+.feedback-type span input[type="radio"] {
+  display: none;
+}
+.feedback-type .message,
+.feedback-type .suggest {
+  line-height: 26px;
+}
+.feedback-type .message,
+.feedback-type .suggest {
+  width: 118px;
+  height: 30px;
+  text-align: center;
+  border: 2px solid #e5e5e5;
+  cursor: pointer;
+}
+.feedback-type .message.active,
+.feedback-type .suggest.active {
+  border: 2px solid #33cc6d;
+  background-image: url("../images/active.png");
+  background-repeat: no-repeat;
+  background-position: 99px 14px;
+}
+.consult-record,
+.complain-record {
+  min-height: 350px;
+}
+.consult-record .message-time,
+.complain-record .message-time {
+  font-weight: bold;
+}
+.consult-record > .message {
+  line-height: 24px;
+  padding: 15px 8px;
+  border-bottom: 1px dashed #b6b6b6;
+}
+.consult-record > .message:first-of-type {
+  padding-top: 0;
+}
+.consult-record > .message .leave-message span {
+  margin-left: 45px;
+  color: #999999;
+}
+.consult-record > .message .reply-message {
+  margin-top: 10px;
+  padding: 19px 10px 9px;
+  background: #f9fefb;
+  border: 1px dashed #d3efde;
+}
+.consult-record > .page-nav {
+  float: right;
+  margin-top: 34px;
+}
+.consult-record > .page-nav ul {
+  float: left;
+}
+.consult-record > .page-nav ul > li {
+  float: left;
+  width: 21px;
+  height: 21px;
+  margin-right: 10px;
+  background: #33cc6d;
+  text-align: center;
+  line-height: 20px;
+  color: #ffffff;
+}
+.consult-record > .page-nav div {
+  float: left;
+}
+.consult-record > .page-nav div span {
+  line-height: 22px;
+  margin-right: 8px;
+}
+.complain-record > .message {
+  line-height: 24px;
+  padding: 15px 8px;
+  border-bottom: 1px dashed #b6b6b6;
+}
+.complain-record > .message:first-of-type {
+  padding-top: 0;
+}
+.complain-record > .message .leave-message span {
+  margin-left: 45px;
+  color: #999999;
+}
+.complain-record > .message .reply-message {
+  margin-top: 10px;
+  padding: 19px 10px 9px;
+  background: #f9fefb;
+  border: 1px dashed #d3efde;
+}
+.complain-record > .page-nav {
+  float: right;
+  margin-top: 34px;
+}
+.complain-record > .page-nav ul {
+  float: left;
+}
+.complain-record > .page-nav ul > li {
+  float: left;
+  width: 21px;
+  height: 21px;
+  margin-right: 10px;
+  background: #33cc6d;
+  text-align: center;
+  line-height: 20px;
+  color: #ffffff;
+}
+.complain-record > .page-nav div {
+  float: left;
+}
+.complain-record > .page-nav div span {
+  line-height: 22px;
+  margin-right: 8px;
+}

@@ -1,0 +1,337 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}改价审批 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    .form-inline.bordered {
+      border-bottom: none;
+    }
+
+    #table_approval tr td {
+      text-align: center;
+    }
+
+    #table_approval tr td:nth-of-type(3),
+    #table_approval tr td:nth-of-type(4),
+    #table_approval tr td:nth-of-type(5),
+    #table_approval tr td:nth-of-type(6) {
+      text-align: right;
+    }
+
+    #table_approval tr td:nth-of-type(2) a {
+      color: #777;
+    }
+
+    #table_approval tr td:nth-of-type(2) a:hover {
+      color: #0090ff;
+    }
+
+    /**********************查看模态框*******************************/
+    #change_price_modal .modal-body {
+      padding: 25px;
+    }
+
+    .personal-info tr td:nth-of-type(odd) {
+      width: 80px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .personal-info tr td:nth-of-type(even){
+    	vertical-align: middle;
+    }
+
+    .good-info .form-control.short {
+      width: 45px;
+      padding: 6px;
+      font-size: 12px;
+      height: 24px;
+      line-height: 12px;
+      display: inline-block;
+    }
+
+    .good-info .form-control.short:nth-of-type(2) {
+      text-align: right;
+    }
+
+    .good-info img {
+      width: 63px;
+      height: 63px;
+      border: 1px solid #efefef;
+    }
+
+    .good-info thead {
+      background: #f6f6f6;
+    }
+
+    .good-info thead tr th {
+      border-bottom: none;
+      text-align: center;
+      height: 40px;
+      font-weight: normal;
+      line-height: 23px;
+    }
+
+    .good-info tbody tr td:nth-of-type(1),
+    .good-info tbody tr td:nth-of-type(4),
+    .good-info tbody tr td:nth-of-type(5) {
+      text-align: center;
+    }
+
+    .good-info tbody tr td:nth-of-type(3),
+    .good-info tbody tr td:nth-of-type(6),
+    .good-info tbody tr td:nth-of-type(7),
+    .good-info tbody tr td:nth-of-type(8) {
+      text-align: right;
+    }
+
+    #change_price_modal p {
+      padding-left: 12px;
+      background: #fff5f5;
+      color: #ed8484;
+      border: 1px solid #fcbaba;
+    }
+
+    .totle_money {
+      font-weight: bolder;
+      text-align: right;
+    }
+
+    .totle_money a {
+      float: left;
+      font-weight: normal;
+      color: #0090ff;
+    }
+
+    .totle_money span {
+      color: #e13838;
+      font-size: 14px;
+      font-family: "微软雅黑";
+    }
+
+    #approve_goods_modal .modal-body {
+      padding: 10px 25px 5px;
+    }
+
+    #approve_goods_modal .personal-info a {
+      color: #0090ff;
+    }
+
+    #approve_goods_modal h6 {
+      margin-bottom: 20px;
+    }
+
+    #change_price_modal .operating-info {
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+    #change_price_modal .operating-info td:last-of-type {
+      text-align: center;
+    }
+
+    .submit-applications {
+      display: none;
+    }
+
+    #approve_goods_modal .modal-footer {
+      display: none;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+    <ul class="tab-defined">
+
+      <li class="{% if request.GET.slug == 'is_my_start' %}active{% endif %}">
+        <a href="javascript:;" class="is_my" data-value="is_my_start">我发起的</a>
+      </li>
+      <li class="{% if request.GET.slug == 'is_my_approval' %}active{% endif %}">
+        <a href="javascript:;" class="is_my" data-value="is_my_approval">待我审批的</a>
+      </li>
+      <li class="{% if request.GET.slug == 'is_my_approved' %}active{% endif %}">
+        <a href="javascript:;" class="is_my" data-value="is_my_approved">我已审批的</a>
+      </li>
+    </ul>
+    {% csrf_token %}
+    <input type="hidden" id="url" value="{% url 'dtsadmin:approval_list' %}">
+    <form class="form-inline bordered" method="get" action="" id="approve_form">
+      <input type="hidden" id="total_count" value="{{ order_list.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <input type="hidden" id="slug" name="slug" value="{{ request.GET.slug|default:'is_my_start' }}">
+      {% if request.GET.slug != 'is_my_approval' %}
+        <div class="spacing">
+          <div class="form-group form-group-dts">
+            <label for="order_code" class="control-label normal">订单编号</label>
+            <input type="text"
+                   class="form-control" id="order_code"
+                   value="{{ request.GET.order_no }}"
+                   name="order_no">
+            <button type="submit" class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+            <a class="control-text more_query_conditions" role="button">更多查询条件<i
+                class="iconfont icon-shangxiajiantou-copy"></i></a>
+          </div>
+        </div>
+        <div class="spacing query_conditions hide">
+          <div class="form-group form-group-dts">
+            <label for="" class="control-label normal">发起时间</label>
+            <input type="text"
+                   class="form-control date"
+                   data-date-format="yyyy-mm-dd"
+                   id=""
+                   value="{{ request.GET.start_time_from }}"
+                   name="start_time_from" placeholder="请选择日期">
+            <span class="control-text">-</span>
+            <input type="text" class="form-control date"
+                   data-date-format="yyyy-mm-dd"
+                   id=""
+                   value="{{ request.GET.start_time_to }}"
+                   name="start_time_to"
+                   placeholder="请选择日期">
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="" class="control-label normal">完成时间</label>
+            <input type="text"
+                   class="form-control date"
+                   data-date-format="yyyy-mm-dd" id=""
+                   value="{{ request.GET.finish_time_from }}"
+                   name="finish_time_from"
+                   placeholder="请选择日期">
+            <span class="control-text">-</span>
+            <input type="text"
+                   class="form-control date"
+                   data-date-format="yyyy-mm-dd" id=""
+                   value="{{ request.GET.finish_time_to }}"
+                   name="finish_time_to"
+                   placeholder="请选择日期">
+          </div>
+          <div class="form-group form-group-dts">
+            <label for="input_enter_name"
+                   class="control-label normal">状态</label>
+            <select class="form-control" name="change_price_state">
+              <option value="">请选择……</option>
+              {% for choice in choices.change_price_state %}
+                <option {% if request.GET.change_price_state == choice.0|stringformat:'s' %}selected{% endif %}
+                        value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+    </form>
+
+
+    <table id="table_approval" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>审批标题</th>
+        <th>订单编号</th>
+        <th>订单金额(元)</th>
+        <th>申请优惠(元)</th>
+        <th>实际优惠(元)</th>
+        <th>实付金额(元)</th>
+        <th>发起时间</th>
+        <th>完成时间</th>
+        <th>状态</th>
+        <th>管理</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      {% for data in order_list %}
+        <tr>
+          <td>{{ data.orderitem_set.all.first.changepricerecord.starff.username }} 申请改价</td>
+          <td><a class="look_order" api="{% url 'dtsadmin:ajax:order_no_check' obj_id=data.pk %}">{{ data.order_no }}</a>
+          </td>
+          <td class="order_amount"> {{ data.total_price|multiply:0.01 }}</td>
+          {# 申请优惠 #}
+          <td class="discount_totle_price"
+              data-discount="{% for item in data.orderitem_set.all %}{{ item.changepricerecord.apply_discount|multiply:item.quantity }},{% endfor %}">
+            {# 这里不要格式化 #}
+
+          </td>
+          <td class="change_price"
+              data-real_discount="{% for item in data.orderitem_set.all %}{{ item.changepricerecord.real_discount|default:0|multiply:item.quantity }},{% endfor %}">
+
+          </td>
+          <td class="real_total_price"></td>
+          <td>{{ data.orderitem_set.all.0.changepricerecord.apply_time | date:'Y-m-d H:i' }}</td>
+          <td>{{ data.orderitem_set.all.0.changepricerecord.reply_time | date:'Y-m-d H:i' }}</td>
+          <td>{{ data.get_change_price_state_display }}</td>
+          <td>
+            {% if request.GET.slug != 'is_my_approval' %}
+              <a class="get_look_change_price"
+                 data-pk="{{ data.pk }}"
+                 api="{% url 'dtsadmin:approval_list' %}"
+              >查看</a>
+            {% else %}
+              <a class="get_verify_change_price"
+                 data-pk="{{ data.pk }}"
+                 api="{% url 'dtsadmin:approval_list' %}"
+              >审核</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr class="no_data">
+          <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if order_list.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ order_list.paginator.per_page }}条，总共{{ order_list.paginator.num_pages }}页，共{{ order_list.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if order_list.has_previous %}{{ order_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == order_list.number %}active{% endif %}"><a class="btn_page"
+                                                                               page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span class="page-count">…</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == order_list.number %}active{% endif %}"><a class="btn_page"
+                                                                             page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span class="page-count">…</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == order_list.number %}active{% endif %}"><a class="btn_page"
+                                                                               page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="
+                {% if order_list.has_next %}{{ order_list.next_page_number }}{% else %}{{ order_list.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_approve_look_order.html' %}    {# 点击订单编号查看 #}
+  {% include 'dtsadmin/modals/modal_approval_verify.html' %}  {# 改价查看 审核 公用 #}
+  {% include 'dtsadmin/modals/modal_common_log.html' %}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/URI.min.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'dtsadmin/js/approval_list.js'|static_url }}"></script>
+{% endblock %}

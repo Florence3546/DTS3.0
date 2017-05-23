@@ -1,0 +1,181 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}账户信息 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/account_info.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main clearfix">
+      <div class="sidebar-member">
+        <ul>
+          <li class="category">账户设置</li>
+          <li class="active"><a>账户信息</a></li>
+          <li><a>账户安全</a></li>
+          <li class="border"><a>收货地址</a></li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="relation-inform">
+          <h5>账户信息<span>(账户登录信息)</span></h5>
+          <div class="relation-box">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="label-defined">用户名：</label>
+                <span>hao123</span>
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="nickname">
+                  <span>*</span>
+                  姓名：
+                </label>
+                <input class="form-control" type="text" value="周大福" id="nickname"></div>
+              <div class="form-group">
+                <label class="label-defined" for="person">
+                  <span>*</span>
+                  手机号：
+                </label>
+                <input class="form-control" type="text" value="18643794583" id="person"></div>
+              <div class="form-group">
+                <label class="label-defined" for="telephone">
+                  <span>*</span>
+                  邮箱：
+                </label>
+                <input class="form-control" type="text" value="hb1004@dingtalk.com" id="telephone"></div>
+              <div class="form-group">
+                <label class="label-defined">性别：</label>
+                <input type="radio" name="sex" id="man"><label for="man">先生&nbsp;</label>
+                <input type="radio" name="sex" id="felman"><label for="felman">女士</label>
+              </div>
+              <div class="form-group">
+                <label class="label-defined"></label>
+                <button class="btn-s1">保存</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="enterprise-inform">
+          <h5>企业信息<span>(企业认证信息)</span></h5>
+          <div class="enterprise-box">
+            <div class="form-group">
+              <label class="label-defined" for="name">企业名称：</label>
+              <input class="form-control" type="text" id="name" value="湖北东力药业有限公司" disabled>
+            </div>
+            <div class="form-group">
+              <label class="label-defined" for="name">企业简称：</label>
+              <input class="form-control" type="text" id="name" value="湖北东力药业有限公司" disabled>
+            </div>
+            <div class="form-group">
+              <label class="label-defined">经营方式：</label>
+              <select class="form-control" disabled>
+                <option>连锁药店</option>
+                <option>医院</option>
+                <option>诊所</option>
+                <option>销售商</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="label-defined">所在地区：</label>
+              <select class="form-control text-short" disabled>
+                <option>广东省</option>
+              </select>
+              <select class="form-control text-short" disabled>
+                <option>广州市</option>
+              </select>
+              <select class="form-control text-short" disabled>
+                <option>白云区</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="label-defined" for="address">详细地址：</label>
+              <input class="form-control text-long" type="text" id="address" value="湖北省武汉市汉阳区3518629号" disabled>
+            </div>
+            <div class="form-group">
+              <label class="label-defined" for="enterprise-tel">企业电话：</label>
+              <input class="form-control text-long" type="text" id="enterprise-tel" value="02755862093" disabled>
+            </div>
+            <div class="form-group">
+              <label class="label-defined" for="enterprise-tel">法人代表：</label>
+              <input class="form-control text-long" type="text" id="enterprise-tel" value="周大福" disabled>
+            </div>
+            <div class="form-group">
+              <label class="label-defined">经营范围：</label>
+              <ul>
+                <li><label><input type="checkbox" checked disabled>中成药</label></li>
+                <li><label><input type="checkbox" checked disabled>中药材</label></li>
+                <li><label><input type="checkbox" checked disabled>中药饮片</label></li>
+                <li><label><input type="checkbox" disabled>化学药制剂</label></li>
+                <li><label><input type="checkbox" disabled>化学原料药</label></li>
+                <li><label><input type="checkbox" checked disabled>抗生素</label></li>
+                <li><label><input type="checkbox" checked disabled>生化药品</label></li>
+                <li><label><input type="checkbox" disabled>生物制品</label></li>
+                <li><label><input type="checkbox" disabled>疫苗</label></li>
+                <li><label><input type="checkbox" disabled>二类精神药品</label></li>
+                <li><label><input type="checkbox" disabled>体外诊断试剂</label></li>
+                <li><label><input type="checkbox" checked disabled>含特殊药品复方制剂</label></li>
+                <li><label><input type="checkbox" checked disabled>一类医疗器械</label></li>
+                <li><label><input type="checkbox" checked disabled>二类医疗器械</label></li>
+                <li><label><input type="checkbox" disabled>三类医疗器械</label></li>
+                <li><label><input type="checkbox" checked disabled>无证的二类的医疗器械</label></li>
+                <li><label><input type="checkbox" disabled>食品</label></li>
+                <li><label><input type="checkbox" checked disabled>化妆品</label></li>
+                <li><label><input type="checkbox" checked disabled>消字号产品</label></li>
+                <li><label><input type="checkbox" checked disabled>其他商品</label></li>
+                <li><label><input type="checkbox" disabled>保健药品</label></li>
+                <li><label><input type="checkbox" checked disabled>毒性药品</label></li>
+                <li><label><input type="checkbox" disabled>一类精神药品</label></li>
+                <li><label><input type="checkbox" disabled>蛋白同化制剂、肽类激素(胰岛素)</label></li>
+                <li><label><input type="checkbox" disabled>麻醉药品</label></li>
+                <li><label><input type="checkbox" checked disabled>放射性药品</label></li>
+                <li><label><input type="checkbox" checked disabled>抗生素原料药</label></li>
+                <li><label><input type="checkbox" disabled>蛋白同化制剂、肽类激素</label></li>
+                <li><label><input type="checkbox" checked disabled>终止妊娠药品</label></td>
+                <li><label><input type="checkbox" checked disabled>化学试剂</label></li>
+                <li><label><input type="checkbox" disabled>计生用品</label></li>
+                <li><label><input type="checkbox" checked disabled>生物制品(除疫苗)</label></li>
+                <li><label><input type="checkbox" checked disabled>保健食品</label></li>
+                <li><label><input type="checkbox" disabled>抗生素制剂</label></li>
+                <li><label><input type="checkbox" checked disabled>一类器械</label></li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label class="label-defined">资质证照：</label>
+              <p class="uploading">
+                <a class="upload_file">
+                  <span>药品经营<br/>企业许可证</span>
+                </a>
+                <a class="upload_file">
+                  <span>企业法人<br/>营业执照</span>
+                </a>
+                <a class="upload_file">
+                  <span>法人委托书</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <!--<script type="text/javascript" src="{{ 'eshop/js/account_info.js'|static_url }}"></script>-->
+{% endblock %}
+

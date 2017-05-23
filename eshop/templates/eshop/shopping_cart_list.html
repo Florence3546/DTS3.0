@@ -1,0 +1,185 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}购物车 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/shopping_cart_list.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+    <input type="hidden" id="shopping_cart_list" value="{% url 'eshop:shopping_cart_list' %}">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+    <div id="shopping-section">
+      {% csrf_token %}
+      <input type="hidden" id="shopping_balance" value="{% url 'eshop:shopping_balance' %}">
+      <div class="logo-content">
+        <div class="logo-group">
+          <div class="logo-img">
+            <a href="{% url 'eshop:eshop_home' %}"><img src="{{ 'eshop/images/huluwa.png'| static_url }}"></a></div>
+          <div class="logo-title">购物车</div>
+        </div>
+        <form class="" method="get" action="{% url 'eshop:good_search_list' %}">
+          <div class="form-group search-group">
+            <div class="input-group search-bar">
+              <input type="search" class="form-control search-box" name="keyword">
+              <div class="input-group-addon btn-addon-defined search-note">
+                <button type="submit" class="search-btn">搜索</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="all-good">全部商品({{ shopping_data | length }})</div>
+      <div class="shopping-list" id="content">
+        <ul class="shopping_car_list">
+          <li class="list-header">
+            <div class="check-good">
+              <input type="checkbox" id="check-all-top" class="check-all"><label for="check-all-top">全选</label>
+            </div>
+            <div class="good-name">商品名称</div>
+            <div class="good-code">商品编码</div>
+            <div class="produce-fatory">生产厂家</div>
+            <div class="sigle-price">单价</div>
+            <div class="good-number">数量</div>
+            <div class="sub-total">小计</div>
+            <div class="operate">操作</div>
+          </li>
+
+
+          {% for obj in shopping_data %}
+            <li class="good_item
+              {% if obj.good.stock_amount == 0 or obj.good.is_online == 2 or obj.good.is_online == 0 %}
+              stockout
+              {% else %}good
+              {% endif %}">
+              <div class="check-good">
+                <input type="checkbox"
+                       data-pk="{{ obj.pk }}"
+                       class="check-box">
+                <div class="img-box">
+                  <a href="{% url 'eshop:good_detail' good_id=obj.good.id %}" target="_blank">
+                    <img width="80px" height="80px" src="{% if obj.good.main_photo.name %}{{ obj.good.main_photo.name |media_url }}{% else %}{{ 'eshop/images/good_placeholder.png'|static_url }}{% endif %}" alt="图片未加载出来"
+                         title="{{ obj.good.get_display_name }}"></a>
+                </div>
+              </div>
+              <div class="good-name">
+                <a href="{% url 'eshop:good_detail' good_id=obj.good.id %}" target="_blank">
+                  <p>{{ obj.good.brand }} {{ obj.good.name }} {{ obj.good.external_spec }}</p></a>
+              </div>
+              <div class="good-code">
+                <p>{{ obj.good.external_id }}</p>
+              </div>
+              <div class="produce-fatory">
+                <p>{{ obj.good.manufacturer.name }}</p>
+              </div>
+              <div class="sigle-price promotion">
+                <p>
+                  <del>￥
+                    <span class="old-price">{{ obj.good.retail_price | multiply:0.01 }}</span></del>
+                </p>
+                <p>
+                  ￥
+                  <span class="price">{{ obj.good.member_price |multiply:0.01 }}</span>
+                </p>
+              </div>
+              <div class="good-number">
+                {% if obj.good.stock_amount == 0 %}
+                  <p>无货</p>
+                  <p>
+                    <a href="javascript:;" class="lack_register" data-pk="{{ obj.good.pk }}">登记缺货</a>
+                  </p>
+                {% elif obj.good.is_online == 2 or obj.good.is_online == 0 %}
+                  <p>失效</p>
+                {% else %}
+                  <div class="form-group-defined">
+                    <div class="input-group input-group-defined good_count_group">
+                      <div class="input-group-addon btn-addon-defined reduce-number">-</div>
+                      <input type="text"
+                             data-id="{{ obj.id }}"
+                             class="form-control input-add-subtract good_count"
+                             value="{{ obj.quantity }}">
+                      <div class="input-group-addon btn-addon-defined add-number">+</div>
+                    </div>
+                    <p class="max-number text-red hide">最多购买999件</p>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="sub-total">
+                <p>
+                  ￥
+                  <span
+                      class="count-money subtotal">{{ obj.good.member_price | multiply:obj.quantity | multiply:0.01 }}</span>
+                </p>
+              </div>
+              <div class="operate">
+                <p>
+                  <a api="{% url 'eshop:shopping_cart_list' %}"
+                     data-pk="{{ obj.good.pk }}"
+                     class="move_to_favorites">移到收藏夹</a>
+                </p>
+                <p>
+                  <a api="{% url 'eshop:shopping_cart_list' %}"
+                     data-pk="{{ obj.pk }}"
+                     class="delete_good">删除</a>
+                </p>
+              </div>
+            </li>
+          {% endfor %}
+          {% if shopping_data %}
+            <li class="list-footer">
+              <div class="select-operate">
+                <input type="checkbox" id="check-all-bottom" class="check-all"><label for="check-all-bottom">全选</label>
+                <a class="delete_goods" api="{% url 'eshop:shopping_cart_list' %}">删除选中的商品</a>
+                <a class="batch_move_to_favorites" api="{% url 'eshop:shopping_cart_list' %}">移到收藏夹</a>
+                <a class="remove_failed_goods hide">删除失效商品</a>
+              </div>
+              <div class="total-number">
+                <p>
+                  已选中
+                  <span class="selected">0</span>
+                  件商品
+                </p>
+                <p>
+                  总价：
+                  <span class="total_prices">￥0.00</span>
+                </p>
+              </div>
+              <div id="submit-account">
+                <a class="shopping_balance"
+                   api=""
+                   href="javascript:;">去结算</a>
+              </div>
+            </li>
+          {% else %}
+            <li class="empty">
+              <img src="{{ 'eshop/images/cart_empty.png' | static_url }}"/>
+              <span>购物车为空，去看看心仪的商品吧！<br/>
+        		    <a href="{% url 'eshop:eshop_home' %}">去逛逛...</a></span>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+      </form>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+
+{% block modal %}
+  {% include 'eshop/modals/modal_lack_register.html' %}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script src="{{ 'eshop/js/shopping_cart_list.js'|static_url }}"></script>
+{% endblock %}
+

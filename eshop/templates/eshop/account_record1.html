@@ -1,0 +1,256 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}账户记录 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/account_record.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main">
+
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_member_center.html' %}
+
+      <div class="account-record">
+        <div class="transaction-detail">账户记录</div>
+        <div class="filter">
+          <form action="">
+            <div class="choose">
+              <label>创建时间：</label>
+              <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" name="" placeholder="请选择日期">
+              <span class="control-text">-</span>
+              <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" name="" placeholder="请选择日期">
+              <a>今天</a>
+              <span class="text">最近：</span>
+              <a class="active">1个月</a>
+              <a>3个月</a>
+              <a>1年</a>
+            </div>
+            <div class="choose">
+              <label>交易类型：</label>
+              <a class="active">全部</a>
+              <a>消费</a>
+              <a>充值</a>
+              <a>退款</a>
+            </div>
+            <div class="choose">
+              <label>支付方式：</label>
+              <a class="active">全部</a>
+              <a>在线支付</a>
+              <a>线下支付</a>
+              <a>预存款</a>
+              <a>货到付款</a>
+              <span class="select">基本筛选</span>
+            </div>
+            <div class="more-choices hide">
+              <div class="choose">
+                <label>交易金额：</label>
+                <input type="text" class="form-control">
+                <span class="control-text">-</span>
+                <input type="text" class="form-control">
+              </div>
+              <div class="choose">
+                <label>交易号：</label>
+                <input type="text" class="form-control form-control-long" placeholder="请输入订单编号/交易号"/>
+                <a class="sure">确定</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>创建时间</th>
+            <th>交易号</th>
+            <th>交易类型</th>
+            <th>金额（元）<i class="iconfont icon-tip"></i></th>
+            <th>支付方式</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>今天 02:20</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span class="prepaid_deposit"><i class="iconfont icon-yucunkuan"></i>+1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>昨天 02:20</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span class="prepaid_deposit"><i class="iconfont icon-yucunkuan"></i>+190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>充值</td>
+            <td><span class="prepaid_deposit"><i class="iconfont icon-yucunkuan"></i>+90.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>货到付款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          <tr>
+            <td>2017-2-5 20:15</td>
+            <td><a>126587846584236654123</a></td>
+            <td>退款</td>
+            <td><span>1190.00</span></td>
+            <td>预存款</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="page-No">
+          <div>
+            共<span>15</span>页&nbsp;&nbsp;到第<input type="text" value="1"/>页&nbsp;&nbsp;<a>确定</a>
+          </div>
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li><a class="previous" href="#" aria-label="Previous"><i
+                  class="iconfont icon-shangxiajiantou-copy1-copy"></i>上一页</a></li>
+              <li><a class="active" href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a class="previous-omit">...</a></li>
+              <li><a href="#">8</a></li>
+              <li><a href="#">9</a></li>
+              <li><a href="#">10</a></li>
+              <li><a class="next-omit">...</a></li>
+              <li><a class="next" href="#" aria-label="Next">下一页<i class="iconfont icon-shangxiajiantou-copy1"></i></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/account_record.js'|static_url }}"></script>
+{% endblock %}
+

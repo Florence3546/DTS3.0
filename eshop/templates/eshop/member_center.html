@@ -1,0 +1,185 @@
+﻿{% extends "eshop/base.html" %} {% load extras %} {% block title %}会员中心 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ 'eshop/css/member_center.css'|static_url }}"> {% endblock %}
+
+<!--主体部分-->
+{% block content %}
+<div id="wrap">
+
+	<!--member_site_nav部分-->
+	{% include 'eshop/site_nav.html' %}
+
+	<!--top_box部分-->
+	{% include 'eshop/member_center_top.html' %}
+
+	<div class="main clearfix">
+
+		<!--sidebar部分-->
+		{% include 'eshop/sidebar_member_center.html' %}
+
+		<div class="section">
+			<div class="basic_inform">
+				<div class="member_inform">
+					<div class="member_img">
+						<img src="{{ 'eshop/images/user.png'|static_url }}">
+					</div>
+					<div class="member_name">
+						<p>{{ request.user.first_name }}
+							<a href="/eshop/account_info/" target="_self"><i class="iconfont icon-xiugai"></i></a>
+						</p>
+						<div class="member_grade">{{ request.user.get_usertype_display }}</div>
+					</div>
+				</div>
+				<div class="pre_payment">
+					<div class="pre_payment_box">
+						<p>预存款余额：<span>¥ {% if request.user.balance %}{{ request.user.balance|multiply:0.01 }}
+                  {% else %}0.00{% endif %} </span></p>
+						<a href="{% url 'eshop:user_recharge' %}">
+							<button class="btn-s1">充值</button>
+						</a>
+					</div>
+				</div>
+				<div class="integral">
+					<p>积分：<span>0分</span></p>
+					<a href="javascript:;" data-toggle="tooltip" data-placement="right" title="不用点了，这里没有内容，该功能未开放">
+						<button class="btn-s1" id="exchange-btn">兑换</button>
+					</a>
+				</div>
+			</div>
+			<div class="count_bar">
+				<ul>
+					<li>
+						<a href="/eshop/my_order/?state=0" target="_self">
+							<div><img src="{{ 'eshop/images/card.png'|static_url }}"></div>
+							<div>待支付<span>{% if data.dzf %}{{ data.dzf }}{% endif %}</span></div>
+						</a>
+					</li>
+					<li>
+						<a href="/eshop/my_order/?state=1" target="_self">
+							<div><img src="{{ 'eshop/images/shipping.png'|static_url }}"></div>
+							<div>待发货<span>{% if data.dfh %}{{ data.dfh }}{% endif %}</span></div>
+						</a>
+					</li>
+					<li>
+						<a href="/eshop/my_order/?state=3" target="_self">
+							<div><img src="{{ 'eshop/images/box.png'|static_url }}"></div>
+							<div>待收货<span>{% if data.dsh %}{{ data.dsh }}{% endif %}</span></div>
+						</a>
+					</li>
+					<li>
+						<a href="/eshop/my_order/?state=5" target="_self">
+							<div><img src="{{ 'eshop/images/return.png'|static_url }}"></div>
+							<div>退款中<span>{% if data.dtk %}{{ data.dtk }}{% endif %}</span></div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="my_order">
+				<div class="order_title"><b>我的订单</b>
+					<a class="pull-right" href="{% url 'eshop:my_order' %}">更多</a>
+				</div>
+				<ul class="order_box">
+
+					{% for order in order_list %}
+					<li>
+						<span>{{ order.ord_time | date:"Y-m-d" }}</span>
+						<span>{{ order.ord_time | date:"H:m" }}</span>
+						<span>{{ order.order_no }}</span>
+						<span>¥{{ order.total_price | divide:'100' }}</span>
+						<span>{{ order.buyer.username }}</span>
+						<span>{{ order.get_trade_state_display }}</span>
+						<span>
+                <a href="{% url 'eshop:my_order' %}#{{ order.order_no }}">查看</a>
+              </span>
+					</li>
+					{% empty %}
+					<li class="empty_order">
+						<img src="{{ 'eshop/images/good_empty.png' | static_url }}" />
+						<span>暂时没有订单！<br/>
+                <a href="{% url 'eshop:eshop_home' %}">去逛逛...</a></span>
+					</li>
+					{% endfor %}
+
+				</ul>
+			</div>
+			<div class="my-collect">
+				<div class="collect_title"><b>我的收藏</b>
+					<a class="pull-right" href="{% url 'eshop:my_collect' %}">更多</a>
+				</div>
+				<div class="collect-box">
+					{% if data.collection %}
+					<div class="prev-good"><i class="iconfont icon-youbian-copy"></i></div>
+					<div class="next-good"><i class="iconfont icon-youbian"></i></div>
+					<div class="collect-list">
+						<div>
+							<ul>
+								{% for coll in data.collection %}
+								<li>
+									<a href="{% url 'eshop:good_detail' good_id=coll.coll_good.id %}">
+										<div class="collect-pic"><img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+										<div class="collect-note">
+											<p class="log-in"><span>￥{{ coll.coll_good.member_price | multiply:0.01 }}</span>
+												<del>￥{{ coll.coll_good.retail_price | multiply:0.01 }}</del>
+											</p>
+											<p class="good_name">{{ coll.coll_good.trade_name }}</p>
+											<p>{{ coll.coll_good.prep_spec }}*{{ coll.coll_good.pack_spec }}/{{ coll.coll_good.unit }}</p>
+										</div>
+									</a>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+					{% else %}
+					<div class="empty-collect">
+						<img src="{{ 'eshop/images/good_empty.png' | static_url }}" />
+						<div>收藏夹为空，浏览商品加入收藏哦！<br/>
+							<a href="{% url 'eshop:eshop_home' %}">去逛逛...</a>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="right_bar">
+			<div class="history_title">浏览记录</div>
+			<ul class="history_box">
+				<li>
+					<div class="history_pic">
+						<img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+					<div class="history_note">
+						<p>会员价：<span>￥25.00</span></p>
+						<p>百多邦 莫匹罗软膏图纸软膏中美史克</p>
+					</div>
+				</li>
+				<li>
+					<div class="history_pic">
+						<img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+					<div class="history_note">
+						<p>会员价：<span>￥25.00</span></p>
+						<p>百多邦 莫匹罗软膏图纸软膏中美史克</p>
+					</div>
+				</li>
+				<li>
+					<div class="history_pic">
+						<img src="{{ 'eshop/images/yagao.png'|static_url }}"></div>
+					<div class="history_note">
+						<p>会员价：<span>￥25.00</span></p>
+						<p>百多邦 莫匹罗软膏图纸软膏中美史克</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!--footer部分-->
+	{% include 'eshop/eshop_footer.html' %}
+
+</div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+<script type="text/javascript" src="{{ 'eshop/js/member_center.js'|static_url }}"></script>
+{% endblock %}

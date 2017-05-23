@@ -1,0 +1,307 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}订单统计 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    #table_enterprise_statistic tr td,
+    #table_good_statistic tr td,
+    #modal_enterprise_statistic tr td,
+    #modal_good_statistic tr td {
+      text-align: center;
+    }
+
+    #table_enterprise_statistic tr td:nth-of-type(2),
+    #table_good_statistic tr td:nth-of-type(3),
+    #modal_enterprise_statistic tr td:nth-of-type(3),
+    #modal_good_statistic tr td:nth-of-type(2) {
+      text-align: left;
+    }
+
+    #table_enterprise_statistic tr td:nth-of-type(6),
+    #table_good_statistic tr td:nth-of-type(10),
+    #modal_enterprise_statistic tr td:nth-of-type(6),
+    #modal_good_statistic tr td:nth-of-type(7) {
+      text-align: right;
+    }
+
+    .modal-body {
+      padding: 25px;
+    }
+  </style>
+
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+<!-- 内容面板 -->
+{% block content %}
+  <div class="small" id="content">
+    <ul class="tab-defined" role="tablist">
+      <li class="active" role="presentation">
+        <a href="#enterprise" role="tab" data-toggle="tab">企业统计</a>
+      </li>
+      <li role="presentation">
+        <a href="#good" role="tab" data-toggle="tab">商品统计</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="enterprise">
+        <form class="form-inline bordered">
+          {% csrf_token %}
+          <div class="spacing">
+            <div class="form-group form-group-dts">
+              <label class="control-label normal">企业名称</label>
+              <input type="text" class="form-control">
+              <button type="button" class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+              <a class="control-text more_query_conditions" role="button">更多查询条件<i
+                  class="iconfont icon-shangxiajiantou-copy"></i></a>
+            </div>
+          </div>
+          <div class="spacing query_conditions hide">
+            <div class="form-group form-group-dts">
+              <label for="" class="control-label normal">交易总额</label>
+              <input type="text" class="form-control money">
+              <span class="control-text">-</span>
+              <input type="text" class="form-control money">
+            </div>
+            <div class="form-group form-group-dts">
+              <label for="input_enter_name" class="control-label normal">协议客户</label>
+              <select class="form-control">
+                <option>请选择……</option>
+                <option>是</option>
+                <option>否</option>
+              </select>
+            </div>
+            <div class="form-group form-group-dts">
+              <label for="" class="control-label normal">下单时间</label>
+              <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="" name=""
+                     placeholder="请选择日期">
+              <span class="control-text">-</span>
+              <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="" name=""
+                     placeholder="请选择日期">
+            </div>
+          </div>
+        </form>
+        <div class="spacing">
+          <button type="button" class="control-btn btn btn-dts btn-s2" data-toggle="modal"
+                  data-target="#export_good_modal">导出
+          </button>
+        </div>
+        <table id="table_enterprise_statistic" class="table-bordered table-hover dataTable">
+          <thead>
+          <tr>
+            <th width="32"><input type="checkbox"/></th>
+            <th>企业名称</th>
+            <th>协议客户</th>
+            <th>注册时间</th>
+            <th>首次下单时间</th>
+            <th>交易总额（元）</th>
+            <th>商品数量</th>
+            <th>订单数量</th>
+            <th width="100">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td>湖北东力药业有限公司</td>
+            <td>是</td>
+            <td>2013-12-19</td>
+            <td>2013-12-19 18:30</td>
+            <td>18000.00</td>
+            <td>344</td>
+            <td>123</td>
+            <td><a data-toggle="modal" data-target="#enterprise_statistic_modal">查看</a></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td>湖北东力药业有限公司</td>
+            <td>是</td>
+            <td>2013-12-19</td>
+            <td>2013-12-19 18:30</td>
+            <td>18000.00</td>
+            <td>344</td>
+            <td>123</td>
+            <td><a>查看</a></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td>湖北东力药业有限公司</td>
+            <td>是</td>
+            <td>2013-12-19</td>
+            <td>2013-12-19 18:30</td>
+            <td>18000.00</td>
+            <td>344</td>
+            <td>123</td>
+            <td><a>查看</a></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td>湖北东力药业有限公司</td>
+            <td>是</td>
+            <td>2013-12-19</td>
+            <td>2013-12-19 18:30</td>
+            <td>18000.00</td>
+            <td>344</td>
+            <td>123</td>
+            <td><a>查看</a></td>
+          </tr>
+          </tbody>
+        </table>
+        <span
+            class="table-info">每页显示{{ page_limit }}条，总共{{ data_list.paginator.num_pages }}页，共{{ paginator.count }}条</span>
+        <ul class="pagination right">
+          <li><a href="{% if data_list.has_previous %}?page=
+            {{ data_list.previous_page_number }}{% else %}javascript:;{% endif %}">&laquo;</a></li>
+
+          {% for i in paginator.page_range %}
+            {% ifequal i page %}
+              <li class="active"><a href="">{{ i }}</a></li>
+            {% else %}
+              <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endifequal %}
+          {% endfor %}
+          <li><a
+              href="{% if data_list.has_next %}?page={{ data_list.next_page_number }}{% else %}javascript:;{% endif %}">&raquo;</a>
+          </li>
+        </ul>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="good">
+        <form class="form-inline bordered">
+          {% csrf_token %}
+          <div class="spacing">
+            <div class="form-group form-group-dts">
+              <label class="control-label normal">商品编码</label>
+              <input type="text" class="form-control">
+              <button type="button" class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+              <a class="control-text more_query_conditions" role="button">更多查询条件<i
+                  class="iconfont icon-shangxiajiantou-copy"></i></a>
+            </div>
+          </div>
+          <div class="spacing query_conditions hide">
+            <div class="form-group form-group-dts">
+              <label class="control-label normal">商品名称</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="form-group form-group-dts">
+              <label for="input_enter_name" class="control-label normal">商品分类</label>
+              <select class="form-control">
+                <option>请选择……</option>
+              </select>
+            </div>
+            <div class="form-group form-group-dts">
+              <label for="" class="control-label normal">总销售额</label>
+              <input type="text" class="form-control money">
+              <span class="control-text">-</span>
+              <input type="text" class="form-control money">
+            </div>
+            <div class="form-group form-group-dts">
+              <label for="" class="control-label normal">下单时间</label>
+              <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="" name=""
+                     placeholder="请选择日期">
+              <span class="control-text">-</span>
+              <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="" name=""
+                     placeholder="请选择日期">
+            </div>
+          </div>
+        </form>
+        <div class="spacing">
+          <button type="button" class="control-btn btn btn-dts btn-s2" data-toggle="modal"
+                  data-target="#export_good_modal">导出
+          </button>
+        </div>
+        <table id="table_good_statistic" class="table-bordered table-hover dataTable">
+          <thead>
+          <tr>
+            <th width="32"><input type="checkbox"/></th>
+            <th>商品编码</th>
+            <th>商品名称</th>
+            <th>商品分类</th>
+            <th>批准文号</th>
+            <th>剂型</th>
+            <th>规格</th>
+            <th>订单数量</th>
+            <th>总销量</th>
+            <th>总销售额（元）</th>
+            <th width="100">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td>5222545224475</td>
+            <td>苦参素片</td>
+            <td>中成药</td>
+            <td>f5s1211111</td>
+            <td>胶囊</td>
+            <td>10g</td>
+            <td>12</td>
+            <td>123</td>
+            <td>2952.00</td>
+            <td><a data-toggle="modal" data-target="#good_statistic_modal">查看</a></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td>5222545224475</td>
+            <td>苦参素片</td>
+            <td>中成药</td>
+            <td>f5s1211111</td>
+            <td>胶囊</td>
+            <td>10g</td>
+            <td>12</td>
+            <td>123</td>
+            <td>2952.00</td>
+            <td><a>查看</a></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td>5222545224475</td>
+            <td>苦参素片</td>
+            <td>中成药</td>
+            <td>f5s1211111</td>
+            <td>胶囊</td>
+            <td>10g</td>
+            <td>12</td>
+            <td>123</td>
+            <td>2952.00</td>
+            <td><a>查看</a></td>
+          </tr>
+          </tbody>
+        </table>
+        <span
+            class="table-info">每页显示{{ page_limit }}条，总共{{ data_list.paginator.num_pages }}页，共{{ paginator.count }}条</span>
+        <ul class="pagination right">
+          <li><a href="{% if data_list.has_previous %}?page=
+            {{ data_list.previous_page_number }}{% else %}javascript:;{% endif %}">&laquo;</a></li>
+
+          {% for i in paginator.page_range %}
+            {% ifequal i page %}
+              <li class="active"><a href="">{{ i }}</a></li>
+            {% else %}
+              <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endifequal %}
+          {% endfor %}
+          <li><a
+              href="{% if data_list.has_next %}?page={{ data_list.next_page_number }}{% else %}javascript:;{% endif %}">&raquo;</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_enterprise_statistic.html' %}
+  {% include 'dtsadmin/modals/modal_good_statistic.html' %}
+{% endblock %}
+
+{% block js %}
+  <!-- <script type="text/javascript" src="{{ 'dtsadmin/js/basic_info.js'|static_url }}"></script> -->
+{% endblock %}

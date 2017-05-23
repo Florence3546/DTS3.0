@@ -1,0 +1,300 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}账户安全 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/account_safety.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main">
+      <div class="sidebar-member">
+        <ul>
+          <li class="category"><b>账户设置</b></li>
+          <li class="{% active_url 'account_info' %}"><a href="{% url 'eshop:account_info' %}">账户信息</a></li>
+          <li class="{% active_url 'account_safety' %}"><a href="{% url 'eshop:account_safety' %}">账户安全</a></li>
+          <li class="{% active_url 'receiving_address' %}"><a href="{% url 'eshop:receiving_address' %}">收货地址</a></li>
+        </ul>
+      </div>
+      <div class="account-safety">
+        <div class="account {% if action != '' %}hide{% endif %}">
+          <div class="title">账户安全</div>
+          <ul>
+            <li>
+              <span><i class="iconfont icon-mark"></i></span>
+              <span>登录密码</span>
+              <span>|</span>
+              <span>互联网账号存在被盗风险，建议您定期更改密码以保护账号安全</span>
+              <span><a data-name="login-password"
+                       href="/eshop/account_safety/?action=action_1&step=verify">修改</a></span>
+            </li>
+            <li>
+              <span><i class="iconfont icon-mark"></i></span>
+              <span>手机验证</span>
+              <span>|</span>
+              <span>您的手机：{{ request.user.phone|slice:':3' }}****{{ request.user.phone|slice:'7:' }}若已停用或丢失请立即更换，避免账户被盗</span>
+              <span><a data-name="change-phone-number" href="/eshop/account_safety/?action=action_2&step=phone"
+                       target="_blank">修改</a></span>
+            </li>
+            <li>
+              <span><i class="iconfont icon-warning warning"></i></span>
+              <span>邮箱验证</span>
+              <span>|</span>
+              <span>验证后，可用于快速找回登录密码等，提高账户安全</span>
+              <span><a class="btn-s1" data-name="verify-mailbox"
+                       href="/eshop/account_safety/?action=action_3&step=verify" target="_blank">立即验证</a></span>
+            </li>
+            <li>
+              <span><i class="iconfont icon-warning warning"></i></span>
+              <span>支付密码</span>
+              <span>|</span>
+              <span>用户预存款支付时输入，建议您定期更换新的支付密码，提高安全性</span>
+              <span><a class="btn-s1" data-name="pay-password"
+                       href="/eshop/account_safety/?action=action_4&step=pay_password" target="_blank">立即设置</a></span>
+            </li>
+          </ul>
+        </div><!-- ./account-safety -->
+
+        <div class="login-password {% if action != 'action_1' %}hide{% endif %} step-box">
+          <div class="title">修改登录密码</div>
+          <div class="step-defined">
+            <div class="first active"><span>1</span>验证身份</div>
+            <div class="second {% if step == 'new_password' %}active{% endif %}"><span>2</span>修改登录密码</div>
+            <div class="third {% if step == 'complete' %}active{% endif %}"><span>3</span>完成</div>
+          </div>
+          <form class="" id="" action="{% url 'eshop:account_safety' %}" method="post">
+            {% if obj.csrfmiddlewaretoken %}
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+            {% else %}
+              {% csrf_token %}
+            {% endif %}
+            <input type="hidden" id="phone" value="{{ request.user.phone }}">
+            <input type="hidden" id="url" value="{% url 'eshop:account_safety' %}">
+            <input type="hidden" id="send_validate_code_url" value="{% url 'eshop:ajax:send_validate_code' %}">
+            <input type="hidden" id="send_validate_code_new_url" value="{% url 'eshop:ajax:send_validate_code_new' %}">
+            <div class="step1 {% if step != 'verify' %}hide{% endif %}">
+              <div class="form-group">
+                <label>已验证手机号：</label>
+                <span>{{ request.user.phone|slice:':3' }}****{{ request.user.phone|slice:'7:' }}</span>
+              </div>
+              <div class="form-group">
+                <label for="verify-number" class="label-defined">请填写手机验证码：</label>
+                <input class="form-control phone_yzm"
+                       name="phone_yzm"
+                       id="verify-number"
+                       type="text"/>
+                <a data-phone="{{ request.user.phone }}" class="gain-code">获取验证码</a>
+              </div>
+              <a class="btn-s2 step1  step1_submit" data-step="second">提交</a>
+            </div>
+            <div class="step2 {% if step != 'new_password' %}hide{% endif %}">
+
+              <div class="form-group">
+                <label for="passwd" class="label-defined">新登录密码：</label>
+                <input class="form-control" type="password" id="new" name="passwd"/>
+              </div>
+              <div class="form-group">
+                <label for="passwd2" class="label-defined">确认登录密码：</label>
+                <input class="form-control"
+                       type="password"
+                       id="com-num"
+                       name="passwd2"/>
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="verify-num">请填写验证码：{{ result.new_password }}</label>
+                <input class="form-control" type="text" name="captcha" id="captcha"/>
+                <span class="img-code">
+	              	<img class="captcha" src="/common/GenerateCheckCode/">
+	              	<a href="javascript:;" class="captcha-rsh">看不清？换一张</a>
+	              </span>
+              </div>
+              <a class="btn-s2 step2 step2_submit" data-step="third">提交</a>
+            </div>
+
+            <div class="step3 {% if step != 'complete' %}hide{% endif %}">
+              <p><i class="iconfont icon-yiwancheng"></i><span>修改登录密码成功！</span></p>
+              <a class="btn-s2" href="{% url 'eshop:eshop_home' %}">开始购物</a>
+              <a class="btn-s2" href="{% url 'eshop:member_center' %}">个人中心</a>
+            </div>
+          </form>
+        </div><!-- ./login-password -->
+
+        <div class="change-phone-number {% if action != 'action_2' %}hide{% endif %}   step-box">
+          <div class="title">修改验证手机号</div>
+          <div class="step-defined">
+            <div class="first active"><span>1</span>验证身份</div>
+            <div class="second {% if step == 'phone_new' %}active{% endif %}"><span>2</span>修改验证手机号</div>
+            <div class="third {% if step == 'complete' %}active{% endif %}"><span>3</span>完成</div>
+          </div>
+          <form class="" id="" action="{% url 'eshop:account_safety' %}" method="post">
+            {% if obj.csrfmiddlewaretoken %}
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+{#                <input type="hidden" id="url" value="{% url 'eshop:account_safety' %}">#}
+
+
+            {% else %}
+              {% csrf_token %}
+            {% endif %}
+            <div class="step1 {% if step != 'phone' %}hide{% endif %}">
+              <div class="form-group">
+                <label>已验证手机号：</label>
+                <span>{{ request.user.phone|slice:':3' }}****{{ request.user.phone|slice:'7:' }}</span>
+              </div>
+              <div class="form-group">
+                <label for="verify-number2" class="label-defined">请填写手机验证码：</label>
+                <input class="form-control short"
+                       name="phone_yzm"
+                       id="verify-number2"
+                       type="text"/>
+                <a class="gain-code" data-phone="{{ request.user.phone }}">获取验证码</a>
+              </div>
+              <a class="btn-s2 step3 step3_submit" data-step="second">提交</a>
+            </div>
+            <div class="step2 {% if step != 'phone_new' %}hide{% endif %}">
+              <div class="form-group">
+                <label for="phone_new" class="label-defined">新验证手机号：</label>
+                <input class="form-control"
+                       name="phone_new"
+                       id="phone_new"
+                       type="text"/>
+              </div>
+              <div class="form-group">
+                <label for="verify-number4" class="label-defined">请填写手机验证码：</label>
+                <input class="form-control short"
+                       name="phone_yzm"
+                       id="phone_code"
+                       type="text"/>
+                <a class="phone_code1" >获取验证码</a>
+              </div>
+              <a class="btn-s2 step4 step4_submit" data-step="third">提交</a>
+            </div>
+            <div class="step3 {% if step != 'complete' %}hide{% endif %}">
+              <p><i class="iconfont icon-yiwancheng"></i><span>修改手机验证号码成功！</span></p>
+              <a class="btn-s2" href="{% url 'eshop:eshop_home' %}">开始购物</a>
+              <a class="btn-s2" href="{% url 'eshop:member_center' %}">个人中心</a>
+            </div>
+          </form>
+        </div>
+        <div class="verify-mailbox {% if action != 'action_3' %}hide{% endif %} step-box">
+          <div class="title">验证邮箱</div>
+          <div class="step-defined">
+            <div class="first active"><span>1</span>验证身份</div>
+            <div class="second {% if step == 'email' %}active{% endif %}"><span>2</span>验证邮箱</div>
+            <div class="third {% if step == 'complete' %}active{% endif %}"><span>3</span>完成</div>
+          </div>
+          <form class="" id="" action="{% url 'eshop:account_safety' %}" method="post">
+            {% if obj.csrfmiddlewaretoken %}
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+            {% else %}
+              {% csrf_token %}
+            {% endif %}
+            <div class="step1 {% if step != 'verify' %}hide{% endif %}">
+              <div class="form-group">
+                <label class="label-defined">已验证手机号：</label>
+                <span>{{ request.user.phone|slice:':3' }}****{{ request.user.phone|slice:'7:' }}</span>
+              </div>
+              <div class="form-group">
+                <label for="verify-number5" class="label-defined">请填写手机验证码：</label>
+                <input class="form-control short"
+                       name="phone_yzm"
+                       id="phone_yzm"
+                       type="text"/>
+                <a class="gain-code" data-phone="{{ request.user.phone }}">获取验证码</a>
+              </div>
+              <a class="btn-s2 step5 step5_submit" data-step="second">提交</a>
+            </div>
+            <div class="step2 {% if step != 'email' %}hide{% endif %}">
+              <div class="form-group">
+                <label for="email" class="label-defined">邮箱地址：</label>
+                <input class="form-control"
+                       name="email"
+                       id="email"
+                       type="text"/>
+              </div>
+              <div class="form-group">
+                <label for="verify-number5" class="label-defined">请填写验证码：</label>
+                <input class="form-control"
+                       name="email_yzm"
+                       id="email_code"
+                       type="text"/>
+                <span class="img-code">
+	              	<img class="captcha" src="/common/GenerateCheckCode/">
+	              	<a href="javascript:;" class="captcha-rsh">看不清？换一张</a>
+	              </span>
+              </div>
+              <a class="btn-s2 step6 step6_submit" data-step="third">提交</a>
+            </div>
+            <div class="step3 {% if step != 'complete' %}hide{% endif %}">
+              <p><i class="iconfont icon-yiwancheng"></i><span>已发送验证邮件至：{{ request.user.email }}</span></p>
+              <div>
+                <p>验证邮件24小时有效，请尽快登录您的邮箱点击验证链接完成验证。</p>
+                <p class="text-red">（请立即完成验证，邮箱验证不通过则验证邮箱失败）</p>
+                <a class="btn-s2">查看验证邮件</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="pay-password {% if action != 'action_4' %}hide{% endif %} step-box">
+          <div class="step1 {% if step != 'pay_password' %}hide{% endif %}">
+            <div class="title">设置支付密码</div>
+            <form class="" id="set_password" action="{% url 'eshop:account_safety' %}" method="post">
+              {% if obj.csrfmiddlewaretoken %}
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+              {% else %}
+                {% csrf_token %}
+              {% endif %}
+              <div class="form-group">
+                <label for="pay_password" class="label-defined">支付密码：</label>
+                <input class="form-control"
+                       type="password"
+                       id="pay_password"
+                       name="pay_password"
+                       maxlength="6"
+                       minlength="6"/>
+              </div>
+              <div class="form-group">
+                <label for="pay_password2" class="label-defined">确认支付密码：</label>
+                <input class="form-control"
+                       type="password"
+                       id="pay_password2"
+                       name="pay_password2"
+                       maxlength="6"
+                       minlength="6"/>
+              </div>
+              <a class="btn-s2 step7 step7_submit" data-step="third">保存</a>
+          </div>
+          <div class="step7 {% if step != 'complete' %}hide{% endif %}">
+            <p><i class="iconfont icon-yiwancheng"></i><span>修改支付密码成功！</span></p>
+            <p><a class="btn-s2" href="{% url 'eshop:eshop_home' %}">开始购物</a></p>
+            <p><a class="btn-s2" href="{% url 'eshop:member_center' %}">个人中心</a></p>
+          </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+
+
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/account_safety.js'|static_url }}"></script>
+
+{% endblock %}
+

@@ -1,0 +1,83 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}支付配送 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>支付配送</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>支付方式</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">支付方式</div>
+        <div class="help-body">
+          <p class="text-content mrg-b-20">
+            本平台提供线上支付、线下支付、预存款、货到付款方式。在线支付几乎涵盖所有大中型银行发行的银行卡，覆盖率达98％。（指第三方支付平台与银行的合作，并非本平台与银行直联）。
+          </p>
+          <div><span>支付说明：</span></div>
+          <dl>
+            <dt>1.预付款支付</dt>
+            <dd>选择要买的商品，放入购物车后“结算中心”，在付款方式选择预存款支付，确认订单后系统会与从您的预存款余额里扣除。</dd>
+          </dl>
+          <dl>
+            <dt>2.线上支付</dt>
+            <dd>为了方便您的网上支付，我们为您提供了多个银行的网上支付功能。用户输入卡号和秘码，即可完成网上银行的支付工作。</dd>
+          </dl>
+          <dl>
+            <dt>3.线下支付</dt>
+            <dd>线下公司转账账号：</dd>
+            <dd>&nbsp;名称：广州市振康医药有限公司</dd>
+            <dd>开户行：农行广州京溪支行</dd>
+            <dd>&nbsp;账号：<span class="num">44070 1010 4000 1068</span></dd>
+            <dd>因银行政策原因，节假日期间，线下公对公、私对公转帐不能实时到款。</dd>
+            <dd>为确保您在最短的时间内收到货物，请尽量通过虚拟支付、线上网银支付、银行转帐等方式支付货款。</dd>
+            <dd>全国统一热线：400-930-9001</dd>
+          </dl>
+          <dl>
+            <dt>4.货到付款</dt>
+            <dd>货到付款是一种先收货后付款的支付方式，物流人员将商品送达顾客指定交货地点后，顾客验收商品无误后，现场交纳货款（现金形式）于物流人员的一种结算支付方式。</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

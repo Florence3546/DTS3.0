@@ -1,0 +1,268 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}用户管理 - DTS管理后台{% endblock %}
+
+{#  侧边栏  #}
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_info_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #table_user tr td {
+      text-align: center;
+    }
+
+    #table_user tr td:nth-of-type(2),
+    #table_user tr td:nth-of-type(5) {
+      text-align: left;
+    }
+
+    #table_user thead th:nth-of-type(1) {
+      width: 32px;
+    }
+
+    #table_user thead th:nth-last-of-type(1) {
+      width: 100px;
+    }
+
+    /***********************添加*********************/
+    label:not(.control-label) {
+      margin: 0;
+      font-weight: normal;
+    }
+
+    input[type=radio], input[type=checkbox] {
+      margin: 5px;
+      vertical-align: sub;
+    }
+
+    .reset-password {
+      line-height: 24px;
+      margin-left: 10px;
+    }
+
+    .table {
+      margin: 10px 0;
+    }
+
+    .text-dark {
+      color: #cccccc;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+
+    {% csrf_token %}
+    <form class="form-inline bordered" id="search_form" method="get" action="">
+      <input type="hidden" id="total_count" value="{{ data_list.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="search_username" class="control-label normal">用户名</label>
+          <input type="text" class="form-control" id="search_username" name="username"
+                 value="{{ request.GET.username }}">
+          <button type="submit" class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="search_usertype" class="control-label normal">用户类型</label>
+          <select class="form-control"
+                  id="search_usertype"
+                  data-value="{{ obj.usertype }}"
+                  name="usertype">
+            <option value="">请选择……</option>
+            {% for choice in choices.usertype %}
+              <option value="{{ choice.0 }}"
+                      {% if request.GET.usertype == choice.0 %}selected{% endif %}>{{ choice.1 }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label class="control-label normal">姓名</label>
+          <input type="text" class="form-control" id="search_full_name" name="first_name"
+                 value="{{ request.GET.first_name }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label class="control-label normal">企业名称</label>
+          <input type="text" class="form-control" id="search_enter_name" name="enter_name"
+                 value="{{ request.GET.enter_name }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="search_is_active" class="control-label normal">用户状态</label>
+          <select class="form-control" name="is_active" id="search_is_active">
+            <option value="">请选择……</option>
+            <option value="0" {% if request.GET.is_active == '0' %}selected{% endif %}>已锁定</option>
+            <option value="1" {% if request.GET.is_active == '1' %}selected{% endif %}>未锁定</option>
+          </select>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="search_date_joined_from" class="control-label normal">注册日期</label>
+          <input type="text"
+                 class="form-control date"
+                 data-date-format="yyyy-mm-dd"
+                 id="search_date_joined_from"
+                 value="{{ request.GET.date_joined_from }}"
+                 name="date_joined_from" placeholder="请选择日期">
+          <span class="control-text">-</span>
+          <input type="text"
+                 class="form-control date"
+                 data-date-format="yyyy-mm-dd"
+                 id="search_date_joined_to"
+                 value="{{ request.GET.date_joined_to }}"
+                 name="date_joined_to" placeholder="请选择日期">
+        </div>
+      </div>
+    </form>
+    <div class="spacing">
+      <button type="button"
+              class="control-btn btn btn-dts btn-s2 add"
+              data-toggle="modal"
+              data-target="#add_user_modal">添加
+      </button>
+      <button type="button"
+              id="lock"
+              api="{% url 'dtsadmin:ajax:switch_lock' model_class='User' action='is_active' %}"
+              class="control-btn btn btn-dts btn-s2 is_lock">锁定
+      </button>
+      <button type="button"
+              id="unlock"
+              api="{% url 'dtsadmin:ajax:switch_lock' model_class='User' action='is_active' %}"
+              class="control-btn btn btn-dts btn-s2 is_lock">解锁
+      </button>
+    </div>
+
+    <table id="table_user" class="table-bordered table-hover dataTable common_modal">
+      <thead>
+      <tr>
+        <th>
+          <input type="checkbox" class="check-all"></th>
+        <th>用户名</th>
+        <th>姓名</th>
+        <th>用户类型</th>
+        <th>企业名称</th>
+        <th>注册日期</th>
+        <th>邮箱</th>
+        <th>企业电话</th>
+        <th>手机号</th>
+        <th>用户状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for data in data_list %}
+        <tr class="{{ data.is_active|yesno:',text-dark, ' }}">
+          <td>
+            <input type="checkbox" class="check-item" name="chk_list" value="{{ data.pk }}"></td>
+          <td>{{ data.username }}</td>
+          <td>{{ data.first_name }} {{ data.last_name }}</td>
+          <td>{{ data.get_usertype_display }}</td>
+          <td>{{ data.enterprise.name }}</td>
+          <td>{{ data.date_joined | date:'Y-m-d' }}</td>
+          <td>{{ data.email }}</td>
+          <td>{{ data.enterprise.phone }}</td>
+          <td>{{ data.phone }}</td>
+          <td>{{ data.is_active|yesno:'未锁定,已锁定, ' }}</td>
+          <td class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">管理
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                    class="look_user"
+                    data-pk="{{ data.pk }}"
+                    api="{% url 'dtsadmin:user_manage' %}"
+                >查看</a>
+              </li>
+              <li>
+                <a href="javascript:;"
+                   data-pk="{{ data.pk }}"
+                   api="{% url 'dtsadmin:user_manage' %}"
+                   class="update">修改</a>
+              </li>
+              <li>
+                <a api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='User' obj_id=data.id %}"
+                   class="delete">删除</a>
+              </li>
+              <li>
+                <a data-toggle="modal" data-target="#common_log_modal">日志</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+      {% endfor %}
+
+      </tbody>
+    </table>
+    {% if data_list.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ data_list.paginator.per_page }}条，总共{{ data_list.paginator.num_pages }}页，共{{ data_list.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if data_list.has_previous %}{{ data_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span class="page-count">…</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                            page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span class="page-count">…</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="{% if data_list.has_next %}{{ data_list.next_page_number }}{% else %}{{ data_list.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}
+{#  模态对话框  #}
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_user.html' %}
+  {% include 'dtsadmin/modals/modal_common_log.html' %}
+  {% include 'dtsadmin/modals/modal_user_check.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'plugins/typeahead/bootstrap3-typeahead.min.js'|static_url }}"></script>
+  <script>
+      // 搜索企业自动补全
+      var items = [
+          {% for choice in choices.auto_user %}
+              '{{ choice.username }} {{ choice.first_name }}',
+          {% endfor %}
+      ];
+      $("#search_username").typeahead({
+          source: items
+      });
+  </script>
+  <script type="text/javascript" src="{{ 'dtsadmin/js/user_manage.js'|static_url }}"></script>
+{% endblock %}

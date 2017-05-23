@@ -1,0 +1,165 @@
+.header-member .menu a.active {
+  background: transparent;
+}
+.order-list {
+  float: left;
+  margin-bottom: 80px;
+  padding-top: 40px;
+  width: 1070px;
+}
+.tab li.input-group {
+  top: -2px;
+  float: right;
+}
+.tab li.input-group .form-control {
+  width: 180px;
+  height: 28px;
+  font-size: 12px;
+}
+.tab li.input-group button {
+  height: 28px;
+  line-height: 18px;
+  color: #777;
+  background: #f4f4f4;
+}
+.subnav li:nth-of-type(1),
+.order-info > li > span:nth-of-type(1) {
+  width: 140px;
+}
+.subnav li:nth-of-type(2),
+.order-info > li > span:nth-of-type(2) {
+  width: 160px;
+}
+.subnav li:nth-of-type(3),
+.order-info > li > span:nth-of-type(3),
+.subnav li:nth-of-type(4),
+.order-info > li > span:nth-of-type(4) {
+  width: 105px;
+}
+.subnav li:nth-of-type(5),
+.order-info > li > span:nth-of-type(5) {
+  width: 100px;
+}
+.subnav li:nth-of-type(6),
+.order-info > li > span:nth-of-type(6) {
+  width: 90px;
+}
+.subnav li:nth-of-type(7),
+.order-info > li > span:nth-of-type(7) {
+  width: 110px;
+}
+.subnav li:nth-of-type(8),
+.order-info > li > span:nth-of-type(8) {
+  width: 100px;
+}
+.subnav li:nth-of-type(9),
+.order-info > li > span:nth-of-type(9) {
+  width: 158px;
+}
+.subnav {
+  width: 1070px;
+  background: #f6f6f6;
+  border: 1px solid #efefef;
+  overflow: hidden;
+}
+.subnav > li {
+  float: left;
+  padding-left: 20px;
+  line-height: 34px;
+}
+.subnav > li select {
+  position: relative;
+  left: -5px;
+  height: 24px;
+  font-size: 12px;
+}
+.subnav > li:last-of-type {
+  text-align: center;
+}
+.order-info {
+  width: 1070px;
+  border-left: 1px solid #efefef;
+  border-right: 1px solid #efefef;
+}
+.order-info > li {
+  min-height: 80px;
+  border-bottom: 1px solid #efefef;
+}
+.order-info > li > span {
+  float: left;
+  display: block;
+  padding-left: 20px;
+  line-height: 80px;
+}
+.order-info > li > span:nth-of-type(3),
+.order-info > li > span:nth-of-type(4) {
+  font-family: "微软雅黑";
+}
+.order-info > li > span:last-of-type a:not(.pay) {
+  margin: 6px;
+  color: #0090ff;
+}
+.order-info > li > span:last-of-type a:not(.pay):hover {
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+}
+.order-info > li > span:last-of-type b {
+  font-weight: normal;
+  margin: 6px;
+}
+.order-info > li > span:not(:last-of-type) a:hover {
+  color: #0090ff;
+}
+.order-info > li > span a.sort-of-goods {
+  position: relative;
+}
+.order-info > li > span a.sort-of-goods i.caret {
+  position: relative;
+  top: -1px;
+  border-width: 5px;
+}
+.order-info > li > span a.sort-of-goods.active {
+  color: #0090ff;
+}
+.order-info > li > span a.sort-of-goods.active i.caret {
+  top: -4px;
+  border-top-color: transparent;
+  border-bottom: 5px solid #0090ff;
+}
+.order-info > li a.pay {
+  display: inline-block;
+  margin-right: 6px;
+  background: #ff7e00;
+  border-color: #ff7e00;
+}
+.order-info > li a.logistics {
+  margin-right: 12px;
+}
+.empty {
+  overflow: hidden;
+  padding: 95px 114px;
+  border: 1px solid #efefef;
+  border-top: none;
+}
+.empty img {
+  width: 69px;
+  height: 51px;
+  float: left;
+  margin: -8px 10px 0 260px;
+}
+.empty a {
+  color: #0090ff;
+  line-height: 24px;
+}
+.empty p {
+  text-align: center;
+}
+.empty p i {
+  margin-right: 10px;
+  vertical-align: middle;
+  font-size: 40px;
+  color: #ff7e00;
+}
+.empty p span {
+  color: #ff7e00;
+}

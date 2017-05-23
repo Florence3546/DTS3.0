@@ -1,0 +1,218 @@
+.header-member .menu a.active {
+  background: transparent;
+}
+.collect-list {
+  float: left;
+  margin: 35px 0 110px;
+  width: 1070px;
+  border: 1px solid #ddd;
+}
+.filter {
+  padding: 8px 0 0 10px;
+  height: 41px;
+  border-bottom: 1px solid #ddd;
+  background: #f9f9f9;
+}
+.filter .choose {
+  overflow: hidden;
+  float: left;
+}
+.filter .choose a {
+  float: left;
+  display: block;
+  width: 88px;
+  height: 24px;
+  line-height: 22px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-left: none;
+}
+.filter .choose a:first-of-type {
+  border-left: 1px solid #e5e5e5;
+}
+.filter .choose a.active {
+  color: #fff;
+  background: #ff7e00;
+}
+.filter .choose a.active span {
+  color: #fff;
+}
+.filter .choose a span {
+  color: #ff7e00;
+  font-weight: bolder;
+  margin-left: 5px;
+}
+.filter .input-group {
+  float: right;
+  margin: 0 10px;
+  width: 220px;
+  font-size: 12px;
+}
+.filter .input-group .form-control {
+  padding: 0 12px;
+  height: 24px;
+  font-size: 12px;
+  color: #777;
+}
+.filter .input-group button {
+  height: 24px;
+  line-height: 10px;
+  font-size: 12px;
+  color: #777;
+  background: #f4f4f4;
+}
+.cancel-box {
+  float: right;
+  height: 40px;
+  position: relative;
+  top: -8px;
+  padding: 8px 10px 0;
+}
+.cancel-box.active {
+  background: #fff;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(0, 0, 0, 0.1);
+}
+.check-all {
+  display: none;
+  float: right;
+  margin-right: 30px;
+  padding-top: 4px;
+  cursor: pointer;
+}
+.check-all a {
+  float: left;
+  display: block;
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #e5e5e5;
+}
+.check-all a i {
+  position: relative;
+  top: -3px;
+  left: -1px;
+  color: transparent;
+}
+.check-all.active a {
+  border: 1px solid #ff7e00;
+}
+.check-all.active a i {
+  color: #ff7e00;
+}
+.delete,
+.batch-add-cart {
+  display: none;
+  float: right;
+  line-height: 24px;
+  margin-right: 10px;
+}
+.delete a,
+.batch-add-cart a {
+  color: #ff7e00;
+}
+.delete a i,
+.batch-add-cart a i {
+  margin-right: 5px;
+}
+.cancel {
+  float: right;
+  margin-left: 20px;
+}
+.cancel a {
+  padding: 5px 11px;
+  line-height: 24px;
+  border: 1px solid #ddd;
+  background: -webkit-linear-gradient(#f7f7f7, #e7e7e7);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#f7f7f7, #e7e7e7);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#f7f7f7, #e7e7e7);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(#f7f7f7, #e7e7e7);
+  /* 标准的语法 */
+}
+.search-goods {
+  padding: 0 0 10px 55px;
+  width: 1080px;
+  overflow: hidden;
+}
+.collect-list.batch .delete,
+.collect-list.batch .batch-add-cart,
+.collect-list.batch .check-all {
+  display: block;
+}
+.collect-list.batch .search-goods > div {
+  border: 3px solid #b2b2b2;
+}
+.collect-list.batch .search-goods > div .collect {
+  display: none;
+}
+.collect-list.batch .search-goods > div .mask-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 6;
+}
+.collect-list.batch .search-goods > div .mask-layer:before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 25px solid #b2b2b2;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.collect-list.batch .search-goods > div .mask-layer:after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 2px;
+  width: 26px;
+  height: 15px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+.collect-list.batch .search-goods > div.active {
+  border: 3px solid #ff7e00;
+}
+.collect-list.batch .search-goods > div.active .mask-layer:before {
+  border-top-color: #ff7e00;
+  border-right-color: #ff7e00;
+}
+.page-No > div,
+.page-No ul {
+  margin-top: 10px;
+}
+.empty {
+  overflow: hidden;
+  padding: 118px 114px;
+}
+.empty img {
+  width: 69px;
+  height: 51px;
+  float: left;
+  margin: -8px 10px 0 260px;
+}
+.empty a {
+  color: #0090ff;
+  line-height: 24px;
+}
+.empty p {
+  text-align: center;
+}
+.empty p i {
+  margin-right: 10px;
+  vertical-align: middle;
+  font-size: 40px;
+  color: #ff7e00;
+}
+.empty p span {
+  color: #ff7e00;
+}

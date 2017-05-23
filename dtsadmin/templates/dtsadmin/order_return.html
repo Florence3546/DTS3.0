@@ -1,0 +1,374 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}订单列表 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    .tab {
+      border-bottom: 2px solid #e5e5e5;
+      height: 32px;
+      margin-bottom: 15px;
+    }
+
+    .tab li {
+      float: left;
+      padding-bottom: 8px;
+      position: relative;
+      top: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tab li.active {
+      border-bottom-color: #0090ff;
+    }
+
+    .tab li.active:after {
+      display: block;
+      content: '';
+      border: 4px solid transparent;
+      border-bottom-color: #0090ff;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -webkit-transform: translate(-4px);
+      -moz-transform: translate(-4px);
+      -ms-transform: translate(-4px);
+      -o-transform: translate(-4px);
+      transform: translate(-4px);
+    }
+
+    .tab li.active a {
+      color: #0090ff;
+    }
+
+    .tab li a {
+      border-right: 1px solid #e5e5e5;
+      padding: 2px 12px;
+      font-size: 14px;
+      font-weight: bolder;
+      color: #999;
+    }
+
+    .tab li:last-of-type a {
+      border-right: none;
+    }
+
+    .form-inline.bordered {
+      border-bottom: none;
+      margin-bottom: 17px;
+    }
+
+    #table_return thead th:nth-of-type(1) {
+      width: 32px;
+    }
+
+    #table_return thead th:nth-last-of-type(1) {
+      width: 100px;
+    }
+
+    #table_return tr td:nth-of-type(1),
+    #table_return tr td:nth-of-type(4),
+    #table_return tr td:nth-of-type(5),
+    #table_return tr td:nth-of-type(8),
+    #table_return tr td:nth-of-type(9),
+    #table_return tr td:nth-of-type(10) {
+      text-align: center;
+    }
+
+    #table_return tr td:nth-of-type(6),
+    #table_return tr td:nth-of-type(7) {
+      text-align: right;
+    }
+
+    #table_return tr td:nth-of-type(7) {
+      color: #ff6600;
+      font-weight: bolder;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+    <ul class="tab">
+      <li class="active">
+        <a href="#">全部</a>
+      </li>
+      <li>
+        <a href="#">我收到的退款申请</a>
+      </li>
+      <li>
+        <a href="#">我收到的退货申请</a>
+      </li>
+    </ul>
+    <form class="form-inline bordered">
+      {% csrf_token %}
+      <div class="h6">
+        <div class="form-group form-group-dts">
+          <label for="input_enter_name" class="control-label normal">售后编号</label>
+          <input type="text" class="form-control" id="input_enter_name" name="name">
+          <button type="button" class="control-btn btn btn-dts btn-s1">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="h6 query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">订单编号</label>
+          <input type="text" class="form-control" id="" name="">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">售后类型</label>
+          <input type="text" class="form-control" id="" name="">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">售后状态</label>
+          <select class="form-control">
+            <option>----请选择----</option>
+            <option>退款关闭</option>
+            <option>退款成功</option>
+            <option>等待审核</option>
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="" class="control-label normal">申请时间</label>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="" name="" placeholder="请选择日期">
+          <span class="control-text">~</span>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="" name="" placeholder="请选择日期">
+        </div>
+      </div>
+    </form>
+
+    <table id="table_return" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>
+          <input type="checkbox" class="check-all"></th>
+        <th>售后编号</th>
+        <th>订单编号</th>
+        <th>售后类型</th>
+        <th>下单人</th>
+        <th>实付金额（元）</th>
+        <th>退款金额（元）</th>
+        <th>售后申请时间</th>
+        <th>售后状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td class="text-red">售后申请，等待审核中</td>
+        <td><a>审核</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td class="text-red">售后申请，等待审核中</td>
+        <td><a>审核</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款成功</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>1701231943060002</td>
+        <td>15522323441111111</td>
+        <td>退款</td>
+        <td>张丽</td>
+        <td>52000.00</td>
+        <td>51000.00</td>
+        <td>2017-03-15 15：27：35</td>
+        <td>退款关闭</td>
+        <td><a>查看</a></td>
+      </tr>
+      </tbody>
+    </table>
+    <span class="table-info">每页显示{{ page_limit }}条，总共{{ data_list.paginator.num_pages }}页，共{{ paginator.count }}条</span>
+    <ul class="pagination right">
+      <li><a href="{% if data_list.has_previous %}?page=
+        {{ data_list.previous_page_number }}{% else %}javascript:;{% endif %}">&laquo;</a></li>
+
+      {% for i in paginator.page_range %}
+        {% ifequal i page %}
+          <li class="active"><a href="">{{ i }}</a></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endifequal %}
+      {% endfor %}
+      <li><a href="{% if data_list.has_next %}?page={{ data_list.next_page_number }}{% else %}javascript:;{% endif %}">&raquo;</a>
+      </li>
+
+
+    </ul>
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/order_list.js'|static_url }}"></script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}新手入门 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>新手入门</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>找回密码</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">找回密码</div>
+        <div class="help-body">
+          <p class="mrg-b-30 mrg-t-30">1.第一步：如果忘记密，在登录页面点击“找回密码”，进入找回密码页面；</p>
+          <img width="966" height="384" src="{{ 'eshop/images/help03.png'|static_url }}"/>
+          <p class="mrg-b-30 mrg-t-30">2.第二步：填入账户名和密码进行登录；</p>
+          <img width="970" height="300" src="{{ 'eshop/images/help04.png'|static_url }}"/>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

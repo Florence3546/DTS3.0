@@ -1,0 +1,298 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}交易记录 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    .form-inline .form-group-dts {
+      margin-left: 0;
+      overflow: hidden;
+      padding: 6px 5px;
+      line-height: 30px;
+    }
+
+    .form-group-dts label {
+      float: left;
+      font-weight: normal;
+      line-height: 28px;
+      width: 60px;
+      text-align: right;
+    }
+
+    .form-group-dts input {
+      position: relative;
+      top: 2px;
+    }
+
+    .form-group-dts .text {
+      padding: 4px 0 3px 15px;
+      border-left: 1px solid #e5e5e5;
+    }
+
+    .form-group-dts .control-text {
+      padding-top: 5px;
+    }
+
+    .form-group-dts a {
+      padding: 4px 8px;
+      margin-right: 10px;
+      color: #777;
+    }
+
+    .form-group-dts a:first-of-type {
+      margin-left: 5px;
+    }
+
+    .form-group-dts a.active {
+      background: #0090ff;
+      color: #fff;
+    }
+
+    a.sure, a.sure.active {
+      background: transparent;
+      color: #0090ff;
+    }
+
+    #table_record tr td {
+      text-align: center;
+    }
+
+    #table_record tr td:nth-of-type(4) {
+      text-align: left;
+    }
+
+    #table_record tr td:nth-of-type(6) {
+      padding-right: 3%;
+      text-align: right;
+      font-weight: bolder;
+      font-family: "微软雅黑";
+    }
+
+    #table_record tr td:nth-of-type(6) span {
+      position: relative;
+    }
+
+    #table_record tr td:nth-of-type(6) i {
+      position: absolute;
+      left: -20px;
+      top: -6px;
+      color: #ffb400;
+    }
+
+    #table_record tr th i {
+      position: relative;
+      top: 3px;
+      color: #ccc;
+      font-weight: normal;
+    }
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+<!-- 内容面板 -->
+{% block content %}
+  <div class="small" id="content">
+    <form class="form-inline">
+      <div class="form-group-dts">
+        <label>创建时间：</label>
+        <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" name="" placeholder="请选择日期">
+        <span class="control-text">-</span>
+        <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" name="" placeholder="请选择日期">
+        <a>今天</a>
+        <span class="text">最近：</span>
+        <a class="active">1个月</a>
+        <a>3个月</a>
+        <a>1年</a>
+      </div>
+      <div class="form-group-dts">
+        <label>交易类型：</label>
+        <a class="active">全部</a>
+        <a>消费</a>
+        <a>充值</a>
+        <a>退款</a>
+      </div>
+      <div class="form-group-dts">
+        <label>支付方式：</label>
+        <a class="active">全部</a>
+        <a>在线支付</a>
+        <a>线下支付</a>
+        <a>预存款</a>
+        <a>货到付款</a>
+      </div>
+      <div class="form-group-dts">
+        <label>交易金额：</label>
+        <input type="text" class="form-control money">
+        <span class="control-text">-</span>
+        <input type="text" class="form-control money">
+      </div>
+      <div class="form-group-dts">
+        <label>交易号：</label>
+        <input type="text" class="form-control form-control-long" placeholder="请输入订单编号/交易号"/>
+        <a class="sure hide">确定</a>
+      </div>
+    </form>
+    <table id="table_record" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th>创建时间</th>
+        <th>交易号</th>
+        <th>下单人</th>
+        <th>企业名称</th>
+        <th>交易类型</th>
+        <th>金额（元）<i class="iconfont icon-tip" data-toggle="tooltip" data-placement="right" title="不用看了，这里没有内容"></i></th>
+        <th>支付方式</th>
+        <th>交易状态</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>今天 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>充值</td>
+        <td><span class="prepaid_deposit"><i class="iconfont icon-yucunkuan"></i>+1190.00</span></td>
+        <td>预存款</td>
+        <td>已付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>充值</td>
+        <td><span class="prepaid_deposit"><i class="iconfont icon-yucunkuan"></i>+1190.00</span></td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>充值</td>
+        <td><span class="prepaid_deposit"><i class="iconfont icon-yucunkuan"></i>+1190.00</span></td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      <tr>
+        <td>2017-03-02 02:20</td>
+        <td>126587846584236654123</td>
+        <td>张爷爷</td>
+        <td>湖北东力药业有限公司</td>
+        <td>退款</td>
+        <td>-1190.00</td>
+        <td>预存款</td>
+        <td>待付款</td>
+      </tr>
+      </tbody>
+    </table>
+    <span class="table-info">每页显示{{ page_limit }}条，总共{{ data_list.paginator.num_pages }}页，共{{ paginator.count }}条</span>
+    <ul class="pagination right">
+      <li><a href="{% if data_list.has_previous %}?page=
+        {{ data_list.previous_page_number }}{% else %}javascript:;{% endif %}">&laquo;</a></li>
+
+      {% for i in paginator.page_range %}
+        {% ifequal i page %}
+          <li class="active"><a href="">{{ i }}</a></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endifequal %}
+      {% endfor %}
+      <li><a href="{% if data_list.has_next %}?page={{ data_list.next_page_number }}{% else %}javascript:;{% endif %}">&raquo;</a>
+      </li>
+
+
+    </ul>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/tranding_record.js'|static_url }}"></script>
+{% endblock %}

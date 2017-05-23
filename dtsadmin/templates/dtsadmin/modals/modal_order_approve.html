@@ -1,0 +1,152 @@
+{% load extras %}
+<div class="modal fade" id="approve_goods_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">审核</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="common_form">
+          <h6><b>订单信息</b></h6>
+          <table class="table table-bordered personal-info">
+            <tr>
+              <td>订单编号</td>
+              <td width="335">{{ order.order_no }}</td>
+              <td>下单时间</td>
+              <td>{{ order.ord_time | date:"Y-m-d H:i:s" }}</td>
+            </tr>
+            <tr>
+              <td>交易状态</td>
+              <td>{{ order.get_trade_state_display }}</td>
+              <td>订单来源</td>
+              <td>{{ order.order_source }}</td>
+            </tr>
+            <tr>
+              <td>协议客户</td>
+              <td>{% bool_str order.is_purchasea_greement %}</td>
+              <td>支付方式</td>
+              <td>{{ order.payment_method.name_cn }}</td>
+            </tr>
+            <tr>
+              <td>订单金额</td>
+              <td>{{ order.total_price | multiply:0.01 }}元</td>
+              <td>实付金额</td>
+              <td>{{ order.real_price | multiply:0.01 }}元</td>
+            </tr>
+            <tr>
+              <td>改价状态</td>
+              <td>{{ order.get_change_price_state_display }}</td>
+              <td>审核状态</td>
+              <td>{{ order.get_verify_state_display }}</td>
+            </tr>
+            <tr>
+              <td>开票状态</td>
+              <td>
+                {% if order.invoice_no %}
+                  <span>已开票</span>
+                  <a href="">查看发票号</a>
+
+                {% else %}
+                  <span>未开票</span>
+                {% endif %}
+              </td>
+              <td>配送方式</td>
+              <td>{{ order.shipping_method.get_shipping_type_display }}</td>
+            </tr>
+            <tr>
+              <td>买家留言</td>
+              <td colspan="3">{{ order.note }}</td>
+            </tr>
+          </table>
+          <h6><b>商品信息</b></h6>
+          <table class="table table-bordered good-info">
+            <thead>
+            <tr>
+              <th>商品图片</th>
+              <th width="210">商品名称</th>
+              <th>单价（元）</th>
+              <th>单价优惠</th>
+              <th>数量</th>
+              <th>小计（元）</th>
+              <th>实付金额（元）</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order_item in order.orderitem_set.all %}
+              <tr>
+                <td><img src="{% if order_item.good.main_photo.name %}{{ order_item.good.main_photo.name|urlencode|media_url }}{% else %}{{ 'common/img/good_placeholder.png'|static_url }}{% endif %}"/></td>
+                <td>{{ order_item.good.brand }} {{ order_item.good.name }} {{ order_item.good.trade_name }}</td>
+                <td class="price">{{ order_item.good.retail_price | multiply:0.01 }}</td>
+                <td class="discount">{% if order_item.changepricerecord.change_price_state == 2 %}{{ order_item.changepricerecord.real_discount|multiply:0.01 }}{% else %}0.00{% endif %}</td>
+                <td class="quantity">{{ order_item.quantity }}</td>
+                <td>{{ order_item.good.retail_price | multiply:order_item.quantity | multiply:0.01 }}</td>
+                <td class="real_price"></td>
+              </tr>
+
+
+            {% endfor %}
+
+
+            </tbody>
+          </table>
+          <h6><b>账户信息</b></h6>
+          <table class="table table-bordered personal-info">
+            <tr>
+              <td>用户名</td>
+              <td width="335">{{ order.buyer.username }}
+                <a class="mrg-l-30" data-toggle="modal" href="#common_log_modal">查看日志</a>
+              </td>
+              <td>姓名</td>
+              <td>{{ order.buyer.user.firstname }}</td>
+            </tr>
+            <tr>
+              <td>企业名称</td>
+              <td>{{ order.buyer.enterprise.name }}</td>
+              <td>手机号</td>
+              <td>{{ order.buyer.phone }}</td>
+            </tr>
+          </table>
+          <h6><b>配送信息</b></h6>
+          <table class="table table-bordered personal-info">
+            <tr>
+              <td>收货人</td>
+              <td width="335">
+                {{ order.receiving_address.people }}
+              </td>
+              <td>手机号</td>
+              <td>{{ order.receiving_address.telephone }}</td>
+            </tr>
+            <tr>
+              <td>地址</td>
+              <td>{{ order.receiving_address.region }}
+                {{ order.receiving_address.address }}
+
+              </td>
+              <td>邮编</td>
+              <td>{{ order.receiving_address.zip }}</td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="modal-footer mrg-t-15">
+        <button type="button"
+                id="verify_pass"
+                data-method="verify_pass"
+                data-pk="{{ order.pk }}"
+                api="{% url 'dtsadmin:order_list' %}"
+                class="btn btn-dts2 btn-s1 verify_order">通过
+        </button>
+        <button type="button"
+                id="verify_nopass"
+                data-method="verify_nopass"
+                data-pk="{{ order.pk }}"
+                api="{% url 'dtsadmin:order_list' %}"
+            {#                data-dismiss="modal"#}
+                class="btn btn-dts2 btn-s4 verify_order">不通过
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

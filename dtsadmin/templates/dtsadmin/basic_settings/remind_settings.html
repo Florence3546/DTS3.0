@@ -1,0 +1,316 @@
+<form id="form_remind_settings" method="post" action="">
+  {% csrf_token %}
+  <p>请在以下流程中，设置短信或邮件提醒</p>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>提醒内容</th>
+      <th>通知对象</th>
+      <th>短信提醒</th>
+      <th>邮件提醒</th>
+      <th>站内消息提醒</th>
+    </tr>
+    </thead>
+   <tbody id="remind_tbody">
+   {% if settings_item_dict.REMIND_SETTING.remind_settings %}
+       {% for item in  settings_item_dict.REMIND_SETTING.remind_settings %}
+           <tr>
+               <td data-key="{{item.reminder_key}}">{{ item.reminder_con }}</td>
+               <td>{{ item.notify_obj }}</td>
+               <td>
+                   <div class="switch-default remind-switch" key="msg">
+                       <div class="switch-on {% ifnotequal item.msg 'Y' %}hide{% endifnotequal %}" val="Y" >启用</div>
+                       <div class="switch-off {% ifnotequal item.msg 'N' %}hide{% endifnotequal %}" val="N" >禁用</div>
+                   </div>
+               </td>
+               <td>
+                   <div class="switch-default remind-switch" key="email">
+                       <div class="switch-on {% ifnotequal item.email 'Y' %}hide{% endifnotequal %} " val="Y" >启用</div>
+                       <div class="switch-off {% ifnotequal item.email 'N' %}hide{% endifnotequal %}"  val="N" >禁用</div>
+                   </div>
+               </td>
+               <td>
+                   <div class="switch-default remind-switch" key="mail">
+                       <div class="switch-on {% ifnotequal item.mail 'Y' %}hide{% endifnotequal %}"  val="Y" >启用</div>
+                       <div class="switch-off {% ifnotequal item.mail 'N' %}hide{% endifnotequal %}"  val="N" >禁用</div>
+                   </div>
+               </td>
+           </tr>
+       {% endfor %}
+   {% else %}
+{#       <tr>#}
+{#           <td >企业提交注册审核</td>#}
+{#           <td >客服人员</td>#}
+{#           <td>#}
+{#               <div class="switch-default remind-switch" key="msg">#}
+{#                   <div class="switch-on " val="Y" >启用</div>#}
+{#                   <div class="switch-off hide" val="N" >禁用</div>#}
+{#               </div>#}
+{#           </td>#}
+{#           <td>#}
+{#               <div class="switch-default remind-switch" key="email">#}
+{#                   <div class="switch-on " val="Y">启用</div>#}
+{#                   <div class="switch-off hide" val="N">禁用</div>#}
+{#               </div>#}
+{#           </td>#}
+{#           <td>#}
+{#               <div class="switch-default remind-switch" key="mail">#}
+{#                   <div class="switch-on " val="Y">启用</div>#}
+{#                   <div class="switch-off hide" val="N">禁用</div>#}
+{#               </div>#}
+{#           </td>#}
+{#       </tr>#}
+       <tr>
+           <td data-key="ent_reg_ver_res">企业注册审核结果</td>
+           <td>会员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+     <!--
+       <tr>
+           <td>会员充值</td>
+           <td>客服人员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch"  key="email">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch"  key="mail">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+       <tr>
+           <td>会员提交订单</td>
+           <td>客服人员</td>
+           <td>
+               <div class="switch-default remind-switch"  key="msg">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>-->
+       <tr>
+           <td data-key="pro_act_ntc">促销活动通知</td>
+           <td>会员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+       <tr>
+           <td data-key="ord_dev">订单发货</td>
+           <td>会员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on " val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+     <!--
+       <tr>
+           <td>退款申请</td>
+           <td>客服人员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+       <tr>
+           <td>退货申请</td>
+           <td>客服人员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>-->
+       <tr>
+           <td data-key="ref_ver_res">退款审核结果</td>
+           <td>会员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+       <tr>
+           <td data-key="ret_ver_res">退货审核结果</td>
+           <td>会员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on" val="Y">启用</div>
+                   <div class="switch-off hide" val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+       <tr>
+           <td data-key="ord_ver_res">订单审核结果</td>
+           <td >会员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on " val="Y" >启用</div>
+                   <div class="switch-off hide" val="N" >禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+       <tr>
+           <td data-key="pay_ntc">付款提醒</td>
+           <td >会员</td>
+           <td>
+               <div class="switch-default remind-switch" key="msg">
+                   <div class="switch-on " val="Y" >启用</div>
+                   <div class="switch-off hide" val="N" >禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="email">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+           <td>
+               <div class="switch-default remind-switch" key="mail">
+                   <div class="switch-on hide" val="Y">启用</div>
+                   <div class="switch-off " val="N">禁用</div>
+               </div>
+           </td>
+       </tr>
+   {% endif %}
+    </tbody>
+ </table>
+  <input type="hidden" name="op_type" value="remind_settings">
+  <input type="hidden" id="remind_settings_val" name="remind_settings_val" value='[{"con":"企业提交注册审核","obj":"客服人员","entpri_reg_cust_msg":"Y","entpri_reg_cust_email":"Y","entpri_reg_cust_mail":"Y"},{"con":"企业注册审核结果","obj":"会员","entpri_reg_mem_msg":"Y","entpri_reg_mem_email":"Y","entpri_reg_mem_mail":"Y"},{"con":"会员充值","obj":"客服人员","mem_rechar_cust_msg":"Y","mem_rechar_cust_email":"Y","mem_rechar_cust_mail":"Y"},{"con":"会员提交订单","obj":"客服人员","mem_suborder_cust_msg":"Y","mem_suborder_cust_email":"Y","mem_suborder_cust_mail":"Y"},{"con":"促销活动通知","obj":"会员","sales_camp_mem_msg":"Y","sales_camp_mem_email":"Y","sales_camp_mem_mail":"Y"},{"con":"订单发货","obj":"会员","order_send_mem_msg":"Y","order_send_mem_email":"Y","order_send_mem_mail":"Y"},{"con":"退款申请","obj":"客服人员","ref_apply_cust_msg":"Y","ref_apply_cust_email":"Y","ref_apply_cust_mail":"Y"},{"con":"退货申请","obj":"客服人员","retgd_apply_cust_msg":"Y","retgd_apply_cust_email":"Y","retgd_apply_cust_mail":"Y"},{"con":"退款审核结果","obj":"会员","ref_verify_mem_msg":"Y","ref_verify_mem_email":"Y","ref_verify_mem_mail":"Y"},{"con":"退货审核结果","obj":"会员","retgd_verify_mem_msg":"Y","retgd_verify_mem_email":"Y","retgd_verify_mem_mail":"Y"}]'>
+  <div class="form-group form-group-dts">
+    <button type="button" class="control-btn btn btn-dts btn-s1" id="remind_settings_btn">保存</button>
+  </div>
+
+</form>

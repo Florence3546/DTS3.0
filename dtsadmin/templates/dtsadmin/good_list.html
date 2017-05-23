@@ -1,0 +1,418 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}商品列表 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #good_tab thead th, #good_tab tbody td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    table input[type="checkbox"] {
+      vertical-align: middle;
+    }
+
+    #good_tab thead th:nth-of-type(1) {
+      width: 32px;
+    }
+
+    #good_tab thead th:nth-last-of-type(1) {
+      width: 100px;
+    }
+
+    #good_tab tbody td:nth-of-type(7) {
+      text-align: left;
+    }
+
+    #good_tab tbody td:nth-of-type(11),
+    #good_tab tbody td:nth-of-type(12) {
+      text-align: right;
+      font-family: "微软雅黑";
+    }
+
+    label:not(.control-label) {
+      margin: 0;
+      font-weight: normal;
+    }
+
+    input[type=radio] {
+      margin: 5px;
+      vertical-align: sub;
+    }
+
+    /*************************添加****************************/
+    #check_good_modal .tab-pane {
+      height: 523px;
+    }
+
+    #basic_info .control-label {
+      padding: 3px 0 3px 15px;
+      width: 140px;
+    }
+
+    #basic_info .form-control:not(.short) {
+    {#    	margin-right: 80px;#}
+    }
+
+    #basic_info .short {
+      width: 80px;
+    }
+
+    #basic_info .form-group-dts {
+      line-height: 24px;
+    }
+
+    #basic_info .picture {
+      float: left;
+      width: 286px;
+      padding-left: 5px;
+    }
+
+    .picture a {
+      position: relative;
+      display: block;
+      width: 60px;
+      height: 60px;
+      float: left;
+      border: 1px solid #e5e5e5;
+      margin-right: 10px;
+    }
+
+    #basic_info .picture a span {
+      font-size: 50px;
+      line-height: 58px;
+      margin-left: 17px;
+      color: #e5e5e5;
+    }
+
+    #basic_info .picture a span.photo-main-text {
+      font-size: 12px;
+      color: #ddd;
+    }
+
+    .picture a.good-photo-main {
+      border: thin solid #ffad62;
+    }
+
+    .picture a img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 100%;
+    }
+
+    .picture a i {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      z-index: 5;
+      display: none;
+      width: 16px;
+      height: 16px;
+      background: #e45050;
+      text-align: center;
+      line-height: 16px;
+      font-style: normal;
+      color: #fff;
+      border-radius: 50%;
+    }
+
+    .picture .pre-img:hover i {
+      display: block;
+    }
+
+    #basic_info p.text-red {
+      padding-left: 65px;
+    }
+
+    .form-group-dts .btn-s3 {
+      margin: 0 30px 0 10px;
+    }
+
+    /**********************查看**********************/
+    #check_good_modal table tr td:nth-of-type(odd) {
+      width: 110px;
+    }
+
+    #export_good_modal .modal-dialog {
+      width: 440px;
+    }
+
+    #export_good_modal .order-export {
+      display: none;
+    }
+
+    /********************** 模态框 ********************/
+    label.error {
+      font-size: 12px;
+      line-height: 24px;
+      color: #f00;
+      font-weight: normal;
+      margin-left: 146px;
+    }
+
+    input[type=radio] {
+      position: relative;
+      top: 1px;
+      margin-right: 5px;
+    }
+
+    .col-sm-6 {
+      padding: 0px;
+    }
+  </style>
+
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_good_manage.html' %}
+{% endblock %}
+
+{% block content %}
+
+
+  <div class="good_list small" id="content">
+    <form class="form-inline bordered" role="form" id="search_good_form" method="get" action="/dtsadmin/good_list/">
+      {% csrf_token %}
+      <input type="hidden" name="choose" id="ex_choose" value="">
+      <input type="hidden" name="good_ids" id="ex_good_ids" value="">
+      <input type="hidden" id="total_count" value="{{ data_list.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="search_good_external_id" class="control-label normal">商品编码</label>
+          <input type="search" class="form-control middle_input" id="search_good_external_id"
+                 name="search_good_external_id" value="{{ request.GET.search_good_external_id }}">
+          <button type="button" class="control-btn btn btn-dts btn-s1 mrg-l-30" id="search_btn">查询</button>
+          <a class="control-text more_query_conditions">更多查询条件<i class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="search_good_trade_name" class="control-label normal">商品名称</label>
+          <input type="search" class="form-control" name="search_good_trade_name"
+                 value="{{ request.GET.search_good_trade_name }}"
+                 id="search_good_trade_name">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="search_good_license" class="control-label normal">批准文号</label>
+          <input type="search" class="form-control" id="search_good_license" name="search_good_license"
+                 value="{{ request.GET.search_good_license }}">
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="search_good_dosage_form" class="control-label normal">剂型</label>
+          <select class="form-control" id="search_good_dosage_form" name="search_good_dosage_form">
+            <option value="">请选择……</option>
+            {% for item in dosage_form_select %}
+              <option value="{{ item.name }}"
+                      {% if request.GET.search_good_dosage_form == item.name %}selected{% endif %}>{{ item.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label for="search_good_category" class="control-label normal">商品分类</label>
+          <select class="form-control" id="search_good_category" name="search_good_category">
+            <option value="">请选择……</option>
+            {% for item in category_select %}
+              <option value="{{ item.id }}"
+                      {% if request.GET.search_good_category == item.id %}selected{% endif %}>{{ item.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label class="control-label normal">出售状态</label>
+          <select class="form-control" id="search_good_is_online" name="search_good_is_online">
+            <option value="">请选择……</option>
+            <option value="0" {% if request.GET.search_good_is_online == '0' %}selected{% endif %}>待上架</option>
+            <option value="1" {% if request.GET.search_good_is_online == '1' %}selected{% endif %}>上架</option>
+            <option value="2" {% if request.GET.search_good_is_online == '2' %}selected{% endif %}>下架</option>
+          </select>
+        </div>
+        <div class="form-group form-group-dts">
+          <label class="control-label normal">审核状态</label>
+          <select class="form-control" id="s_is_qua" name="s_is_qua">
+            <option value="">请选择……</option>
+            <option value="0" {% if s_is_qua == '0' %}selected{% endif %}>未申请</option>
+            <option value="1" {% if s_is_qua == '1' %}selected{% endif %}>审核中</option>
+            <option value="2" {% if s_is_qua == '2' %}selected{% endif %}>通过</option>
+            <option value="3" {% if s_is_qua == '3' %}selected{% endif %}>不通过</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <form class="form-inline">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <button type="button" class="control-btn btn btn-dts btn-s2" id="add_good">添加
+          </button>
+          <button type="button" class="control-btn btn btn-dts btn-s2">导入</button>
+          <button type="button" class="control-btn btn btn-dts btn-s2" data-toggle="modal"
+                  data-target="#export_good_modal">导出
+          </button>
+          <button type="button" class="control-btn btn btn-dts btn-s2">同步</button>
+        </div>
+      </div>
+    </form>
+    <table id="good_tab" class="table table-bordered table-hover dataTable table_defined">
+      <thead>
+      <tr>
+        <th>
+          <input type="checkbox" class="check-all">
+        </th>
+        <th>商品编码</th>
+        <th>商品名称</th>
+        <th>商品规格</th>
+        <th>单位</th>
+        <th>包装</th>
+        <!--       <th>厂家</th> -->
+        <th>剂型</th>
+        <th>商品分类</th>
+        <th>批准文号</th>
+        <th>库存</th>
+        <th>零售价</th>
+        <th>会员价</th>
+        <!--        <th>供应商</th> -->
+        <th>出售状态</th>
+        <th>审核状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for data in data_list %}
+        <tr>
+          <td><input type="checkbox" class="check-item good-item" id="{{ data.id }}" value="{{ data.id }}"></td>
+          <td>{{ data.external_id }}</td>
+          <td>{{ data.trade_name }}</td>
+          <td>{{ data.prep_spec }}</td>
+          <td>{{ data.unit }}</td>
+          <td>{{ data.pack_spec }}</td>
+          {#          <td>{{ data.manufacturer }}</td>#}
+          <td>{{ data.drugattr.dosage_form }}</td>
+          <td>{% if  data.category is not None %}{{ data.category }}{% endif %}</td>
+          <td>{{ data.drugattr.license }}</td>
+          <td>{{ data.stock_amount }}</td>
+          <td>￥{{ data.retail_price|multiply:0.01 }}</td>
+          <td>￥{{ data.member_price|multiply:0.01 }}</td>
+          {#          <td>{{ data.supplier|default:'' }}</td>#}
+          <td>{{ data.get_is_online_display }}</td>
+          <td>{{ data.get_is_qualified_display }}</td>
+          <td class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              操作<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="look_good"
+                   api="{% url 'dtsadmin:ajax:get_good_byid' modal_name='GoodCheck' obj_id=data.id %}">查看</a>
+              </li>
+              <li>
+                <a class="update_good"
+                   api="{% url 'dtsadmin:ajax:get_good_form' modal_name='GoodDrugAttr' obj_id=data.id %}">修改</a>
+              </li>
+              {% ifnotequal data.is_qualified  2 %}
+                <li>
+                  <a class="switch_qualified"
+                     api="{% url 'dtsadmin:ajax:get_good_byid' modal_name='GoodCheck' obj_id=data.id %}"
+                     id="{{ data.id }}">审核</a>
+                </li>
+              {% endifnotequal %}
+              {#                      <li>#}
+              {#                          <a data-toggle="modal" data-target="#common_log_modal">日志</a>#}
+              {#                      </li>#}
+              <li>
+                <a href="javascript:;" class="delete" api="{% url 'dtsadmin:ajax:delete_good' obj_id=data.id %}">删除</a>
+              </li>
+              {% ifequal data.is_qualified  2 %}
+                <li>
+                  {% ifnotequal data.is_online 1 %}
+                    <a class="switch_online" href="javascript:;"
+                       api="{% url 'dtsadmin:ajax:switch_drug_online' method='on' obj_id=data.id %}" method="on">上架</a>
+                  {% else %}
+                    <a class="switch_online" href="javascript:;"
+                       api="{% url 'dtsadmin:ajax:switch_drug_online' method='off' obj_id=data.id %}"
+                       method="off">下架</a>
+                  {% endifnotequal %}
+                </li>
+              {% endifequal %}
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if data_list.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ data_list.paginator.per_page }}条，总共{{ data_list.paginator.num_pages }}页，共{{ data_list.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if data_list.has_previous %}{{ data_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span class="page-count">…</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                            page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span class="page-count">…</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="
+                 {% if data_list.has_next %}{{ data_list.next_page_number }}{% else %}{{ data_list.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{#模态对话框#}
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_good.html' %}
+  {% include 'dtsadmin/modals/modal_good_check.html' %}
+  {% include 'dtsadmin/modals/modal_common_log.html' %}
+  {% include 'dtsadmin/modals/modal_common_delete.html' %}
+  {% include 'dtsadmin/modals/modal_good_export.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'plugins/typeahead/bootstrap3-typeahead.min.js'|static_url }}"></script>
+  <script>
+      // 搜索企业自动补全
+      var items = [
+          {% for choice in choices.auto_good %}
+              '{{ choice.name }} {{ choice.pinyin }}',
+          {% endfor %}
+      ];
+      $("#search_good_external_id").typeahead({
+          source: items
+      });
+  </script>
+  <script type="text/javascript" src="{{ 'plugins/jqPaginator/jqPaginator.min.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'dtsadmin/js/good_list.js'|static_url }}"></script>
+{% endblock %}

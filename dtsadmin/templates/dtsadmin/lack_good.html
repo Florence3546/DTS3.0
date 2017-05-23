@@ -1,0 +1,171 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}缺货登记 - DTS管理后台{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_order_manage.html' %}
+{% endblock %}
+
+{% block css %}
+  <style>
+    .admin-main {
+      margin-top: 10px;
+    }
+
+    #order_state {
+      width: 120px;
+    }
+
+    #lack_table thead th:first-child {
+      width: 32px;
+    }
+
+    #lack_table thead th:last-child {
+      width: 100px;
+    }
+
+    #lack_table td {
+      text-align: center;
+    }
+
+    #lack_table td:nth-child(3) {
+      text-align: left;
+    }
+
+    .pagination li.active a {
+      background: #0090ff;
+    }
+
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="content">
+    {% csrf_token %}
+    <form class="form-inline bordered" role="form" id="search_lack_form" method="get" action="">
+      <input type="hidden" id="total_count" value="{{ data_list.paginator.count }}">
+      <input type="hidden" id="page" name="page" value="{{ page|default:1 }}">
+      <div class="spacing">
+        <div class="form-group form-group-dts">
+          <label for="good_name" class="control-label normal">商品名称</label>
+          <input type="text" class="form-control" id="good_name" name="good_name" value="{{ request.POST.good_name }}">
+          <button type="submit" class="control-btn btn btn-dts btn-s1 mrg-l-30">查询</button>
+          <a class="control-text more_query_conditions" role="button">更多查询条件<i
+              class="iconfont icon-shangxiajiantou-copy"></i></a>
+        </div>
+      </div>
+      <div class="spacing query_conditions hide">
+        <div class="form-group form-group-dts">
+          <label for="lack_state" class="control-label normal">缺货状态</label>
+          <select class="form-control" id="lack_state" name="stock_amount">
+            <option value="">请选择……</option>
+            <option value="0" {% if request.GET.stock_amount == '0' %}selected{% endif %}>缺货
+            </option>
+            <option value="1" {% if request.GET.stock_amount == '1' %}selected{% endif %}>有货
+            </option>
+          </select>
+        </div>
+        <div class="form-group form-group-dts" id="rgs-time">
+          <label for="register_created_from" class="control-label normal">登记时间</label>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="register_created_from"
+                 name="register_created_from" value="{{ request.GET.register_created_from }}" placeholder="请选择日期">
+          <span class="control-text">-</span>
+          <input type="text" class="form-control date" data-date-format="yyyy-mm-dd" id="register_created_to"
+                 name="register_created_to" value="{{ request.GET.register_created_to }}" placeholder="请选择日期">
+        </div>
+      </div>
+    </form>
+    <div class="spacing">
+      <button id="bulk_delete" type="button" class="control-btn btn btn-dts btn-s2"
+              api="{% url 'dtsadmin:ajax:bluk_delete_byids' model_class='LackRegister' %}">删除
+      </button>
+    </div>
+
+    <table id="lack_table" class="table-bordered table-hover dataTable">
+      <thead>
+      <tr>
+        <th><input type="checkbox" class="check-all"></th>
+        <th>商品编号</th>
+        <th>商品名称</th>
+        <th>用户名</th>
+        <th>手机号</th>
+        <th>登记时间</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for obj in data_list %}
+        <tr>
+          <td><input type="checkbox" class="check-item" name="chk_list" value="{{ obj.id }}"></td>
+          <td>{{ obj.good.external_id }}</td>
+          <td>{{ obj.good.name }} {{ obj.good.prep_spec }} {{ obj.good.pack_spec }}</td>
+          <td>{{ obj.people.username }}</td>
+          <td>{{ obj.people.phone }}</td>
+          <td>{{ obj.created | date:'Y-m-d' }}</td>
+          <td>
+            {% if obj.good.stock_amount == 0 %}
+              <span>缺货</span>
+            {% else %}
+              <span class="text-red">有货</span>
+            {% endif %}
+          </td>
+          <td><a href="javascript:;"
+                 class="delete"
+                 api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='LackRegister' obj_id=obj.id %}"
+          >删除</a></td>
+        </tr>
+      {% empty %}
+        <tr class="no_data">
+          <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if data_list.paginator.count > 0 %}
+      <span
+          class="table-info">每页显示{{ data_list.paginator.per_page }}条，总共{{ data_list.paginator.num_pages }}页，共{{ data_list.paginator.count }}条</span>
+      <ul class="pagination right">
+        <li>
+          <a class="btn_page" page="
+              {% if data_list.has_previous %}{{ data_list.previous_page_number }}{% else %}1{% endif %}">&laquo;</a>
+        </li>
+        {% if pagi_bar.left %}
+          {% for page in pagi_bar.left %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          <li><span class="page-count">…</span></li>
+        {% endif %}
+        {% for page in pagi_bar.center %}
+          <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                            page="{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% if pagi_bar.right %}
+          <li><span class="page-count">…</span></li>
+          {% for page in pagi_bar.right %}
+            <li class="{% if page == data_list.number %}active{% endif %}"><a class="btn_page"
+                                                                              page="{{ page }}">{{ page }}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li>
+          <a class="btn_page"
+             page="
+                 {% if data_list.has_next %}{{ data_list.next_page_number }}{% else %}{{ data_list.paginator.num_pages }}{% endif %}"
+          >&raquo;</a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/lack_good.js'|static_url }}"></script>
+{% endblock %}

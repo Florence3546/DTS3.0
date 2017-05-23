@@ -1,0 +1,125 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}基本信息 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    #form_remind_settings table {
+      text-align: center;
+    }
+
+    #form_consult_settings .form-control.data_time {
+      width: 85px;
+    }
+
+    #form_auth_settings .form-group-dts #select_picture,
+    #form_auth_settings .form-group-dts #select_message {
+      width: 80px;
+    }
+
+    #form_logo_settings .tip_note {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 15px;
+      color: #cccccc;
+    }
+
+    #fixed_telephone {
+      width: 125px;
+    }
+
+    .logo-pane {
+      overflow: hidden;
+      padding-top: 10px;
+    }
+
+    .logo-pane .upload_file {
+      float: left;
+      display: block;
+      max-height: 400px;
+      max-width: 400px;
+      text-align: center;
+      background: #f9f9f9;
+      border: 1px solid #e3e3e3;
+      overflow: hidden;
+      margin-left: 45px;
+    }
+
+    .upload_file span {
+      position: relative;
+      top: 45%;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .upload_file_span {
+      height: 77px;
+      margin-top: 40px;
+      display: block;
+      width: 151px
+    }
+
+    #logo_preview img {
+      max-height: 400px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_basic_settings.html' %}
+{% endblock %}
+
+<!-- 内容面板 -->
+{% block content %}
+  <!-- 标签导航 -->
+  <ul class="tab-defined" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#site_settings" aria-controls="site_settings" role="tab" data-toggle="tab">前台网站</a>
+    </li>
+    <li role="presentation">
+      <a href="#logo_settings" aria-controls="logo_settings" role="tab" data-toggle="tab">后台Logo</a>
+    </li>
+    <li role="presentation">
+      <a href="#consult_settings" aria-controls="consult_settings" role="tab" data-toggle="tab">客服设置</a>
+    </li>
+    <li role="presentation">
+      <a href="#auth_settings" aria-controls="auth_settings" role="tab" data-toggle="tab">登录验证</a>
+    </li>
+    <li role="presentation">
+      <a href="#remind_settings" aria-controls="remind_settings" role="tab" data-toggle="tab">信息提醒</a>
+    </li>
+  </ul>
+
+  <!-- 标签面板 -->
+  <div class="tab-content small">
+    <div role="tabpanel" class="tab-pane active" id="site_settings">
+      {% include 'dtsadmin/basic_settings/site_settings.html' %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="logo_settings">
+      {% include 'dtsadmin/basic_settings/logo_settings.html' %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="consult_settings">
+      {% include 'dtsadmin/basic_settings/consult_settings.html' %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="auth_settings">
+      {% include 'dtsadmin/basic_settings/auth_settings.html' %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="remind_settings">
+      {% include 'dtsadmin/basic_settings/remind_settings.html' %}
+    </div>
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_service_account.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/basic_info.js'|static_url }}"></script>
+{% endblock %}

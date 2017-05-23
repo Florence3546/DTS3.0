@@ -1,0 +1,224 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %} - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/account_safety.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main">
+      <div class="sidebar-member">
+        <ul>
+          <li class="category"><b>账户设置</b></li>
+          <li class="{% active_url 'account_info' %}"><a href="{% url 'eshop:account_info' %}">账户信息</a></li>
+          <li class="{% active_url 'account_safety' %}"><a href="{% url 'eshop:account_safety' %}">账户安全</a></li>
+          <li class="{% active_url 'receiving_address' %}"><a href="{% url 'eshop:receiving_address' %}">收货地址</a></li>
+        </ul>
+      </div>
+      <div class="account-safety">
+        <div class="account">
+          <div class="title">账户安全</div>
+          <ul>
+            <li>
+              <span><i class="iconfont icon-mark"></i></span>
+              <span>登录密码</span>
+              <span>|</span>
+              <span>互联网账号存在被盗风险，建议您定期更改密码以保护账号安全</span>
+              <span><a data-name="login-password">修改</a></span>
+            </li>
+            <li>
+              <span><i class="iconfont icon-mark"></i></span>
+              <span>手机验证</span>
+              <span>|</span>
+              <span>您的手机：137****5568若已停用或丢失请立即更换，避免账户被盗</span>
+              <span><a data-name="change-phone-number">修改</a></span>
+            </li>
+            <li>
+              <span><i class="iconfont icon-warning warning"></i></span>
+              <span>邮箱验证</span>
+              <span>|</span>
+              <span>验证后，可用于快速找回登录密码等，提高账户安全</span>
+              <span><a class="btn-s1" data-name="verify-mailbox">立即验证</a></span>
+            </li>
+            <li>
+              <span><i class="iconfont icon-warning warning"></i></span>
+              <span>支付密码</span>
+              <span>|</span>
+              <span>用户预存款支付时输入，建议您定期更换新的支付密码，提高安全性</span>
+              <span><a class="btn-s1" data-name="pay-password">立即设置</a></span>
+            </li>
+          </ul>
+        </div>
+        <div class="login-password hide step-box">
+          <div class="title">修改登录密码</div>
+          <div class="step-defined">
+            <div class="first active"><span>1</span>验证身份</div>
+            <div class="second"><span>2</span>修改登录密码</div>
+            <div class="third"><span>3</span>完成</div>
+          </div>
+          <form>
+            <div class="step1">
+              <div class="form-group">
+                <label>已验证手机号：</label>
+                <span>130****1110</span>
+              </div>
+              <div class="form-group">
+                <label>请填写手机验证码：</label>
+                <input class="form-control short" type="text"/>
+                <a class="gain-code">获取验证码</a>
+              </div>
+              <a class="btn-s2 next" data-step="second">提交</a>
+            </div>
+            <div class="step2 hide">
+              <div class="form-group">
+                <label>新登录密码：</label>
+                <input class="form-control" type="password"/>
+              </div>
+              <div class="form-group">
+                <label>确认登录密码：</label>
+                <input class="form-control" type="password"/>
+              </div>
+              <div class="form-group">
+                <label>请填写验证码：</label>
+                <input class="form-control" type="text"/>
+                <span class="img-code">
+	              	<img src="../../static/eshop/images/code.png"/>
+	              	<a>看不清？换一张</a>
+	              </span>
+              </div>
+              <a class="btn-s2 next" data-step="third">提交</a>
+            </div>
+            <div class="step3 hide">
+              <p><i class="iconfont icon-yiwancheng"></i><span>修改登录密码成功！</span></p>
+              <a class="btn-s2">开始购物</a>
+              <a class="btn-s2">个人中心</a>
+            </div>
+          </form>
+        </div>
+        <div class="change-phone-number hide step-box">
+          <div class="title">修改验证手机号</div>
+          <div class="step-defined">
+            <div class="first active"><span>1</span>验证身份</div>
+            <div class="second"><span>2</span>修改验证手机号</div>
+            <div class="third"><span>3</span>完成</div>
+          </div>
+          <form>
+            <div class="step1">
+              <div class="form-group">
+                <label>已验证手机号：</label>
+                <span>130****1110</span>
+              </div>
+              <div class="form-group">
+                <label>请填写手机验证码：</label>
+                <input class="form-control short" type="text"/>
+                <a class="gain-code">获取短信验证码</a>
+              </div>
+              <a class="btn-s2 next" data-step="second">提交</a>
+            </div>
+            <div class="step2 hide">
+              <div class="form-group">
+                <label>新验证手机号：</label>
+                <input class="form-control" type="password"/>
+              </div>
+              <div class="form-group">
+                <label>请填写手机验证码：</label>
+                <input class="form-control short" type="password"/>
+                <a class="gain-code">获取短信验证码</a>
+              </div>
+              <a class="btn-s2 next" data-step="third">提交</a>
+            </div>
+            <div class="step3 hide">
+              <p><i class="iconfont icon-yiwancheng"></i><span>修改手机验证号码成功！</span></p>
+              <a class="btn-s2">开始购物</a>
+              <a class="btn-s2">个人中心</a>
+            </div>
+          </form>
+        </div>
+        <div class="verify-mailbox hide step-box">
+          <div class="title">验证邮箱</div>
+          <div class="step-defined">
+            <div class="first active"><span>1</span>验证身份</div>
+            <div class="second"><span>2</span>验证邮箱</div>
+            <div class="third"><span>3</span>完成</div>
+          </div>
+          <form>
+            <div class="step1">
+              <div class="form-group">
+                <label>已验证手机号：</label>
+                <span>130****1110</span>
+              </div>
+              <div class="form-group">
+                <label>请填写手机验证码：</label>
+                <input class="form-control short" type="text"/>
+                <a class="gain-code">获取短信验证码</a>
+              </div>
+              <a class="btn-s2 next" data-step="second">提交</a>
+            </div>
+            <div class="step2 hide">
+              <div class="form-group">
+                <label>邮箱地址：</label>
+                <input class="form-control" type="password"/>
+              </div>
+              <div class="form-group">
+                <label>请填写验证码：</label>
+                <input class="form-control" type="text"/>
+                <span class="img-code">
+	              	<img src="../../static/eshop/images/code.png"/>
+	              	<a>看不清？换一张</a>
+	              </span>
+              </div>
+              <a class="btn-s2 next" data-step="third">提交</a>
+            </div>
+            <div class="step3 hide">
+              <p><i class="iconfont icon-yiwancheng"></i><span>已发送验证邮件至：11*****@163.com</span></p>
+              <div>
+                <p>验证邮件24小时有效，请尽快登录您的邮箱点击验证链接完成验证。</p>
+                <p class="text-red">（请立即完成验证，邮箱验证不通过则验证邮箱失败）</p>
+                <a class="btn-s2">查看验证邮件</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="pay-password hide">
+          <div class="title">设置支付密码</div>
+          <form>
+            <div class="form-group">
+              <label>支付密码：</label>
+              <input class="form-control" type="password"/>
+            </div>
+            <div class="form-group">
+              <label>确认支付密码：</label>
+              <input class="form-control" type="password"/>
+            </div>
+            <a class="btn-s2">保存</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+
+
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/account_safety.js'|static_url }}"></script>
+
+{% endblock %}
+

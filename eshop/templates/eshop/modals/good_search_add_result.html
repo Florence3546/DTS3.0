@@ -1,0 +1,31 @@
+{% load extras %}
+<tr>
+  <td><input type="checkbox"
+             data-id="{{ quickly_order.id }}"
+             class="check-item order_item"></td>
+  <td class="number"></td>
+  <td class="good_name">{{ good.get_display_name }}</td>
+  <td>
+    <div class="input-group input-group-defined">
+      <div class="input-group-addon btn-addon-defined reduce-number good_count_action"
+           data-action="count_reduce">-
+      </div>
+      <input type="text"
+             data-id="{{ quickly_order.id }}"
+             class="form-control input-add-subtract good_count quickly_order_id_{{ quickly_order.id }}"
+             value="1" onchange="">
+      <div class="input-group-addon btn-addon-defined add-number good_count_action"
+           data-action="count_add">+
+      </div>
+    </div>
+  </td>
+  <td>包</td>
+  <td>{{ good.external_id }}</td>
+  <td>5g*16袋</td>
+  <td>{{ good.enterprise.name }}</td>
+  <td class="good_price">{{ good.member_price | multiply:0.01 }}</td>
+  <td class="subtotal">0.00</td>
+  <td>
+    <a class="remove">删除</a>
+  </td>
+</tr>

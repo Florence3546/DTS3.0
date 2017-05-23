@@ -1,0 +1,209 @@
+.header-member .menu a.active {
+  background: transparent;
+}
+.account-record {
+  float: left;
+  margin-bottom: 80px;
+  padding-top: 40px;
+  width: 1070px;
+}
+.transaction-detail {
+  margin-bottom: 15px;
+  padding: 2px 0 8px 12px;
+  font-size: 14px;
+  font-weight: bolder;
+  border-bottom: 2px solid #33cc6d;
+}
+.filter .choose {
+  overflow: hidden;
+  padding: 0 12px 5px;
+  line-height: 30px;
+}
+.filter .choose label {
+  float: left;
+  font-weight: normal;
+  line-height: 30px;
+  width: 60px;
+  text-align: right;
+}
+.filter .choose input {
+  float: left;
+  width: 110px;
+  height: 30px;
+  font-size: 12px;
+  margin: 0 5px;
+}
+.filter .choose input.form-control-long {
+  width: 236px;
+}
+.filter .choose .control-text {
+  float: left;
+}
+.filter .choose .text {
+  padding: 4px 0 3px 15px;
+  border-left: 1px solid #e5e5e5;
+}
+.filter .choose a {
+  padding: 4px 8px;
+  margin-right: 10px;
+}
+.filter .choose a:first-of-type {
+  margin-left: 5px;
+}
+.filter .choose a.active {
+  background: #33cc6d;
+  color: #fff;
+}
+.filter .choose .select {
+  color: #0090ff;
+  float: right;
+  margin-right: 15px;
+  padding-right: 17px;
+  position: relative;
+  cursor: pointer;
+}
+.filter .choose .select:after {
+  position: absolute;
+  right: 0;
+  top: 12px;
+  display: block;
+  content: '';
+  border: 6px solid transparent;
+  border-top-color: #0090ff;
+}
+.filter .choose .select.active:after {
+  top: 6px;
+  border-top-color: transparent;
+  border-bottom-color: #0090ff;
+}
+.filter .more-choices {
+  margin-bottom: 15px;
+}
+.filter .more-choices a,
+.filter .more-choices a.active {
+  background: transparent;
+  color: #0090ff;
+  display: none;
+}
+.filter .more-choices button {
+  margin-left: 77px;
+  border-radius: 0;
+}
+#account_record_tab {
+  margin-bottom: 0;
+  border-collapse: collapse;
+}
+#account_record_tab thead {
+  background: #f6f6f6;
+}
+#account_record_tab th,
+#account_record_tab td {
+  padding: 0;
+  vertical-align: middle;
+}
+#account_record_tab thead tr th {
+  width: 190px;
+  height: 40px;
+  line-height: 21px;
+  text-align: center;
+  font-weight: normal;
+  border-bottom: 0;
+}
+#account_record_tab thead tr th i {
+  position: relative;
+  top: 3px;
+  color: #ccc;
+  font-weight: normal;
+}
+#account_record_tab thead tr th:nth-of-type(2) {
+  width: 240px;
+}
+#account_record_tab tbody tr td {
+  height: 38px;
+  line-height: 21px;
+}
+#account_record_tab tbody tr td:nth-of-type(2),
+#account_record_tab tbody tr td:nth-of-type(3),
+#account_record_tab tbody tr td:nth-of-type(5) {
+  text-align: center;
+}
+#account_record_tab tbody tr td:nth-of-type(1) {
+  padding-left: 50px;
+}
+#account_record_tab tbody tr td:nth-of-type(4) {
+  padding-right: 80px;
+  text-align: right;
+  font-weight: bolder;
+  font-family: "微软雅黑";
+}
+#account_record_tab tbody tr td span.prepaid_deposit {
+  position: relative;
+  color: #5b7dbb;
+}
+#account_record_tab tbody tr td span.prepaid_deposit i {
+  position: absolute;
+  left: -20px;
+  color: #ffb400;
+}
+#account_record_tab tbody tr td a:hover {
+  color: #0090ff;
+}
+#account_record_tab_paginate {
+  margin-top: 20px;
+  margin-right: 250px;
+}
+#account_record_tab_paginate .paginate_button {
+  height: 32px;
+  border-radius: 0;
+  margin-left: 0;
+  border: 1px solid #e5e5e5;
+}
+#account_record_tab_paginate .paginate_button.current {
+  border-color: #33cc6d;
+  color: #fff !important;
+  background: #33cc6d;
+}
+#account_record_tab_paginate .paginate_button:not(.current):hover {
+  color: #777777 !important;
+  background: #f6f6f6;
+}
+#account_record_tab_paginate .paginate_button:active {
+  background: #f6f6f6;
+  box-shadow: none;
+}
+#account_record_tab_paginate .paginate_button:not(.previous) {
+  border-left: 0;
+}
+#account_record_tab_paginate .paginate_button.disabled {
+  background: #f6f6f6;
+}
+#account_record_tab_paginate .paginate_button.previous {
+  margin-left: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+#account_record_tab_paginate .paginate_button.next {
+  margin-left: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.dataTables_wrapper {
+  position: inherit;
+}
+#account_record_tab .dataTables_empty {
+  height: 320px;
+}
+#page_no {
+  width: 200px;
+  float: right;
+  margin-top: -33px;
+  z-index: 5;
+}
+#page_no input {
+  margin: 0 3px 0 3px;
+  width: 32px;
+  height: 32px;
+  line-height: 28px;
+  text-align: center;
+  border: 1px solid #e5e5e5;
+}

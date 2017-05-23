@@ -1,0 +1,59 @@
+<div class="modal fade" id="modal_address" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">新增收货地址</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="form_address">
+          {% if obj.csrfmiddlewaretoken %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+            {% csrf_token %}
+          {% endif %}
+          <input type="hidden" id="payment_id" name="id" value="{{ obj.id }}">
+          <input type="hidden" id="id_user_id" name="user" value="{{ obj.user_id|default:user.id }}">
+
+          <div class="form-group">
+            <label for="person"><span class="text-red">*</span>收货人：</label>
+            <input type="text" class="form-control" id="person" name="people" value="{{ obj.people }}" required>
+          </div>
+          <div class="form-group">
+            <label for="prov"><span class="text-red">*</span>所在地区：</label>
+            <div id="distpicker">
+              <input type="hidden" id="region" name="region" value="{{ obj.region }}">
+              <select id="prov" class="form-control province" required></select>
+              <select id="city" class="form-control city" required></select>
+              <select id="dis" class="form-control district" required></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="sim-distance"><span class="text-red">*</span>详细地址：</label>
+            <input type="text" class="form-control" id="sim-distance" name="address" value="{{ obj.address }}"
+                   required>
+          </div>
+          <div class="form-group">
+            <label for="telephone_no"><span class="text-red">*</span>手机号：</label>
+            <input type="text" class="form-control" id="telephone_no" name="telephone" value="{{ obj.telephone }}"
+                   required>
+          </div>
+          <div class="form-group">
+            <label for="email">邮箱：</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ obj.email }}">
+          </div>
+          <div>
+            <button type="button" class="btn enter_click" id="save_add_address"
+                    api="{% url 'dtsadmin:ajax:add_object_byform' form_class='ReceivingAddressForm' %}">保存
+            </button>
+            <button type="button" class="btn enter_click" id="save_update_address"
+                    api="{% url 'dtsadmin:ajax:update_object_byform' form_class='ReceivingAddressForm' %}">保存
+            </button>
+            <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

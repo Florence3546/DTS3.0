@@ -1,0 +1,103 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}会员设置 - DTS管理后台{% endblock %}
+
+{% block css %}
+  <style>
+    #member_settings table {
+      width: 800px;
+      text-align: center;
+    }
+
+    #member_settings table > thead > tr > th:nth-child(1),
+    #member_settings table > thead > tr > th:nth-child(4) {
+      width: 200px;
+    }
+
+    #member_settings table > thead > tr > th:nth-child(2) {
+      width: 235px;
+    }
+
+    #member_settings table > thead > tr > th:nth-child(3) {
+      width: 165px;
+    }
+
+    .form-horizontal .form-group-dts .control-label {
+      font-weight: normal;
+      padding-right: 0;
+    }
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_basic_settings.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="small" id="member_settings">
+    <div class="form-group">
+      <button type="button" class="control-btn btn btn-dts btn-s1" id="add_member" title="该功能暂未开放">
+        添加会员等级
+      </button>
+    </div>
+    <table class="table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>等级名称</th>
+        <th>等级折扣率</th>
+        <th>默认等级</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>普通会员</td>
+        <td>100%</td>
+        <td>是</td>
+        <td>
+          <a class="font_btn" data-toggle="modal" data-target="#change_member">修改</a>
+          <a class="font_btn">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>铜牌会员</td>
+        <td>98%</td>
+        <td>否</td>
+        <td>
+          <a class="font_btn" data-toggle="modal" data-target="#change_member">修改</a>
+          <a class="font_btn">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>银牌会员</td>
+        <td>95%</td>
+        <td>否</td>
+        <td>
+          <a class="font_btn" data-toggle="modal" data-target="#change_member">修改</a>
+          <a class="font_btn">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>金牌会员</td>
+        <td>90%</td>
+        <td>否</td>
+        <td>
+          <a class="font_btn" data-toggle="modal" data-target="#change_member">修改</a>
+          <a class="font_btn">删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{#模态对话框#}
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_add_member.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/member_settings.js'|static_url }}"></script>
+{% endblock %}

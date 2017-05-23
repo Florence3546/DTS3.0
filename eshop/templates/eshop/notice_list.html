@@ -1,0 +1,228 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}首页 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <style>
+    .main-menu {
+      height: 45px;
+      overflow: hidden;
+    }
+
+    .main-menu:hover {
+      height: 520px;
+      background: #fff;
+      border: 1px solid #16b753;
+      border-top: none;
+      overflow: visible;
+      z-index: 5;
+    }
+
+    .main-menu:hover li:first-of-type {
+      padding-left: 11px;
+    }
+
+    .notice-list {
+      width: 1200px;
+      margin: 20px auto;
+    }
+
+    .notice-tab {
+      min-height: 297px;
+    }
+
+    .notice-tab table {
+      border: 1px solid #dddddd;
+    }
+
+    .notice-tab table thead {
+      border-bottom: 1px solid #dddddd;
+      color: #484848;
+      background: #f9f9f9;
+    }
+
+    .notice-tab table thead tr th, .notice-tab table tbody tr td {
+      height: 40px;
+      padding: 0;
+      line-height: 38px;
+    }
+
+    .notice-tab table thead tr th {
+      border-bottom: 0;
+    }
+
+    .notice-tab table thead tr th:nth-child(1) {
+      padding-left: 50px;
+      text-align: left;
+      font-weight: normal;
+    }
+
+    .notice-tab table thead tr th:nth-child(2) {
+      text-align: center;
+      font-weight: normal;
+    }
+
+    .notice-tab table tbody tr td:nth-child(1) {
+      padding-left: 20px;
+    }
+
+    .notice-tab table tbody tr td:nth-child(2) {
+      width: 150px;
+      text-align: center;
+    }
+
+    .notice-tab table tbody tr:hover {
+      background: #fdfdfd;
+    }
+
+    .notice-tab table tbody tr.tr-white {
+      background: white;
+    }
+
+    .notice-crumb {
+      height: 30px;
+    }
+
+    .notice-item-title:visited {
+      color: #999999;
+    }
+
+    .notice-item-title:hover {
+      color: #0090ff;
+    }
+
+    #tr_empty:hover {
+      background: #ffffff;
+    }
+  </style>
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+    <!--site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+    <div id="content">
+      <div class="main-nav">
+        <div class="nav">
+          <!--
+          <a href="index.html">首页</a>
+          <a href="#">热销商品</a>
+          <a href="#">医药咨询</a>
+          <a href="#">快速下单</a>
+          <a href="#">供应招商</a>
+          <ul class="main-menu">
+            <li><i class="iconfont icon-shangpinfenlei"></i>全部商品分类</li>
+            <li>
+              <p>中药</p>
+              <a href="#">中成药</a>
+              <a href="#">中药引片</a>
+              <a href="#">中药材</a>
+            </li>
+            <li>
+              <p>西药</p>
+              <a href="#">抗生素</a>
+              <a href="#">肽类激素</a>
+              <a href="#">化学原料药</a>
+            </li>
+            <li>
+              <p>医药器械</p>
+              <a href="#">Ⅰ类</a>
+              <a href="#">Ⅱ类</a>
+              <a href="#">Ⅲ类</a>
+            </li>
+            <li>
+              <p>计生用品</p>
+              <a href="#">终止妊娠药品</a>
+              <a href="#">其他计生用品</a>
+            </li>
+            <li>
+              <p>保健品</p>
+              <a href="#">保健药品</a>
+              <a href="#">保健食品</a>
+            </li>
+            <li>
+              <p>进口药品</p>
+              <a href="#">进口药品</a>
+              <a href="#">进口计生</a>
+            </li>
+            <li>
+              <p>其他</p>
+              <a href="#">消毒用品</a>
+              <a href="#">日化用品</a>
+              <a href="#">非药品</a>
+            </li>
+          </ul>-->
+          <!-- 主导航 -->
+          {% for obj in home_section.main_nav.sectionhref_list %}
+            <a href="{{ obj.href }}" target="_blank">{{ obj.text }}</a>
+          {% endfor %}
+          <ul class="main-menu">
+            <!-- 全部商品分类 -->
+            <li>
+              <a href="{{ home_section.category_nav.href }}" target="_blank" style="color: #fff;">
+                {{ home_section.category_nav.icon|safe }}{{ home_section.category_nav.title }}
+              </a>
+            </li>
+            {% for obj in home_section.category_nav.child_list %}
+              <li>
+                <p>{{ obj.title }}</p>
+                {% for sectionhref in obj.sectionhref_list %}
+                  <a href="{{ sectionhref.href }}" target="_blank">{{ sectionhref.text }}</a>
+                {% endfor %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="notice-list">
+      <div class="notice-crumb">首页 > {% ifequal info_type 'I' %}资讯{% else %}公告{% endifequal %}列表</div>
+      <div class="notice-tab">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>标题</th>
+            <th>发布时间</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for item in pub_lst %}
+            <tr>
+              <td><a class="notice-item-title" href="{% url 'eshop:eshop_notice' info_id=item.id %}"
+                     target="_blank">{{ item.name }}</a></td>
+              <td> {{ item.start_date|date:'Y-m-d' }}</td>
+            </tr>
+          {% empty %}
+            <tr id="tr_empty">
+              <td colspan="2" style="height: 200px; text-align: center; vertical-align: middle"><img
+                  src="{{ 'eshop/images/notice_empty.png' | static_url }}"/> 暂无{% ifequal info_type 'I' %}资讯{% else %}公告{% endifequal %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        </table>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+  </div>
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script>
+      $(".notice-item-title").mouseover(function () {
+          $(".notice-tab table tbody tr").addClass("tr-white");
+      });
+      $(".notice-item-title").mouseout(function () {
+          $(".notice-tab table tbody tr").removeClass("tr-white");
+      });
+  </script>
+{% endblock %}
+

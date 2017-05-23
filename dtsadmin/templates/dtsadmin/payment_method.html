@@ -1,0 +1,169 @@
+{% extends "dtsadmin/base.html" %}
+{% load extras %}
+
+{% block title %}支付方式 - DTS管理后台{% endblock %}
+{% block css %}
+  <style>
+    #content table > thead > tr > th:nth-child(5) {
+      width: 15%;
+    }
+
+    #content table > tbody > tr > td {
+      height: 50px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    #modal_payment .modal-body {
+      padding: 25px 25px 25px 0;
+      margin-left: -15px;
+    }
+
+    #modal_payment #money {
+      line-height: 30px;
+    }
+
+    #modal_payment .on-off {
+      height: 30px;
+    }
+
+    #modal_payment .on-off div {
+      line-height: 27px;
+    }
+
+    #modal_payment .on-off .col-sm-9 {
+      padding-top: 5px;
+    }
+
+    #modal_payment label {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #modal_payment input.middle, #modal_payment select.middle {
+      width: 150px;
+    }
+
+    #modal_payment input.long, #modal_payment select.long {
+      width: 300px;
+    }
+
+    #id_support_money {
+      line-height: 27px;
+    }
+
+    #modal_payment #id_order_no {
+      width: 80px;
+    }
+
+    #modal_payment .sort-no {
+      display: inline-block;
+      float: left;
+      margin-left: 10px;
+      line-height: 30px;
+    }
+
+    #modal_payment input[type='text'], #modal_payment select {
+      float: left;
+    }
+
+    #modal_payment .on-off input[type="radio"] {
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    #modal_payment .on-off label {
+      font-size: 12px;
+    }
+
+    .form-group-dts .form-control {
+      display: inline-block;
+      float: none;
+      text-align: center;
+    }
+
+    #modal_payment .tip-no {
+      line-height: 24px;
+    }
+  </style>
+{% endblock %}
+
+<!-- 侧边栏 -->
+{% block sidebar %}
+  {% include 'dtsadmin/sidebars/sidebar_basic_settings.html' %}
+{% endblock %}
+
+{% block content %}
+  <div id="content" class="small">
+    <div class="form-group form-group-dts clearfix">
+      <button type="button" class="control-btn btn btn-dts btn-s1 add_payment">添加支付方式
+      </button>
+      <button type="submit" class="control-btn btn btn-dts btn-s1"
+              api="{% url 'dtsadmin:ajax:save_order' model_name='PaymentMethod' %}"
+              id="{% if payment_list %}btn_save_sort{% endif %}">保存排序
+      </button>
+    </div>
+    <div class="form-group form-group-dts">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>支付种类</th>
+          <th>显示名称</th>
+          <th>支付类型</th>
+          <th>显示排序</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          {% for obj in payment_list %}
+            <td class="kind-td">
+              <img src="{{ obj.logo }}">
+            </td>
+            <td>{{ obj.name_cn }}</td>
+            <td class="type-td">{{ obj.get_pay_type_display }}</td>
+            <td><input type="text" class="form-control short" data-pk="{{ obj.pk }}"
+                       value={{ obj.order_no }}>
+            </td>
+            <td class="start_using">
+              {% if obj.is_active %}
+                <div class="switch-default" is_active="0"
+                     api="{% url "dtsadmin:ajax:switch_bool" model_class='PaymentMethod' obj_id=obj.id field='is_active' %}">
+                  <div class="switch-on" is_active="0">启用</div>
+                  <div class="switch-off hide">禁用</div>
+                </div>
+              {% else %}
+                <div class="switch-default" is_active="1"
+                     api="{% url "dtsadmin:ajax:switch_bool" model_class='PaymentMethod' obj_id=obj.id field='is_active' %}">
+                  <div class="switch-on hide" is_active="0">启用</div>
+                  <div class="switch-off">禁用</div>
+                </div>
+              {% endif %}
+            </td>
+            <td>
+              <a class="update_payment"
+                 api="{% url 'dtsadmin:ajax:get_modal_byid' modal_name='PaymentMethod' obj_id=obj.id %}">修改</a>
+              <a class="delete_payment"
+                 api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='PaymentMethod' obj_id=obj.id %}">删除</a>
+            </td>
+            </tr>
+          {% empty %}
+            <tr class="no_data">
+              <td colspan="30"><img style="" src="{{ 'dtsadmin/img/no_data.png'|static_url }}"></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+{#模态对话框#}
+{% block modal %}
+  {% include 'dtsadmin/modals/modal_payment_method.html' %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'dtsadmin/js/payment_method.js'|static_url }}"></script>
+{% endblock %}

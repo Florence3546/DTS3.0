@@ -1,0 +1,46 @@
+{% load extras %}
+<div id="search-result" class="hide">
+  <div class="search-closed">&times;</div>
+  <table>
+
+    {% if good_search_result %}
+
+
+      <thead>
+      <tr>
+        <th>商品编码</th>
+        <th>商品名称</th>
+        <th>单位</th>
+        <th>商品规格</th>
+        <th>生产厂家</th>
+        <th>单价(元)</th>
+      </tr>
+      </thead>
+    {% endif %}
+
+
+    <tbody>
+
+    {% for good in good_search_result %}
+
+      <tr class="good_item" data-id="{{ good.id }}">
+        <td>{{ good.external_id }}</td>
+        <td>
+          <a>{{ good.get_display_name }}</a>
+        </td>
+        <td>包</td>
+        <td>5g*16袋</td>
+        <td>{{ good.enterprise.name }}</td>
+        <td>{{ good.member_price | multiply:0.01 }}</td>
+      </tr>
+
+    {% empty %}
+      <tr>
+        没有找到数据
+      </tr>
+    {% endfor %}
+
+
+    </tbody>
+  </table>
+</div>

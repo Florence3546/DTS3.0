@@ -1,0 +1,68 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}支付配送 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>支付配送</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>配送说明</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">配送说明</div>
+        <div class="help-body">
+          <ul>
+            <li>
+              1.配送时间和范围
+              <div class="mrg-l-12">根据你所订购商品的配送地址及商品所在库房的情况，我们会在1-5个工作日之内将商品送到您所填写的配送地址，详细配送时间将在购物车中提示。但由于市场货源变动
+                较大，部分热销商品可能会存在缺货导致送货延时或取消订单的特殊情况请您谅解！
+              </div>
+            </li>
+            <li>2.本平台所有非药品商品均采用“第三方物流送货上门”的配送方式（部分城市需要到邮局自提）。</li>
+            <li>3.本平台提供自备运输车辆的送货服务。湖北省内均提供免费送货服务，具体请向客服咨询。</li>
+            <li>4.本平台支持客户上门自提。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

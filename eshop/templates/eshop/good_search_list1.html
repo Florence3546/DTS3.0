@@ -1,0 +1,866 @@
+{% extends "eshop/base.html" %} {% load extras %} {% block title %}商品搜索列表 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/good_search_list.css'|static_url }}"> {% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <div id="content">
+      <div class="main-nav">
+        <div class="nav">
+          <a href="#">首页</a>
+          <a href="#">热销商品</a>
+          <a href="#">医药咨询</a>
+          <a href="#">快速下单</a>
+          <a href="#">供应招商</a>
+          <ul class="main-menu">
+            <li><i class="iconfont icon-shangpinfenlei"></i>全部商品分类</li>
+            <li>
+              <p>中药</p>
+              <a href="#">中成药</a>
+              <a href="#">中药引片</a>
+              <a href="#">中药材</a>
+            </li>
+            <li>
+              <p>西药</p>
+              <a href="#">抗生素</a>
+              <a href="#">肽类激素</a>
+              <a href="#">化学原料药</a>
+            </li>
+            <li>
+              <p>医药器械</p>
+              <a href="#">Ⅰ类</a>
+              <a href="#">Ⅱ类</a>
+              <a href="#">Ⅲ类</a>
+            </li>
+            <li>
+              <p>计生用品</p>
+              <a href="#">终止妊娠药品</a>
+              <a href="#">其他计生用品</a>
+            </li>
+            <li>
+              <p>保健品</p>
+              <a href="#">保健药品</a>
+              <a href="#">保健食品</a>
+            </li>
+            <li>
+              <p>进口药品</p>
+              <a href="#">进口药品</a>
+              <a href="#">进口计生</a>
+            </li>
+            <li>
+              <p>其他</p>
+              <a href="#">消毒用品</a>
+              <a href="#">日化用品</a>
+              <a href="#">非药品</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="main">
+        <div class="crumb">
+          <ul>
+            <li>
+              <span>全部</span>
+              <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+            </li>
+            <li>
+              <span>西药</span>
+              <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+            </li>
+            <li>
+              <select>
+                <option>抗生素</option>
+              </select>
+            </li>
+            <li>
+              <div>
+                百多邦<span>x</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                匹得邦<span>x</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                鸿辉远大<span>x</span>
+              </div>
+            </li>
+            <li class="goods-No">
+              共找到<span>251</span>件商品
+            </li>
+            <li>
+              <a class="empty"><i class="iconfont icon-qingkong"></i>清空</a>
+            </li>
+          </ul>
+        </div>
+        <div class="attrs">
+          <div class="brand-attr">
+            <div>品牌</div>
+            <ul>
+              <li>
+                <a class="active">百多邦</a>
+                </a>
+              </li>
+              <li>
+                <a>华畜</a>
+              </li>
+              <li>
+                <a>中农</a>
+              </li>
+              <li>
+                <a class="active">匹得邦</a>
+              </li>
+              <li>
+                <a class="active">鸿辉远大</a>
+              </li>
+              <li>
+                <a>中农康畜</a>
+              </li>
+              <li>
+                <a>爱纳它</a>
+              </li>
+              <li>
+                <a>桑岛</a>
+              </li>
+              <li>
+                <a>百多邦</a>
+              </li>
+              <li>
+                <a>华畜</a>
+              </li>
+              <li>
+                <a>中农</a>
+              </li>
+              <li>
+                <a>匹得邦</a>
+              </li>
+              <li>
+                <a>鸿辉远大</a>
+              </li>
+              <li>
+                <a>中农康畜</a>
+              </li>
+              <li>
+                <a>爱纳它</a>
+              </li>
+              <li>
+                <a>桑岛</a>
+              </li>
+            </ul>
+            <a class="multiple-choice">+ 多选</a>
+            <a class="more">更多<i class="iconfont icon-shangxiajiantou"></i></a>
+          </div>
+          <div class="origin-attr">
+            <div>产地</div>
+            <ul>
+              <li>
+                <a>百多邦</a>
+              </li>
+              <li>
+                <a>华畜</a>
+              </li>
+              <li>
+                <a>中农</a>
+              </li>
+              <li>
+                <a>匹得邦</a>
+              </li>
+              <li>
+                <a>鸿辉远大</a>
+              </li>
+              <li>
+                <a>中农康畜</a>
+              </li>
+              <li>
+                <a>爱纳它</a>
+              </li>
+              <li>
+                <a>桑岛</a>
+              </li>
+            </ul>
+          </div>
+          <div class="formulation-attr">
+            <div>剂型</div>
+            <ul>
+              <li>
+                <a>颗粒</a>
+              </li>
+              <li>
+                <a>片剂</a>
+              </li>
+            </ul>
+          </div>
+          <div class="sort-attr">
+            <div>类别</div>
+            <ul>
+              <li>
+                <a>中成药</a>
+              </li>
+              <li>
+                <a>化学药</a>
+              </li>
+            </ul>
+          </div>
+          <div class="more-choices">
+            <div></div>
+            <a>更多选择</a>
+          </div>
+        </div>
+        <div class="hot-goods">
+          <div class="goods">
+            <div>热销商品</div>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail' good_id=1 %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+          <a href="#"><img src="../../static/eshop/images/sousuo/guanggao1.png"> </a>
+          <a href="#"><img src="../../static/eshop/images/sousuo/guanggao2.png"> </a>
+        </div>
+        <div class="good-list">
+          <div class="filter">
+            <a class="active">综合<i class="iconfont icon-icon-test1"></i></a>
+            <a>新品<i class="iconfont icon-icon-test1"></i></a>
+            <a>销量<i class="iconfont icon-icon-test1"></i></a>
+            <div class="choose">
+              <a class="active"><i class="iconfont icon-duidui"></i></a>仅显示有货
+            </div>
+            <div class="choose">
+              <a><i class="iconfont icon-duidui"></i></a>促销商品
+            </div>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="在结果中搜索">
+              <span class="input-group-btn">
+							    	<button class="btn btn-default" type="button">搜索</button>
+							    </span>
+            </div>
+            <div class="arrangement">
+              <a class="active"><i class="iconfont icon-datumoshi"></i>大图</a>
+              <a><i class="iconfont icon-shangpinfenlei"></i>列表</a>
+            </div>
+            <div class="pagination">
+              <a><i class="iconfont icon-shangxiajiantou-copy1-copy"></i></a>
+              <span>1</span>/<span>3</span>
+              <a><i class="iconfont icon-shangxiajiantou-copy1"></i></a>
+            </div>
+          </div>
+          <div class="search-goods">
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <!--<div>
+                    <div class="input-group">
+                      <span class="input-group-addon">-</span>
+                      <input type="text" class="form-control" placeholder="1">
+                      <span class="input-group-addon">+</span>
+                    </div>
+                    <span class="pull-left btn-s4">加入购物车</span>
+                </div>-->
+              <div class="stockout">
+                <div class="input-group">
+                  <span>-</span>
+                  <span>1</span>
+                  <span>+<span>
+                </div>
+                <span class="pull-left btn-s4">缺货登记</span>
+              </div>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div>
+                <div class="input-group">
+                  <span class="input-group-addon">-</span>
+                  <input type="text" class="form-control" placeholder="1">
+                  <span class="input-group-addon">+</span>
+                </div>
+                <span class="pull-left btn-s4">加入购物车</span>
+              </div>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+            <div class="single_good">
+              <a href="#">
+                <img src="../../static/eshop/images/sousuo/good.png"/>
+                <p class="log-in"><span>￥2533.00</span>
+                  <del>￥2533.00</del>
+                </p>
+                <p>金戈 构型西地那非片</p>
+                <p>500mg*10片/盒</p>
+              </a>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" placeholder="1">
+                <span class="input-group-addon">+</span>
+              </div>
+              <span class="pull-left btn-s4">加入购物车</span>
+              <span class="collect"><i class="iconfont icon-shoucang1"></i>收藏</span>
+            </div>
+          </div>
+          <div class="page-No">
+            <div>
+              共<span>15</span>页&nbsp;&nbsp;到第<input type="text" value="1"/>页&nbsp;&nbsp;
+              <a>确定</a>
+            </div>
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li>
+                  <a class="previous" href="#" aria-label="Previous"><i
+                      class="iconfont icon-shangxiajiantou-copy1-copy"></i>上一页</a>
+                </li>
+                <li>
+                  <a class="active" href="#">1</a>
+                </li>
+                <li>
+                  <a href="#">2</a>
+                </li>
+                <li>
+                  <a class="previous-omit">...</a>
+                </li>
+                <li>
+                  <a href="#">8</a>
+                </li>
+                <li>
+                  <a href="#">9</a>
+                </li>
+                <li>
+                  <a href="#">10</a>
+                </li>
+                <li>
+                  <a class="next-omit">...</a>
+                </li>
+                <li>
+                  <a class="next" href="#" aria-label="Next">下一页<i class="iconfont icon-shangxiajiantou-copy1"></i></a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+    <div class="right-tab">
+      <a href="#"><i class="iconfont icon-qq"></i></a>
+      <a href="#"><i class="iconfont icon-gouwuche"></i></a>
+      <a href="#"><i class="iconfont icon-liuyan"></i></a>
+      <a href="#"><i class="iconfont icon-huidaodingbu"></i></a>
+    </div>
+  </div>
+
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+
+{% endblock %}

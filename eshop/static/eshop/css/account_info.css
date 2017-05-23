@@ -1,0 +1,145 @@
+.header-member .menu > div {
+  background: rgba(255, 255, 255, 0.2);
+}
+.main {
+  margin-bottom: 110px;
+}
+.main .section {
+  float: left;
+  width: 870px;
+  margin-top: 35px;
+  border: 1px solid #e5e5e5;
+}
+.main .section .relation-inform {
+  width: 100%;
+  height: 360px;
+  padding: 10px 30px;
+  border-bottom: 1px dashed #e0e0e0;
+  line-height: 30px;
+}
+.main .section .enterprise-inform {
+  width: 100%;
+  height: auto;
+  padding: 10px 30px;
+}
+h5 {
+  padding-left: 14px;
+  font-weight: bold;
+}
+h5 span {
+  font-weight: normal;
+  font-size: 12px;
+  margin-left: 6px;
+}
+.form-group {
+  overflow: hidden;
+}
+.form-group .label-defined {
+  float: left;
+  width: 95px;
+  text-align: right;
+  line-height: 30px;
+}
+.form-group .label-defined span {
+  color: #e71414;
+}
+.form-group input[type="radio"] {
+  margin: -1px 5px 0 0;
+  vertical-align: middle;
+}
+.form-group .form-control {
+  float: left;
+  width: 200px;
+  height: 30px;
+  font-size: 12px;
+  color: #777;
+}
+.form-group input[disabled] {
+  cursor: not-allowed;
+  background: #fff;
+  color: #ccc;
+}
+.form-group select[disabled] {
+  cursor: not-allowed;
+  color: #ccc;
+}
+.form-group .text-long {
+  width: 312px;
+}
+.form-group .text-short {
+  margin-right: 6px;
+  width: 100px;
+}
+.enterprise-box .form-group:nth-child(1) {
+  margin-top: 20px;
+}
+table {
+  position: relative;
+  left: -34px;
+  top: 8px;
+  float: left;
+}
+table label {
+  width: auto;
+  text-align: left;
+  float: none;
+}
+table input[type=checkbox] {
+  margin-left: 0;
+  margin-right: 6px;
+  margin-top: -3px;
+  vertical-align: middle;
+}
+table td {
+  padding-left: 35px;
+}
+.enterprise-inform ul {
+  overflow: hidden;
+  padding-top: 3px;
+}
+.enterprise-inform ul li {
+  float: left;
+  width: 230px;
+}
+.enterprise-inform ul li label {
+  width: auto;
+  text-align: left;
+  float: none;
+  line-height: 14px;
+}
+.enterprise-inform ul li input {
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+  margin-left: 0;
+}
+.uploading {
+  overflow: hidden;
+  padding-top: 10px;
+}
+.uploading a {
+  position: relative;
+  float: left;
+  display: block;
+  margin-right: 15px;
+  width: 92px;
+  height: 92px;
+  text-align: center;
+  background: #f9f9f9;
+  border: 1px solid #e3e3e3;
+  overflow: hidden;
+}
+.uploading a span {
+  position: relative;
+  top: 25px;
+  color: #ccc;
+}
+.uploading a img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}

@@ -1,0 +1,64 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}支付配送 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/simple_page.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/main_nav.html' %}
+
+    <div class="main">
+      <div class="crumb">
+        <ul>
+          <li>
+            <span>首页</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>支付配送</span>
+            <i class="iconfont greater-than icon-shangxiajiantou-copy1"></i>
+          </li>
+          <li>
+            <span>签收验货</span>
+          </li>
+        </ul>
+      </div>
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_help.html' %}
+
+
+      <div class="help-content">
+        <div class="help-title">签收验货</div>
+        <div class="help-body">
+          <ul>
+            <li>为保障您的权益，请务必在收到商品时验货，并注意以下环节：</li>
+            <li>1.请与配送人员当面核对商品种类、商品数量、应付金额、发货清单、赠品（如有）等是否与订单一致；</li>
+            <li>2.如存在包装破损、商品错误、商品短缺、配送错误、商品存在质量问题、开箱等影响签收的因素，您可以在配送人员在场的情况下联系国药网在线客服处理；</li>
+            <li>3.为了保护您的权益，建议您尽量不要委托他人代为签收，如由他人代为签收而没有在配送人员在场的情况下验货，则视为您所订购的商品包装无任何问题；</li>
+            <li>4.收货人无正当理由拒绝签收货品的，运费由用户自行承担。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+{% endblock %}

@@ -1,0 +1,249 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}账户信息 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/account_info.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main clearfix">
+      <div class="sidebar-member">
+        <ul>
+          <li class="category"><b>账户设置</b></li>
+          <li class="{% active_url 'account_info' %}"><a href="{% url 'eshop:account_info' %}">账户信息</a></li>
+          <li class="{% active_url 'account_safety' %}"><a href="{% url 'eshop:account_safety' %}">账户安全</a></li>
+          <li class="{% active_url 'receiving_address' %}"><a href="{% url 'eshop:receiving_address' %}">收货地址</a></li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="relation-inform">
+          <h5>账户信息<span>(账户登录信息)</span></h5>
+          <div class="relation-box">
+            <form id="account_form" class="form-horizontal" method="post" action="">
+              {% csrf_token %}
+              <input type="hidden" name="pk" value="{{ data.pk }}">
+              <div class="form-group">
+                <label class="label-defined">用户名：</label>
+                <span>{{ data.username }}</span>
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="first_name">
+                  <span>*</span>
+                  姓名：
+                </label>
+                <input class="form-control is_change" type="text"
+                       data-change=""
+                       value="{{ data.first_name }}" id="first_name" name="first_name">
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="phone">
+                  <span>*</span>
+                  手机号：
+                </label>
+                <input class="form-control is_change" type="text" value="{{ data.phone }}" id="phone" name="phone"></div>
+              <div class="form-group">
+                <label class="label-defined" for="email">
+                  <span>*</span>
+                  邮箱：
+                </label>
+                <input class="form-control is_change" type="text" value="{{ data.email }}" id="email" name="email"></div>
+              <div class="form-group">
+                <label class="label-defined">性别：</label>
+              <input type="hidden" id="is_gender_change" value="{{ user.gender }}">
+                <label><input type="radio" name="gender" value="1"
+                              {% if user.gender == 1 %}checked{% endif %}>男士</label>
+                <label><input type="radio" name="gender" value="2"
+                              {% if user.gender == 2 %}checked{% endif %}>女士</label>
+              </div>
+              <div class="form-group">
+                <label class="label-defined"></label>
+                <button
+                    type="button"
+                    api="{% url 'eshop:account_info' %}"
+                    class="btn-s1 save">保存
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {% if data.enterprise %}
+          <div class="enterprise-inform">
+            <h5>企业信息<span>(企业认证信息)</span></h5>
+            <div class="enterprise-box">
+              <div class="form-group">
+                <label class="label-defined" for="name">企业名称：</label>
+                <input class="form-control" type="text" id="name" value="{{ data.enterprise.name }}" disabled>
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="name">企业简称：</label>
+                <input class="form-control" type="text" id="name" value="{{ data.enterprise.short_name }}" disabled>
+              </div>
+              <div class="form-group">
+                <label class="label-defined">经营方式：</label>
+                <select class="form-control" disabled>
+                  <option>{{ data.enterprise.operate_mode }}</option>
+                  {#                  {% for choice in obj.operate_mode %}#}
+                  {#                    <option value="{{ choice }}">{{ choice }}</option>#}
+                  {#                  {% endfor %}#}
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="label-defined">所在地区：</label>
+                {% for i in obj.region %}
+                  <select class="form-control text-short" disabled>
+                    <option>{{ i }}</option>
+                  </select>
+                {% endfor %}
+
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="address">详细地址：</label>
+                <input class="form-control text-long" type="text" id="address" value="{{ data.enterprise.address }}"
+                       disabled>
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="enterprise-tel">企业电话：</label>
+                <input class="form-control text-long" type="text" id="enterprise-tel"
+                       value="{{ data.enterprise.phone }}"
+                       disabled>
+              </div>
+              <div class="form-group">
+                <label class="label-defined" for="enterprise-tel">法人代表：</label>
+                <input class="form-control text-long" type="text" id="enterprise-tel"
+                       value="{{ data.enterprise.legal_repr }}" disabled>
+              </div>
+              <div class="form-group">
+                <label class="label-defined">经营范围：</label>
+                <table>
+                  <tr>
+                    <td><label><input type="checkbox" {% if '化学原料药' in  obj.biz_scope %}checked{% endif %} disabled>化学原料药</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '抗生素' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>抗生素</label></td>
+                    <td><label><input type="checkbox" {% if '生化药品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>生化药品</label></td>
+                    <td><label><input type="checkbox" {% if '生物制品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>生物制品</label></td>
+                  </tr>
+
+                  <tr>
+                    <td><label><input type="checkbox" {% if '疫苗' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>疫苗</label></td>
+                    <td><label><input type="checkbox" {% if '二类精神药品' in  obj.biz_scope %}checked{% endif %} disabled>二类精神药品</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '体外诊断试剂' in  obj.biz_scope %}checked{% endif %} disabled>体外诊断试剂</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '含特殊药品复方制剂' in  obj.biz_scope %}checked{% endif %} disabled>含特殊药品复方制剂</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="checkbox" {% if '一类医疗器械' in  obj.biz_scope %}checked{% endif %} disabled>一类医疗器械</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '二类医疗器械' in  obj.biz_scope %}checked{% endif %} disabled>二类医疗器械</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '三类医疗器械' in  obj.biz_scope %}checked{% endif %} disabled>三类医疗器械</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '无证的二类的医疗器械' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>无证的二类的医疗器械</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="checkbox" {% if '食品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>食品</label></td>
+                    <td><label><input type="checkbox" {% if '化妆品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>化妆品</label></td>
+                    <td><label><input type="checkbox" {% if '消字号产品' in  obj.biz_scope %}checked{% endif %} disabled>消字号产品</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '其他商品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>其他商品</label></td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="checkbox" {% if '保健药品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>保健药品</label></td>
+                    <td><label><input type="checkbox" {% if '毒性药品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>毒性药品</label></td>
+                    <td><label><input type="checkbox" {% if '一类精神药品' in  obj.biz_scope %}checked{% endif %} disabled>一类精神药品</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '蛋白同化制剂、肽类激素(胰岛素)' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>蛋白同化制剂、肽类激素(胰岛素)</label></td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="checkbox" {% if '麻醉药品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>麻醉药品</label></td>
+                    <td><label><input type="checkbox" {% if '放射性药品' in  obj.biz_scope %}checked{% endif %} disabled>放射性药品</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '抗生素原料药' in  obj.biz_scope %}checked{% endif %} disabled>抗生素原料药</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '蛋白同化制剂、肽类激素' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>蛋白同化制剂、肽类激素</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="checkbox" {% if '终止妊娠药品' in  obj.biz_scope %}checked{% endif %} disabled>终止妊娠药品</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '化学试剂' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>化学试剂</label></td>
+                    <td><label><input type="checkbox" {% if '计生用品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>计生用品</label></td>
+                    <td><label><input type="checkbox" {% if '生物制品(除疫苗)' in  obj.biz_scope %}checked{% endif %} disabled>生物制品(除疫苗)</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="checkbox" {% if '保健食品' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>保健食品</label></td>
+                    <td><label><input type="checkbox" {% if '抗生素制剂' in  obj.biz_scope %}checked{% endif %} disabled>抗生素制剂</label>
+                    </td>
+                    <td><label><input type="checkbox" {% if '一类器械' in  obj.biz_scope %}checked{% endif %}
+                                      disabled>一类器械</label></td>
+                  </tr>
+
+                  </tr>
+
+                </table>
+              </div>
+              <div class="form-group">
+                <label class="label-defined">资质证照：</label>
+                <p class="uploading">
+                  {% for i in obj.photo %}
+                    <a class="upload_file">
+                      <img src="/media/{{ i.photo }}" alt="" width="100%">
+                    </a>
+                  {% endfor %}
+                </p>
+
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+
+
+
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/account_info.js'|static_url }}"></script>
+
+{% endblock %}
+

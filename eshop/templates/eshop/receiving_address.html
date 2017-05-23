@@ -1,0 +1,79 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}收货地址 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/receiving_address.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+    {% csrf_token %}
+
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+
+    <div class="main clearfix">
+      <div class="sidebar-member">
+        <ul>
+          <li class="category"><b>账户设置</b></li>
+          <li class="{% active_url 'account_info' %}"><a href="{% url 'eshop:account_info' %}">账户信息</a></li>
+          <li class="{% active_url 'account_safety' %}"><a href="{% url 'eshop:account_safety' %}">账户安全</a></li>
+          <li class="{% active_url 'receiving_address' %}"><a href="{% url 'eshop:receiving_address' %}">收货地址</a></li>
+        </ul>
+      </div>
+      <div class="receiving_address">
+        <div class="add-address clearfix">
+          <p>
+            <button class="btn-s2 add_new">新建收货地址</button>
+          </p>
+          <p>您已创建了<span id="address_no">0</span>个收货地址，最多可以创建<span>20</span>个收货地址</p></div>
+        <ul class="address-box clearfix">
+          {% for obj in address_list %}
+            <li>
+              <p><span class="perl-dic">{{ obj.region }}</span><span class="per-name">{{ obj.people|default:obj.user.username }}</span>
+                {% if obj.is_default %}<span
+                    class="default-address">默认地址</span>{% endif %}</p>
+              <div class="address-content">
+                <p>{{ obj.address }}</p>
+                <p>{{ obj.telephone|default:obj.user.phone }}</p>
+              </div>
+              <p>{% if obj.is_default %}
+              {% else %}
+                <a href="javascript:;" class="set-default"
+                   api="{% url 'eshop:ajax:set_default' obj_id=obj.id %}">设为默认</a>
+              {% endif %}
+                <a href="javascript:;" class="edit-address"
+                   api="{% url 'dtsadmin:ajax:get_modal_byid' modal_name='ReceivingAddress' obj_id=obj.id %}">编辑</a>
+                <a href="javascript:;" class="delete-address"
+                   api="{% url 'dtsadmin:ajax:delete_object_byid' model_class='ReceivingAddress' obj_id=obj.id %}">删除</a>
+              </p>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+
+<!-- 模态对话框 -->
+{% block modal %}
+  {% include 'eshop/modals/modal_receiving_address.html' %}
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/data.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/distpicker.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/receiving_address.js'|static_url }}"></script>
+{% endblock %}

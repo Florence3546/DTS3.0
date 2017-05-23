@@ -1,0 +1,12 @@
+{% load extras %}
+<ul class="sidebar-member">
+  <li class="category"><b>订单中心</b></li>
+  <li class="{% active_url 'my_order' %}"><a href="{% url 'eshop:my_order' %}">我的订单</a></li>
+  <li class="{% active_url 'my_collect' %}"><a href="{% url 'eshop:my_collect' %}?state=0">我的收藏</a></li>
+  <li class="{% active_url 'lack_good' %}"><a href="{% url 'eshop:lack_good' %}">缺货登记</a></li>
+  <li class="category"><b>账号管理</b></li>
+  <li class="{% active_url 'account_record' %}"><a href="{% url 'eshop:account_record' %}">账户记录</a></li>
+  <li class="category">信息管理</li>
+  <li class="{% active_url 'consult_feedback' %}"><a href="{% url 'eshop:consult_feedback' %}">咨询反馈</a></li>
+  <li class="{% active_url 'site_message' %}"><a href="{% url 'eshop:site_message' %}">站内消息</a></li>
+</ul>

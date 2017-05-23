@@ -1,0 +1,556 @@
+{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}首页 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/eshop_home.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  <div id="wrap">
+
+    <!--site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+
+    <!--home_top部分-->
+    {% include 'eshop/home_top.html' %}
+
+    <div id="content">
+      <div class="main-nav">
+        <div class="nav">
+          <a href="#">首页</a>
+          <a href="#">热销商品</a>
+          <a href="#">医药咨询</a>
+          <a href="#">快速下单</a>
+          <a href="#">供应招商</a>
+          <ul class="main-menu">
+            <li><i class="iconfont icon-shangpinfenlei"></i>全部商品分类</li>
+            <li>
+              <p>中药</p>
+              <a href="#">中成药</a>
+              <a href="#">中药引片</a>
+              <a href="#">中药材</a>
+            </li>
+            <li>
+              <p>西药</p>
+              <a href="good_list1.html">抗生素</a>
+              <a href="#">肽类激素</a>
+              <a href="#">化学原料药</a>
+            </li>
+            <li>
+              <p>医药器械</p>
+              <a href="#">Ⅰ类</a>
+              <a href="#">Ⅱ类</a>
+              <a href="#">Ⅲ类</a>
+            </li>
+            <li>
+              <p>计生用品</p>
+              <a href="#">终止妊娠药品</a>
+              <a href="#">其他计生用品</a>
+            </li>
+            <li>
+              <p>保健品</p>
+              <a href="#">保健药品</a>
+              <a href="#">保健食品</a>
+            </li>
+            <li>
+              <p>进口药品</p>
+              <a href="#">进口药品</a>
+              <a href="#">进口计生</a>
+            </li>
+            <li>
+              <p>其他</p>
+              <a href="#">消毒用品</a>
+              <a href="#">日化用品</a>
+              <a href="#">非药品</a>
+            </li>
+          </ul>
+          <div class="notice-board">
+            <div class="service-info">
+              <img class="pull-left" src="../../static/eshop/images/service.png"/>
+              <p>客服热线</p>
+              <p>027-84886797</p>
+              <p>药监投诉</p>
+              <p>12331</p>
+            </div>
+            <div class="mailbox">
+              <i class="iconfont icon-email"></i>
+              <span>|</span>
+              <a>hb1004@dingtalk.com</a>
+            </div>
+            <p>
+              <span><a class="active">公告</a></span>
+              <span><a>资讯</a></span>
+              <a>更多</a>
+            </p>
+            <ol>
+              <li><a href="#"><span>2017年春节及客服阿达撒</span><span>01-18</span></a></li>
+              <li><a href="#"><span>域名变更通知qwewqewqewqeqwewqeqew</span><span>01-18</span></a></li>
+              <li><a href="#"><span>医药批发商城上线</span><span>01-18</span></a></li>
+              <li><a href="#"><span>医药批发商城上线</span><span>01-18</span></a></li>
+              <li><a href="#"><span>医药批发商城上线</span><span>01-18</span></a></li>
+              <li><a href="#"><span>医药批发商城上线</span><span>01-18</span></a></li>
+              <li><a href="#"><span>医药批发商城上线</span><span>01-18</span></a></li>
+              <li><a href="#"><span>医药批发商城上线</span><span>01-18</span></a></li>
+              <li><a href="#"><span>医药批发商城上线</span><span>01-18</span></a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="banner">
+        <a href="#"></a>
+      </div>
+      <div class="main">
+        <div class="sales-promotion">
+          <div class="hot">
+            <span class="active">推荐品种</span>
+            <span>热卖商品</span>
+          </div>
+          <div class="selling-goods goods">
+            <a href="{% url 'eshop:good_detail1' %}">
+              <span><span><img src="../../static/eshop/images/shouye/good.png"/></span></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail1' %}">
+              <span><span><img src="../../static/eshop/images/shouye/good.png"/></span></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail1' %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail1' %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail1' %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="{% url 'eshop:good_detail1' %}">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="log-in"><span>￥2533.00</span>
+                <del>￥2533.00</del>
+              </p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+        </div>
+        <div id="chinese-medicine" class="floor">
+          <h3>中药<a href="#">更多</a></h3>
+          <div class="nav-third">
+            <a href="#">中成药</a>
+            <a href="#">中药材</a>
+            <a href="#">中药饮片</a>
+          </div>
+          <div class="goods">
+            <a href="#">
+              <img src="../../static/eshop/images/shouye/big.png"/>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+        </div>
+        <div id="westem-medicine" class="floor">
+          <h3>西药<a href="#">更多</a></h3>
+          <div class="nav-third">
+            <a href="#">蛋白同化制剂</a>
+            <a href="#">肽类激素</a>
+            <a href="#">抗生素</a>
+            <a href="#">生化药品</a>
+            <a href="#">生物制品</a>
+            <a href="#">抗生素制剂</a>
+            <a href="#">放射性药品</a>
+            <a href="#">特殊复方制剂</a>
+            <a href="#">麻醉药品</a>
+            <a href="#">化学原料药</a>
+            <a href="#">二类精神</a>
+            <a href="#">化学药制剂</a>
+            <a href="#">其他西药</a>
+          </div>
+          <div class="goods">
+            <a href="#">
+              <img src="../../static/eshop/images/shouye/big.png"/>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+        </div>
+        <div id="medical-equipment" class="floor">
+          <h3>医疗器械<a href="#">更多</a></h3>
+          <div class="nav-third">
+            <a href="#">注射剂</a>
+            <a href="#">Ⅰ类医疗器械</a>
+            <a href="#">Ⅱ类医疗器械</a>
+            <a href="#">Ⅲ类医疗器械</a>
+            <a href="#">医疗器械</a>
+          </div>
+          <div class="goods">
+            <a href="#">
+              <img src="../../static/eshop/images/shouye/big.png"/>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+        </div>
+        <div id="total-health-products" class="floor">
+          <h3>计生用品<a href="#">更多</a></h3>
+          <div class="nav-third">
+            <a href="#">终止妊娠药品</a>
+            <a href="#">其他计生药品</a>
+          </div>
+          <div class="goods">
+            <a href="#">
+              <img src="../../static/eshop/images/shouye/big.png"/>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+        </div>
+        <div id="other-supplies" class="floor">
+          <h3>其他用品<a href="#">更多</a></h3>
+          <div class="nav-third">
+            <a href="#">消毒药品</a>
+            <a href="#">非药品</a>
+            <a href="#">保健品</a>
+            <a href="#">进口药品</a>
+          </div>
+          <div class="goods">
+            <a href="#">
+              <img src="../../static/eshop/images/shouye/big.png"/>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+            <a href="#">
+              <span><img src="../../static/eshop/images/shouye/good.png"/></span>
+              <p class="not-log-in">登录后显示价格</p>
+              <p>金戈 构型西地那非片</p>
+              <p>500mg*10片/盒</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+    <div class="left-tab">
+      <a>医药种类</a>
+      <a href="#chinese-medicine">中药</a>
+      <a href="#westem-medicine">西药</a>
+      <a href="#medical-equipment">医疗器械</a>
+      <a href="#total-health-products">计生药品</a>
+      <a href="#other-supplies">其他</a>
+      <a href="#site-nav">TOP</a>
+    </div>
+    <div class="right-tab">
+      <a href="#"><i class="iconfont icon-qq"></i></a>
+      <a href="#"><i class="iconfont icon-gouwuche"></i></a>
+      <a href="#"><i class="iconfont icon-liuyan"></i></a>
+      <a href="#"><i class="iconfont icon-huidaodingbu"></i></a>
+    </div>
+  </div>
+{% endblock %}
+
+<!-- 自定义JS -->
+{% block js %}{% endblock %}
+

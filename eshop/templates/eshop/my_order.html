@@ -1,0 +1,240 @@
+﻿{% extends "eshop/base.html" %}
+{% load extras %}
+
+{% block title %}我的订单 - DTS商城{% endblock %}
+
+<!-- 自定义CSS -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ 'eshop/css/my_order.css'|static_url }}">
+{% endblock %}
+
+<!--主体部分-->
+{% block content %}
+  {% csrf_token %}
+  <div id="wrap">
+    <!--member_site_nav部分-->
+    {% include 'eshop/site_nav.html' %}
+    <!--top_box部分-->
+    {% include 'eshop/member_center_top.html' %}
+    <div class="main">
+      <!--sidebar部分-->
+      {% include 'eshop/sidebar_member_center.html' %}
+      <div class="order-list">
+        <ul class="tab order_nav">
+          <li class=""><a href="{% url 'eshop:my_order' %}">全部订单</a></li>
+          <li>
+            <a href="{% url 'eshop:my_order' %}?state=0">待付款
+            <span class="badge badge-defined">{{ data.not_paid|default:'' }}</span></a>
+          </li>
+          <li><a href="{% url 'eshop:my_order' %}?state=2">待发货
+            <span class="badge badge-defined">{{ data.is_picking|default:'' }}</span></a>
+          </li>
+          <li><a href="{% url 'eshop:my_order' %}?state=3">待收货
+            <span class="badge badge-defined">{{ data.is_ship|default:'' }}</span></a>
+          </li>
+          <li><a href="{% url 'eshop:my_order' %}?state=5">退款中
+            <span class="badge badge-defined">{{ data.is_refund|default:'' }}</span></a>
+          </li>
+          <li><a class="border-right-none" href="{% url 'eshop:my_order' %}?state=6">已关闭</a></li>
+          <li class="input-group">
+            <form id="order_form" action="" method="get">
+							<input type="hidden" name="page" value="" class="page_num">
+              <input type="text"  class="form-control"   value="{{ request.GET.order_no }}" name="order_no"  placeholder="订单编号"/>
+              <span class="input-group-btn pull-left">
+		        		<button class="btn btn-default" type="submit"><i class="iconfont icon-sousuo"></i></button>
+		        	</span>
+            </form>
+          </li>
+        </ul>
+        <ul class="subnav">
+          <li>
+            <select id="order_date_past">
+              <option value="90">近三个月订单</option>
+              <option value="60">近两个月订单</option>
+              <option value="30">近一个月订单</option>
+            </select>
+          </li>
+          <li>订单编号</li>
+          <li>订单金额</li>
+          <li>实付金额</li>
+          <li>订单操作</li>
+          <li>收货人</li>
+          <li>商品明细</li>
+          <li>
+            {% if request.GET.state %}
+              交易状态
+            {% else %}
+              <select id="trade_state">
+                <option value="">交易状态</option>
+                {% for choice in choices %}
+                  <option value="{{ choice.0 }}" {% if request.GET.trade_state == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+              </select>
+            {% endif %}
+          </li>
+          <li>交易操作</li>
+        </ul>
+        <ul class="order-info">
+          {% for order in order_list %}
+            <li>
+              <span>{{ order.ord_time | date:"Y-m-d H:i" }}</span>
+              <span><a>{{ order.order_no }}</a></span>
+              <span><b>￥{{ order.total_price|multiply:'0.01' }}</b></span>
+              <span><b>￥{{ order.real_price|multiply:'0.01' }}</b></span>
+              {% if order.trade_state == 0 %}
+                <span><a href="javascript:;" class="cancel-order" data-id="{{ order.id }}">取消订单</a></span>
+              {% elif order.trade_state > 0 and order.trade_state < 5 %}
+                <span><a href="{% url 'eshop:changing_or_refunding' %}?id={{ order.id }}">退款/退货</a></span>
+              {% elif order.trade_state == 5 %}
+                <span><a href="{% url 'eshop:changing_or_refunding' %}?id={{ order.id }}">查看退款</a></span>
+              {% elif order.trade_state == 6 and order.refundrecord_set.all %}
+                <span><a href="{% url 'eshop:changing_or_refunding' %}?id={{ order.id }}">查看退款</a></span>
+              {% else %}
+                <span>————</span>
+              {% endif %}
+              <span>{{ order.buyer.username }}</span>
+              <span><a class="sort-of-goods">共{{ order.orderitem_set.all | length }}种商品<i class="caret"></i></a></span>
+              <span>{{ order.get_trade_state_display }}</span>
+              <span>
+                {% if order.trade_state == 0 %}
+                  <a class="pay btn-s1" href="{% url 'eshop:submit_order' %}?oid={{ order.order_no }}">去支付</a>
+                {% elif order.trade_state == 1 %}
+                  <b>等待审核</b>
+                {% elif order.trade_state == 2 %}
+                  <b>等待发货</b>
+                {% elif order.trade_state == 3 %}
+                  <a class="pay btn-s1 conf-rec" href="javascript:;" data-id="{{ order.id }}">确认收货</a>
+                {% elif order.trade_state == 4 %}
+                 <a href="javascript:;" title="该功能暂未开放">查看物流</a>
+                {% endif %}
+
+                {% if order.trade_state == 3 %}
+                  <a href="javascript:;" title="该功能暂未开放">查看物流</a>
+                {% else %}
+                  <a href="{% url 'eshop:shopping_cart_list' %}?order_id={{ order.order_no }}">再次购买</a>
+                {% endif %}
+            </span>
+              {% if order.orderitem_set.count %}
+                <div class="goods-information" id="{{ order.order_no }}">
+                  <ul class="goods-nav">
+                    <li>商品信息</li>
+										<li>商品编号</li>
+										<li>商品数量</li>
+										<li>单价(元)</li>
+										<li>单价优惠(元)</li>
+										<li>小计(元)</li>
+										<li>实付金额(元)</li>
+                  </ul>
+                  <ul class="goods-list">
+                    {% for item in order.order_item_set %}
+                      <li>
+                        <div>
+                          <a class="good-name" href="{% url 'eshop:good_detail' good_id=item.good.id %}">
+                          	<img src="{% if item.good.main_photo.name %}{{ item.good.main_photo.name | media_url }}{% else %}{{ 'eshop/images/good_placeholder.png'|static_url }}{% endif %}" />
+	                          <p>
+	                            <span>{{ item.good.trade_name }}</span>
+	                            <span>{{ item.good.external_spec }}</span>
+	                          </p>
+                          </a>
+                          <a class="add_cart"
+                             data-id="{{ item.good.id }}"
+                             api="{% url 'order:cart' %}">加入购物车</a>
+                        </div>
+                        <div>{{ item.good.external_id }}</div>
+			                  <div>*{{ item.quantity }}</div>
+			                  <div>{{ item.price|multiply:0.01 }}</div>
+			                  <div>{% if item.preferential_price %}{{ item.preferential_price|multiply:0.01 }}{% else %}0.00{% endif %}</div>
+			                  <div>{{ item.price|multiply:item.quantity|multiply:0.01 }}</div>
+			                  <div>{{ item.real_price|multiply:item.quantity|multiply:0.01 }}</div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <div class="goods-total-amount">
+                    <p><span>商品总金额：</span><span>￥{{ order.good_total_price|multiply:0.01 }}</span></p>
+                    <p><span>运费：</span><span>￥0.00</span></p>
+                    <p><span>促销优惠金额：</span><span>￥{% if order.total_preferential_price %}{{ order.total_preferential_price|multiply:0.01 }}{% else %}0.00{% endif %}</span></p>
+                    <p><span>积分兑换：</span><span>￥0.00</span></p>
+                    <p class="totla-money"><span>商品总金额(含运费)：</span><span>￥{{ order.good_total_price|multiply:0.01 }}</span></p>
+                  </div>
+                  <div class="delivery-info">
+                    <p>收货地址：{% if order.receiving_address.region %}{{ order.receiving_address.region }} {% endif %}{{ order.receiving_address.address }}</p>
+                    <p>支付方式：{{ order.payment_method.get_pay_type_display }}</p>
+                    <p>配送方式：{{ order.shipping_method.get_shipping_type_display }}</p>
+                    <p>订单状态：{{ order.get_trade_state_display }}
+                      {% if order.trade_state == 0 %}
+                        <a class="pay btn-s1 pull-right"
+                           href="{% url 'eshop:submit_order' %}?oid={{ order.order_no }}">去支付</a></p>
+                      {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% if order_list %}
+          <div class="page-No">
+            <div>
+              共<span>{{ order_list.paginator.num_pages }}</span>页&nbsp;&nbsp;
+              到第<input class="input_page" type="text" value="1"/>页&nbsp;&nbsp;
+              <a class="skip">确定</a>
+            </div>
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li><a class="previous" href="{% if order_list.has_previous %}?page=
+                {{ order_list.previous_page_number }}{% else %}javascript:;{% endif %}" aria-label="Previous">
+                  <i class="iconfont icon-shangxiajiantou-copy1-copy"></i>上一页</a></li>
+                {% if pagi_bar.left %}
+                  {% for page in pagi_bar.left %}
+                    {% if page == order_list.number %}
+                      <li><a class="active">{{ page }}</a></li>
+                    {% else %}
+                      <li><a href="?page={{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  <li><span class="previous-omit">…</span></li>
+                {% endif %}
+                {% for page in pagi_bar.center %}
+                  {% if page == order_list.number %}
+                    <li><a class="active">{{ page }}</a></li>
+                  {% else %}
+                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if pagi_bar.right %}
+                  <li><span class="next-omit">…</span></li>
+                  {% for page in pagi_bar.right %}
+                    {% if page == order_list.number %}
+                      <li><a class="active">{{ page }}</a></li>
+                    {% else %}
+                      <li><a href="?page={{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+                <li><a class="next" href="{% if order_list.has_next %}?page=
+                {{ order_list.next_page_number }}{% else %}javascript:;{% endif %}" aria-label="Next">
+                  下一页<i class="iconfont icon-shangxiajiantou-copy1"></i></a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        {% else %}
+          <div class="empty">
+            <img src="{{ 'eshop/images/order_empty.png' | static_url }}"/>
+            <span>暂时没有订单哦！<br/>
+        		<a href="{% url 'eshop:eshop_home' %}">去逛逛...</a></span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!--footer部分-->
+    {% include 'eshop/eshop_footer.html' %}
+
+  </div>
+{% endblock %}
+<!-- 自定义JS -->
+{% block js %}
+  <script type="text/javascript" src="{{ 'eshop/js/my_order.js'|static_url }}"></script>
+  <script type="text/javascript" src="{{ 'eshop/js/URI.min.js'|static_url }}"></script>
+{% endblock %}
+

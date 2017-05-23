@@ -1,0 +1,29 @@
+<div class="header-member">
+  <div class="box">
+    <a href="{% url 'eshop:eshop_home' %}"><img src="../../static/eshop/images/logo_order.jpg"></a>
+    <div class="menu">
+      <a class="active" href="{% url 'eshop:member_center' %}">会员中心</a>
+      <div class="account">
+        <span>账户设置<i class="iconfont icon-shangxiajiantou"></i></span>
+        <div>
+          <a href="{% url 'eshop:account_info' %}">账户信息</a>
+          <a href="{% url 'eshop:account_safety' %}">账户安全</a>
+          <a href="{% url 'eshop:receiving_address' %}">收货地址</a>
+        </div>
+      </div>
+      <a href="{% url 'eshop:quickly_order' %}">快速下单</a>
+    </div>
+    <form action="{% url 'eshop:good_search_list' %}" method="get">
+      <div class="search input-group">
+        <input type="text"
+               name="keyword"
+               class="form-control"
+               value="{{ request.GET.keyword }}"
+               placeholder="">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">搜索</button>
+	      </span>
+      </div>
+    </form>
+  </div>
+</div>

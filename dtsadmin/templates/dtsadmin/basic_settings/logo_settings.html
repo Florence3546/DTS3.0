@@ -1,0 +1,36 @@
+{% load  extras %}
+<form action="" class="form-horizontal" id="form_logo_settings" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-group form-group-dts">
+    <label for="logo_submit" class="control-label normal"><span class="must-note">*</span>Logo图片上传</label>
+    <button type="button" class="control-btn btn btn-dts btn-s0" class="file" id="upload_btn">上传图片</button>
+    <input type="file" name="logo_img" id="site_logo" class="hide">
+    <input type="hidden" id="old_logo" value="{{ settings_item_dict.ADMIN_LOGO.logo_path }}">
+    <span class="tip_note">图片大小不超过1M</span>
+  </div>
+
+  <div class="form-group form-group-dts">
+    <label for="logo_submit" class="control-label normal"><span class="must-note">*</span>Logo链接地址</label>
+    <input type="email" class="form-control" id="logo_submit" name="logo_href"
+           value="{{ settings_item_dict.ADMIN_LOGO.logo_href }}">
+    <span class="tip_note">点击Logo图片跳转地址</span>
+  </div>
+
+  <div class="form-group form-group-dts">
+    <label class="control-label"></label>
+    <button type="button" class="control-btn btn btn-dts btn-s1" id="logo_settings_btn">保存</button>
+  </div>
+
+  <div id="logo-pane" class="logo-pane">
+    <input type="hidden" name="op_type" value="admin_logo">
+    <div id="logo_preview" class="upload_file">
+      {% ifequal settings_item_dict.ADMIN_LOGO.logo_path None %}
+        <span class="img_file"></span>
+        <span class="upload_file_span">后台LOGO</span>
+      {% else %}
+        <img class="img-responsive" src="{{ settings_item_dict.ADMIN_LOGO.logo_path|media_url }}" alt="后台LOGO"
+             title="后台LOGO">
+      {% endifequal %}
+    </div>
+  </div>
+</form>

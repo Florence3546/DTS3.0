@@ -1,0 +1,382 @@
+.header-member .menu > a:first-of-type {
+  background: rgba(255, 255, 255, 0.2);
+}
+.section {
+  float: left;
+  width: 860px;
+  margin-bottom: 110px;
+}
+.section .basic_inform {
+  width: 100%;
+  height: 105px;
+  margin-top: 36px;
+  background: #f9f9f9;
+}
+.section .count_bar {
+  width: 100%;
+  height: 85px;
+  margin-top: 20px;
+}
+.section .my_order {
+  width: 100%;
+  margin-top: 20px;
+}
+.section .my_collect {
+  width: 100%;
+  margin-top: 20px;
+}
+.right_bar {
+  float: left;
+  width: 200px;
+  margin-left: 15px;
+  margin-top: 36px;
+}
+.basic_inform .member_inform {
+  float: left;
+  width: 225px;
+  height: 105px;
+}
+.basic_inform .member_inform .member_img {
+  float: left;
+  width: 70px;
+  height: 70px;
+  margin-top: 14px;
+  margin-left: 12px;
+}
+.basic_inform .member_inform .member_name {
+  float: left;
+  padding-top: 30px;
+  margin-left: 12px;
+}
+.basic_inform .pre_payment {
+  float: left;
+  width: 350px;
+  height: 105px;
+  padding: 15px 0;
+}
+.basic_inform .pre_payment .pre_payment_box {
+  width: 100%;
+  height: 70px;
+  border-left: 1px dashed #e5e5e5;
+  border-right: 1px dashed #e5e5e5;
+}
+.basic_inform .integral {
+  float: left;
+  width: 275px;
+  height: 105px;
+}
+.member_name p {
+  font-weight: bold;
+}
+.member_name p .iconfont {
+  margin-left: 5px;
+  color: #33cc6d;
+}
+.member_name .member_grade {
+  width: 64px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 10px;
+  text-align: center;
+  color: #fff;
+  background: #e2e2e2;
+}
+.pre_payment_box {
+  padding-left: 80px;
+  padding-top: 15px;
+}
+.pre_payment_box p {
+  font-weight: bold;
+}
+.pre_payment_box p span {
+  color: #ff6600;
+  font-family: "微软雅黑";
+}
+.pre_payment_box button {
+  height: 24px;
+  line-height: 20px;
+  background: #ff7e00;
+  border-color: #ff7e00;
+}
+.integral {
+  padding-left: 80px;
+  padding-top: 30px;
+}
+.integral p {
+  font-weight: bold;
+}
+.integral p span {
+  color: #ff6600;
+}
+.integral button {
+  height: 24px;
+  line-height: 20px;
+}
+.count_bar > ul {
+  width: 100%;
+  height: 100%;
+}
+.count_bar > ul li {
+  float: left;
+  width: 207px;
+  height: 85px;
+  margin-right: 10px;
+  background: #f9f9f9;
+}
+.count_bar > ul li:last-child {
+  margin-right: 0;
+}
+.count_bar > ul li div:nth-child(1) {
+  float: left;
+  width: 85px;
+  height: 85px;
+  text-align: center;
+  padding-top: 17px;
+}
+.count_bar > ul li div:nth-child(2) {
+  float: left;
+  width: 120px;
+  height: 85px;
+  line-height: 85px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.count_bar > ul li div:nth-child(2) span {
+  margin-left: 10px;
+  color: #ff6600;
+}
+.order_title,
+.collect_title {
+  height: 40px;
+  line-height: 38px;
+  padding: 0 10px;
+  border: 1px solid #e5e5e5;
+  background: #f9f9f9;
+}
+.order_title a:hover,
+.collect_title a:hover {
+  color: #0090ff;
+}
+#wrap .my_order .order_box {
+  width: 100%;
+  max-height: 400px;
+}
+#wrap .my_order .order_box li {
+  width: 100%;
+  height: 80px;
+  border: 1px solid #e5e5e5;
+  border-top: none;
+  line-height: 78px;
+}
+#wrap .my_order .order_box .empty_order {
+  height: 150px;
+  padding-top: 50px;
+}
+#wrap .my_order .order_box .empty_order img {
+  display: block;
+  float: left;
+  margin-left: 300px;
+}
+#wrap .my_order .order_box .empty_order span {
+  width: 200px;
+  margin-left: 15px;
+  text-align: left;
+  line-height: 24px;
+}
+#wrap .my_order .order_box .empty_order a {
+  color: #0090ff;
+}
+#wrap .my_order .order_box .empty_order a:visited {
+  color: #0090ff;
+}
+#wrap .order_box a {
+  color: #0090ff;
+  cursor: pointer;
+}
+#wrap .order_box a:visited {
+  color: #999;
+}
+#wrap .order_box a:hover {
+  color: #45aeff;
+  text-decoration: none;
+}
+#wrap .order_box a:active {
+  color: #45aeff;
+}
+.order_box > li > span {
+  display: inline-block;
+  text-align: center;
+}
+.order_box > li > span:nth-child(1) {
+  width: 85px;
+  text-align: right;
+}
+.order_box > li > span:nth-child(2) {
+  width: 65px;
+}
+.order_box > li > span:nth-child(3) {
+  width: 180px;
+}
+.order_box > li > span:nth-child(4) {
+  width: 150px;
+  font-family: "微软雅黑";
+}
+.order_box > li > span:nth-child(5) {
+  width: 120px;
+}
+.order_box > li > span:nth-child(6) {
+  width: 150px;
+}
+#wrap .my-collect {
+  position: relative;
+  margin-top: 20px;
+}
+#wrap .my-collect .collect-box {
+  border: 1px solid #e5e5e5;
+  border-top: 0;
+  overflow: hidden;
+}
+#wrap .my-collect .collect-box .collect-list {
+  padding: 20px 0;
+  margin-left: 70px;
+  width: 720px;
+  overflow: hidden;
+}
+#wrap .my-collect .collect-box .collect-list > div {
+  width: 2000px;
+}
+#wrap .my-collect .collect-box ul {
+  position: relative;
+  float: left;
+}
+#wrap .my-collect .collect-box ul li {
+  float: left;
+  margin: 0 5px;
+  width: 170px;
+  height: 245px;
+  padding: 0 20px;
+  text-align: center;
+}
+#wrap .my-collect .collect-box ul li:hover {
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(0, 0, 0, 0.1);
+}
+#wrap .my-collect .collect-box .empty-collect {
+  height: 150px;
+  padding-top: 35px;
+}
+#wrap .my-collect .collect-box .empty-collect img {
+  float: left;
+  margin-left: 220px;
+}
+#wrap .my-collect .collect-box .empty-collect div {
+  float: left;
+  margin-left: 10px;
+  line-height: 24px;
+}
+#wrap .my-collect .collect-box .empty-collect a {
+  color: #0090ff;
+}
+#wrap .my-collect .collect-box .empty-collect a:visited {
+  color: #0090ff;
+}
+#wrap .my-collect .prev-good,
+#wrap .my-collect .next-good {
+  position: absolute;
+  top: 140px;
+  z-index: 7;
+}
+#wrap .my-collect .prev-good .iconfont,
+#wrap .my-collect .next-good .iconfont {
+  font-size: 60px;
+  color: #e6e6e6;
+  cursor: pointer;
+}
+#wrap .my-collect .prev-good {
+  left: 0;
+}
+#wrap .my-collect .next-good {
+  right: 0;
+}
+.collect-box ul li .collect-pic img {
+  width: 130px;
+  height: 130px;
+}
+.collect-box ul li .collect-note {
+  width: 130px;
+}
+.collect-box ul li .collect-note .log-in {
+  margin-top: 20px;
+  height: 22px;
+  font-weight: bolder;
+  font-family: "微软雅黑";
+  color: #ff6600;
+}
+.collect-box ul li .collect-note .log-in span {
+  font-size: 16px;
+  font-weight: bolder;
+}
+.collect-box ul li .collect-note .log-in del {
+  font-size: 12px;
+  font-weight: normal;
+  color: #999;
+}
+.collect-box ul li .collect-note p:hover {
+  color: #ff7e00;
+}
+.right_bar {
+  margin-bottom: 50px;
+  border: 1px solid #e5e5e5;
+}
+.right_bar .history_title {
+  width: 100%;
+  height: 40px;
+  font-weight: bold;
+  line-height: 40px;
+  padding-left: 10px;
+  border-bottom: 1px solid #e5e5e5;
+  background: #f9f9f9;
+}
+.right_bar .history_box {
+  width: 100%;
+  height: auto;
+}
+.history_box > li {
+  margin: 20px 0;
+  cursor: pointer;
+}
+.history_box > li .history_pic {
+  width: 130px;
+  height: auto;
+  margin: 0 auto;
+}
+.history_box > li .history_pic img {
+  width: 100%;
+}
+.history_box > li .history_note {
+  width: 160px;
+  margin: 0 auto;
+}
+.history_box > li .history_note p {
+  height: auto;
+  line-height: 24px;
+  text-align: center;
+}
+.history_box > li .history_note p:nth-child(1) {
+  color: #ff6600;
+  margin-top: 30px;
+  font-weight: bold;
+}
+.history_box > li .history_note p:nth-child(1) span {
+  font-size: 16px;
+  font-family: "微软雅黑";
+}
+#wrap .tooltip {
+  margin-left: -125px;
+}
+#wrap .tooltip-inner {
+  background: #eaeaea;
+  color: #777;
+}
+#wrap .tooltip-arrow {
+  border-right-color: #eaeaea;
+}

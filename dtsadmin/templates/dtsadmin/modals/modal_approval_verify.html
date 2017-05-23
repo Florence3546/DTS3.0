@@ -1,0 +1,118 @@
+{% load extras %}
+<div class="modal fade" id="approval_verify_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">改价申请</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="change_price_form">
+          {% if obj.csrfmiddlewaretoken %}
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{ obj.csrfmiddlewaretoken }}">
+          {% else %}
+              {% csrf_token %}
+          {% endif %}
+          <input type="hidden" name="pk" value="{{ change_price.pk }}">
+          <input type="hidden" name="action" value="change_price">
+          <input type="hidden" name="method" value="submit_change_price">
+        </form>
+  			<table class="table table-bordered personal-info">
+          	<tr>
+          		<td>下单人</td>
+          		<td>{{ order.buyer.first_name }}</td>
+          		<td>申请客服</td>
+          		<td>{{ request.user.first_name }}</td>
+          		<td>支付方式</td>
+          		<td>{{ order.payment_method.name_cn }}</td>
+          		<td>配送方式</td>
+          		<td>{{ order.shipping_method.name_cn }}</td>
+          	</tr>
+          	<tr>
+          		<td>订单金额</td>
+          		<td>￥{{ order.total_price | multiply:0.01 }}</td>
+          		<td>订单编号</td>
+          		<td>{{ order.order_no }}</td>
+          		<td>配送信息</td>
+          		<td colspan="3">
+                    {{ order.receiving_address.region }}
+                    {{ order.receiving_address.address }}
+                    {{ order.receiving_address.people }}
+                    {{ order.receiving_address.telephone }}
+                </td>
+          	</tr>
+          </table>
+        <table class="table table-bordered good-info">
+          <thead>
+          <tr>
+            <th>商品图片</th>
+            <th width="210">商品名称</th>
+            <th>单价（元）</th>
+            <th>单价优惠（元）</th>
+            <th>数量</th>
+            <th>小计（元）</th>
+            <th>实付金额（元）</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for order_item in order.orderitem_set.all %}
+            <tr>
+              <td><img src="{% if order_item.good.main_photo.name %}{{ order_item.good.main_photo.name|urlencode|media_url }}{% else %}{{ 'common/img/good_placeholder.png'|static_url }}{% endif %}"/></td>
+              <td>{{ order_item.good.brand }} {{ order_item.good.name }} {{ order_item.good.trade_name }}</td>
+              <td class="price">{{ order_item.good.member_price | multiply:0.01 }}</td>
+              {% if slug == 'approval' %}
+	              <td class="td_approval">
+	                <input class="form-control short discount"
+	                       data-pk="{{ order_item.pk }}"
+	                       type="text" value="{{ order_item.changepricerecord.apply_discount|multiply:0.01 }}"/></td>
+              {% else %}
+              	<td class="discount">{% if order_item.changepricerecord.change_price_state == 2 %}{{ order_item.changepricerecord.real_discount|multiply:0.01 }}{% else %}{{ order_item.changepricerecord.apply_discount|multiply:0.01 }}{% endif %}</td>
+              {% endif %}
+              <td class="quantity">{{ order_item.quantity }}</td>
+              <td>{{ order_item.good.member_price|multiply:order_item.quantity|multiply:0.01 }}</td>
+              <td class="real_price"></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% if order_record %}
+          <table class="table table-bordered good-info operating-info">
+            <thead>
+            <tr>
+              <th width="150">申请时间</th>
+              <th>处理信息</th>
+              <th width="150">操作人</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in order_record %}
+              <tr>
+                <td>{{ record.created | date:'Y-m-d H:i' }}</td>
+                <td>{{ record.operate_cn }}</td>
+                <td>{{ record.operator.username }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
+      {% if slug == 'approval'  %}
+      	<div class="modal-footer mrg-t-15">
+          <button type="button"
+                  data-method="deliver_order"
+                  data-pk="{{ order.pk }}"
+                  api="{% url 'dtsadmin:approval_list' %}"
+                  class="btn btn-s1 btn-dts2 submit_change_price_pass">通过
+          </button>
+          <button type="button"
+                  data-method="deliver_order"
+                  data-pk="{{ order.pk }}"
+                  api="{% url 'dtsadmin:approval_list' %}"
+                  class="btn btn-s4 btn-dts2 submit_change_price_nopass">不通过
+          </button>
+      	</div>
+      {% endif %}
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
